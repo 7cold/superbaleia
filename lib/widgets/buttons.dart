@@ -11,7 +11,8 @@ class BaleiaButtons {
     double h,
     Function func,
   ) =>
-      SizedBox(
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         height: h,
         width: w,
         child: CupertinoButton(
@@ -34,7 +35,8 @@ class BaleiaButtons {
     double h,
     Function func,
   ) =>
-      SizedBox(
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         height: h,
         width: w,
         child: CupertinoButton(

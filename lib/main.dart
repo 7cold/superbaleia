@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:superbaleia/services/services.dart';
+import 'package:superbaleia/widgets/buttons.dart';
+import 'package:superbaleia/widgets/forms.dart';
 
 void main() {
   runApp(MyApp());
 }
+
+TextEditingController email = TextEditingController();
+TextEditingController senha = TextEditingController();
 
 class MyApp extends StatelessWidget {
   @override
@@ -13,7 +19,34 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(),
+      home: Scaffold(
+        body: Column(
+          children: [
+            BaleiaForms.textFormField("email", email),
+            BaleiaForms.textFormFieldPass("senha", senha),
+            BaleiaButtons.buttonPrimary(
+              "Login",
+              Get.width,
+              35,
+              () async {
+                userLogin(email.text, senha.text).then((result) {
+                  if (result == "login error") {
+                    return Get.rawSnackbar(
+                      snackPosition: SnackPosition.BOTTOM,
+                      message: "error",
+                    );
+                  } else if (result == "login ok") {
+                    return Get.rawSnackbar(
+                      snackPosition: SnackPosition.BOTTOM,
+                      message: "OK",
+                    );
+                  }
+                });
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 }
