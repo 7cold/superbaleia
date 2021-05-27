@@ -29,13 +29,15 @@ class MyApp extends StatelessWidget {
               Get.width,
               35,
               () async {
-                userLogin(email.text, senha.text).then((result) {
-                  if (result == "login error") {
+                //chama funcao de login
+                login(email.text, senha.text).then((result) {
+                  //checa o resultado com o mysql e retorna um snackbar usando pacote GET
+                  if (result == "error") {
                     return Get.rawSnackbar(
                       snackPosition: SnackPosition.BOTTOM,
                       message: "error",
                     );
-                  } else if (result == "login ok") {
+                  } else if (result == "ok") {
                     return Get.rawSnackbar(
                       snackPosition: SnackPosition.BOTTOM,
                       message: "OK",
