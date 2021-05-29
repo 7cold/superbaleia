@@ -1,7 +1,12 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:superbaleia/controller/controller.dart';
 
 String url = 'https://superbaleia.000webhostapp.com/api.php';
+String urlClientes = 'https://superbaleia.000webhostapp.com/api_clientes.php';
+
+final Controller c = Get.put(Controller());
 
 Future<String> login(String email, String senha) async {
   var response = await http.post(url,
@@ -9,13 +14,27 @@ Future<String> login(String email, String senha) async {
         'email': email,
         'password': senha,
       }));
-
-  var message = jsonDecode(response.body);
-
-  if (message[0] == 'ok') {
+  var result = jsonDecode(response.body);
+  if (result[0] == 'ok') {
+    c.dadosCliente.addAll(result[1]);
+    c.salvarClienteId(c.dadosCliente['cliente_id']);
     return "ok";
   } else {
     return "error";
+  }
+}
+
+carregarClienteAtual(String clienteId) async {
+  if (c.clienteId.value != "") {
+    var response = await http.post(urlClientes, body: {
+      'action': 'carregarClienteAtual',
+      'cliente_id': clienteId ?? '',
+    });
+    var result = jsonDecode(response.body);
+    c.dadosCliente.addAll(result[0]);
+    print("usuario logado: " + c.dadosCliente['cliente_email']);
+  } else {
+    print("nenhum cliente logado!");
   }
 }
 

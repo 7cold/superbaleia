@@ -40,14 +40,12 @@ class BaleiaButtons {
         height: h,
         width: w,
         child: CupertinoButton(
-          color: Color(corSec),
+          color: Color(corGrey).withAlpha(50),
           borderRadius: BorderRadius.circular(5),
           padding: EdgeInsets.all(0),
           child: Text(
             label,
-            style: TextStyle(
-              fontFamily: fontUltraLight,
-            ),
+            style: TextStyle(fontFamily: fontUltraLight, color: Colors.black),
           ),
           onPressed: func,
         ),
