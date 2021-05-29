@@ -10,8 +10,14 @@ void main() {
 
 TextEditingController email = TextEditingController();
 TextEditingController senha = TextEditingController();
+bool ocultar = true;
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -21,9 +27,15 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BaleiaForms.textFormField("email", email),
-            BaleiaForms.textFormFieldPass("senha", senha),
+            BaleiaForms.textFormFieldPass("senha", senha, () {
+              //Substituir por GETX pra eu aprender
+              setState(() {
+                ocultar = !ocultar;
+              });
+            }, ocultar),
             BaleiaButtons.buttonPrimary(
               "Login",
               Get.width,
