@@ -83,4 +83,52 @@ class BaleiaForms {
           ),
         ),
       );
+
+  static textFormFielSearch(String hint, TextEditingController controller) =>
+      Padding(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: SizedBox(
+          height: 45,
+          child: TextField(
+            controller: controller,
+            autofocus: false,
+            obscureText: false,
+            decoration: InputDecoration(
+              suffixIcon: Container(
+                margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(corPri),
+                ),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.search,
+                    size: 18,
+                    color: Color(corBack),
+                  ),
+                ),
+              ),
+              hintText: hint,
+              hintStyle: textRegular(15, corGrey),
+              contentPadding: EdgeInsets.only(left: 15),
+              border: OutlineInputBorder(),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: Colors.grey[200],
+                  width: 1.5,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: Colors.grey[300],
+                  width: 1.5,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
 }

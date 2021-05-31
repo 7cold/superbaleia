@@ -9,7 +9,8 @@ String urlClientes = 'https://superbaleia.000webhostapp.com/api_clientes.php';
 final Controller c = Get.put(Controller());
 
 Future<String> login(String email, String senha) async {
-  var response = await http.post(url,
+  c.carregando.value = true;
+  var response = await http.post(Uri.parse(url),
       body: json.encode({
         'email': email,
         'password': senha,
@@ -18,15 +19,17 @@ Future<String> login(String email, String senha) async {
   if (result[0] == 'ok') {
     c.dadosCliente.addAll(result[1]);
     c.salvarClienteId(c.dadosCliente['cliente_id']);
+    c.carregando.value = false;
     return "ok";
   } else {
+    c.carregando.value = false;
     return "error";
   }
 }
 
 carregarClienteAtual(String clienteId) async {
   if (c.clienteId.value != "") {
-    var response = await http.post(urlClientes, body: {
+    var response = await http.post(Uri.parse(urlClientes), body: {
       'action': 'carregarClienteAtual',
       'cliente_id': clienteId ?? '',
     });
@@ -36,6 +39,27 @@ carregarClienteAtual(String clienteId) async {
   } else {
     print("nenhum cliente logado!");
   }
+}
+
+carregarCategorias() async {
+  var response = await http
+      .post(Uri.parse(urlClientes), body: {'action': 'carregarCategorias'});
+  var res = json.decode(response.body);
+  c.categorias.value = res;
+}
+
+carregarBanners() async {
+  var response = await http
+      .post(Uri.parse(urlClientes), body: {'action': 'carregarBanners'});
+  var res = json.decode(response.body);
+  c.banners.value = res;
+}
+
+carregarDicas() async {
+  var response = await http
+      .post(Uri.parse(urlClientes), body: {'action': 'carregarDicas'});
+  var res = json.decode(response.body);
+  c.dicas.value = res;
 }
 
 // Future<String> cadastroCliente() async {

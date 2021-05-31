@@ -7,14 +7,21 @@ import 'package:superbaleia/telas/login.dart';
 class Controller extends GetxController {
   @override
   onInit() async {
+    await carregarCategorias();
+    await carregarDicas();
+    await carregarBanners();
     await carregarClienteId();
     await carregarClienteAtual(clienteId.value);
     super.onInit();
   }
 
   RxMap dadosCliente = {}.obs;
+  RxList categorias = [].obs;
+  RxList banners = [].obs;
+  RxList dicas = [].obs;
   RxString clienteId = "".obs;
   RxBool showPassword = true.obs;
+  RxBool carregando = false.obs;
   final getStorage = GetStorage().obs;
 
   funcShowPassword() {

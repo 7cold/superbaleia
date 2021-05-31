@@ -13,8 +13,9 @@ dependencies:
   responsive_grid: ^2.0.0
   carousel_slider: ^3.0.0
   cupertino_icons: ^1.0.3
-  http: ^0.12.2
+  http: ^0.13.0
   get_storage: ^2.0.2
+  cached_network_image: ^3.0.0
 
 dev_dependencies:
   flutter_test:

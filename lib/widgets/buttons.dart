@@ -51,6 +51,23 @@ class BaleiaButtons {
         ),
       );
 
+  static Widget buttonText(
+    String label,
+    Function func,
+  ) =>
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: CupertinoButton(
+          borderRadius: BorderRadius.circular(5),
+          padding: EdgeInsets.all(0),
+          child: Text(
+            label,
+            style: TextStyle(fontFamily: fontBold, color: Color(corPri)),
+          ),
+          onPressed: func,
+        ),
+      );
+
   static Widget iconButton() => Container(
         height: 35,
         width: 35,

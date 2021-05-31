@@ -1,45 +1,42 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:superbaleia/data/dicas_data.dart';
 
 import 'buttons.dart';
 import 'colors.dart';
 import 'texts.dart';
 
 class BaleiaCards {
-  static Widget cardSlide(
-    double w,
-    double h,
-    List<Widget> list,
-  ) =>
-      Material(
-        shadowColor: CupertinoColors.tertiaryLabel,
-        borderRadius: BorderRadius.circular(10),
-        elevation: 10,
-        child: Container(
-          height: h,
-          width: w,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: CarouselSlider(
-            items: list,
-            options: CarouselOptions(
-              aspectRatio: 16 / 9,
-              viewportFraction: 1,
-              pageSnapping: false,
-              disableCenter: false,
-              initialPage: 0,
-              enableInfiniteScroll: true,
-              reverse: false,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              scrollDirection: Axis.horizontal,
+  static Widget cardSlide(double w, double h, List<Widget> list) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Material(
+          shadowColor: CupertinoColors.tertiaryLabel,
+          borderRadius: BorderRadius.circular(10),
+          elevation: 10,
+          child: Container(
+            height: h,
+            width: w,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: CarouselSlider(
+              items: list,
+              options: CarouselOptions(
+                aspectRatio: 16 / 9,
+                viewportFraction: 1,
+                initialPage: 0,
+                reverse: false,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal,
+              ),
             ),
           ),
         ),
@@ -51,12 +48,12 @@ class BaleiaCards {
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             image: NetworkImage(url),
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ),
         ),
       );
 
-  static Widget cardTips() => Padding(
+  static Widget cardTips(DicasData dicasData) => Padding(
         padding: EdgeInsets.only(left: 10, bottom: 24),
         child: Material(
           elevation: 5,
@@ -64,13 +61,13 @@ class BaleiaCards {
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
           child: Container(
-            height: 150,
+            height: 160,
             width: 120,
             child: Flex(
               direction: Axis.vertical,
               children: [
                 Flexible(
-                  flex: 6,
+                  flex: 5,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.black,
@@ -79,8 +76,7 @@ class BaleiaCards {
                         topRight: Radius.circular(8),
                       ),
                       image: DecorationImage(
-                        image: NetworkImage(
-                            'https://www.receiteria.com.br/wp-content/uploads/receitas-de-pao-com-ovo-8-1-1200x738.jpg'),
+                        image: NetworkImage(dicasData.dicasImg),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -104,7 +100,7 @@ class BaleiaCards {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Lanche Natural",
+                              dicasData.dicasTitulo,
                               style: textBold(13, corBackDark),
                             ),
                             SizedBox(height: 8),
@@ -112,11 +108,11 @@ class BaleiaCards {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "10 min",
+                                  dicasData.dicasTempo + " min",
                                   style: textMedium(12, corGrey),
                                 ),
                                 Text(
-                                  "268 kcal",
+                                  dicasData.dicasKcal + " kcal",
                                   style: textMedium(12, corGrey),
                                 ),
                               ],
@@ -124,6 +120,83 @@ class BaleiaCards {
                           ],
                         ),
                       )),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+  static Widget cardPratos(DicasData dicasData) => Padding(
+        padding: EdgeInsets.only(left: 10, bottom: 24, right: 10),
+        child: Material(
+          elevation: 5,
+          shadowColor: Colors.white.withOpacity(0.5),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            height: 160,
+            width: Get.context.width / 2,
+            child: Stack(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                        image: NetworkImage(dicasData.dicasImg),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.transparent,
+                        Colors.black.withAlpha(55),
+                        Colors.black.withAlpha(200),
+                      ],
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          dicasData.dicasTitulo,
+                          style: textBold(16, corBack),
+                        ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Text(
+                              dicasData.dicasTempo + " min",
+                              style: textMedium(14, corGrey),
+                            ),
+                            Text(
+                              "  •  ",
+                              style: textMedium(14, corGrey),
+                            ),
+                            Text(
+                              dicasData.dicasKcal + " kcal",
+                              style: textMedium(14, corGrey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -211,6 +284,33 @@ class BaleiaCards {
               ],
             ),
           ),
+        ),
+      );
+
+  static Widget cardCategoria(String nome, String imgUrl, int color) =>
+      Container(
+        margin: EdgeInsets.only(right: 8),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+        decoration: BoxDecoration(
+          color: Color(color),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CachedNetworkImage(
+              height: 22,
+              imageUrl: imgUrl,
+              placeholder: (context, url) => CupertinoActivityIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error_outline),
+            ),
+            SizedBox(width: 10),
+            Text(
+              nome,
+              style: textRegular(15, corBack),
+            )
+          ],
         ),
       );
 }
