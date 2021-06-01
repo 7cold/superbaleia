@@ -61,7 +61,7 @@ class BaleiaCards {
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
           child: Container(
-            height: 160,
+            height: 170,
             width: 120,
             child: Flex(
               direction: Axis.vertical,

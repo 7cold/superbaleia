@@ -9,7 +9,7 @@ final Controller c = Get.put(Controller());
 class BaleiaForms {
   static textFormField(String hint, TextEditingController controller) =>
       Padding(
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 15),
         child: SizedBox(
           height: 40,
           child: TextField(
@@ -56,9 +56,11 @@ class BaleiaForms {
                   c.funcShowPassword();
                 },
                 icon: Icon(
-                  Icons.remove_red_eye_outlined,
+                  c.showPassword.value
+                      ? Icons.remove_red_eye_outlined
+                      : Icons.visibility_off_outlined,
                   size: 18,
-                  color: Color(corBackDark),
+                  color: Color(corGrey),
                 ),
               ),
               hintText: hint,
