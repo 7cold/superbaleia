@@ -17,25 +17,91 @@ class HomeUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.person_outline_rounded,
-            ),
+    return Obx(() {
+      ClienteData cliente = ClienteData.fromJson(c.dadosCliente);
+      return Scaffold(
+        appBar: c.dadosCliente['cliente_nome'] != null
+            ? AppBar(
+                leading: Builder(
+                  builder: (BuildContext context) {
+                    return IconButton(
+                      icon: const Icon(
+                        Icons.menu_rounded,
+                        color: Color(corPri),
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      tooltip: MaterialLocalizations.of(context)
+                          .openAppDrawerTooltip,
+                    );
+                  },
+                ),
+                elevation: 0,
+                backgroundColor: Colors.white,
+                actions: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 10),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.person_outline_rounded,
+                        color: Color(corPri),
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : null,
+        drawer: c.dadosCliente['cliente_nome'] != null
+            ? Drawer(
+          elevation: 0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 300,
+                color: Color(corBack),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            cliente.clienteNome,
+                            style: textHeavy(22, corBackDark),
+                          ),
+                          SizedBox(height: 15),
+                          Text(
+                            cliente.clienteCel,
+                            style: textLight(14, corGrey),
+                          ),
+                          Text(
+                            cliente.clienteEnd + " - " + cliente.clienteEndNum,
+                            style: textLight(14, corGrey),
+                          ),
+                          SizedBox(height: 40),
+                          BaleiaButtons.buttonSecondary("Sair", 200, 35, () {}),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-      drawer: Drawer(),
-      backgroundColor: Color(corBack),
-      body: SafeArea(
-        child: Obx(() {
-          ClienteData clienteData = ClienteData.fromJson(c.dadosCliente);
-          return c.dadosCliente['cliente_nome'] != null
+        ):null,
+        backgroundColor: Color(corBack),
+        body: SafeArea(
+          child: c.dadosCliente['cliente_nome'] != null
               ? SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(
@@ -172,9 +238,9 @@ class HomeUi extends StatelessWidget {
                     ],
                   ),
                 )
-              : BaleiaExtras.widgetLoading;
-        }),
-      ),
-    );
+              : BaleiaExtras.widgetLoading,
+        ),
+      );
+    });
   }
 }

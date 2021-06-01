@@ -139,16 +139,13 @@ class BaleiaCards {
             width: Get.context.width / 2,
             child: Stack(
               children: [
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
-                        image: NetworkImage(dicasData.dicasImg),
-                        fit: BoxFit.cover,
-                      ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: NetworkImage(dicasData.dicasImg),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
