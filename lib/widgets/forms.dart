@@ -133,4 +133,39 @@ class BaleiaForms {
           ),
         ),
       );
+
+  static textFormFieldCad(
+          String hint, user, campo, valid, teclado, obscureText) =>
+      Padding(
+        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+        child: TextFormField(
+          keyboardType: teclado,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            labelText: hint,
+            fillColor: Colors.blue,
+            hintStyle: textRegular(15, corGrey),
+            contentPadding: EdgeInsets.only(
+              left: 15,
+            ),
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: Colors.grey[350],
+                width: 2,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: Colors.grey[300],
+                width: 2,
+              ),
+            ),
+          ),
+          validator: valid,
+          onSaved: campo,
+        ),
+      );
 }

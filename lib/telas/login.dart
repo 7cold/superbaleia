@@ -17,6 +17,7 @@ class LoginUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Color(corBack),
       body: Obx(
         () => c.carregando.value == true
             ? BaleiaExtras.widgetLoading
