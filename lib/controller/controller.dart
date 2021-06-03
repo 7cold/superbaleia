@@ -15,6 +15,7 @@ class Controller extends GetxController {
     super.onInit();
   }
 
+  RxString idCat = "".obs;
   RxMap dadosCliente = {}.obs;
   RxList categorias = [].obs;
   RxList banners = [].obs;

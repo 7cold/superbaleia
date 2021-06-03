@@ -5,6 +5,7 @@ import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/categorias_data.dart';
 import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/dicas_data.dart';
+import 'package:superbaleia/telas/dados_cliente.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/card.dart';
 import 'package:superbaleia/widgets/colors.dart';
@@ -25,7 +26,7 @@ class HomeUi extends StatelessWidget {
                 leading: Builder(
                   builder: (BuildContext context) {
                     return IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.menu_rounded,
                         color: Color(corPri),
                         size: 30,
@@ -46,7 +47,7 @@ class HomeUi extends StatelessWidget {
                     child: IconButton(
                       onPressed: () {},
                       icon: Icon(
-                        Icons.person_outline_rounded,
+                        Icons.shopping_cart_outlined,
                         color: Color(corPri),
                         size: 30,
                       ),
@@ -56,49 +57,29 @@ class HomeUi extends StatelessWidget {
               )
             : null,
         drawer: c.dadosCliente['cliente_nome'] != null
-            ? Drawer(
-          elevation: 0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 300,
-                color: Color(corBack),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            cliente.clienteNome,
-                            style: textHeavy(22, corBackDark),
-                          ),
-                          SizedBox(height: 15),
-                          Text(
-                            cliente.clienteCel,
-                            style: textLight(14, corGrey),
-                          ),
-                          Text(
-                            cliente.clienteEnd + " - " + cliente.clienteEndNum,
-                            style: textLight(14, corGrey),
-                          ),
-                          SizedBox(height: 40),
-                          BaleiaButtons.buttonSecondary("Sair", 200, 35, () {}),
-                        ],
-                      ),
-                    ),
-                  ],
+            ? BaleiaExtras.drawer(cliente, c, [
+                BaleiaExtras.itemDrawer(
+                  Icons.person_outline_rounded,
+                  "Meus Dados",
+                  DadosClienteUi(),
                 ),
-              ),
-            ],
-          ),
-        ):null,
+                BaleiaExtras.itemDrawer(
+                  Icons.shopping_cart_outlined,
+                  "Carrinho",
+                  DadosClienteUi(),
+                ),
+                BaleiaExtras.itemDrawer(
+                  Icons.paste,
+                  "Meus Pedidos",
+                  DadosClienteUi(),
+                ),
+                BaleiaExtras.itemDrawer(
+                  Icons.help_outline_rounded,
+                  "Ajuda",
+                  DadosClienteUi(),
+                ),
+              ])
+            : null,
         backgroundColor: Color(corBack),
         body: SafeArea(
           child: c.dadosCliente['cliente_nome'] != null
@@ -130,7 +111,7 @@ class HomeUi extends StatelessWidget {
                           children: [
                             SizedBox(height: 15),
                             BaleiaForms.textFormFielSearch(
-                                "Pesquisar...", null),
+                                "Pesquisar...", (null)),
                             SingleChildScrollView(
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
@@ -144,7 +125,9 @@ class HomeUi extends StatelessWidget {
                                   return BaleiaCards.cardCategoria(
                                       catData.catNome,
                                       catData.catImagem,
-                                      catData.catCor);
+                                      catData.catCor,
+                                      catData,
+                                      c);
                                 }).toList()),
                               ),
                             ),

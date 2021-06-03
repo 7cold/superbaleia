@@ -5,3 +5,4 @@ const int corBackDark = 0XFF212529;
 const int corGrey = 0XFF9fa6ac;
 const int corGreen = 0XFF60b800;
 const int corRed = 0XFFff6961;
+const int corOrange = 0XFFfb9300;

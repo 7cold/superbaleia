@@ -9,7 +9,7 @@ final Controller c = Get.put(Controller());
 class BaleiaForms {
   static textFormField(String hint, TextEditingController controller) =>
       Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 15),
+        padding: EdgeInsets.only(left: 20, right: 20),
         child: SizedBox(
           height: 40,
           child: TextField(
@@ -53,6 +53,7 @@ class BaleiaForms {
             decoration: InputDecoration(
               suffixIcon: IconButton(
                 onPressed: () {
+                  FocusScope.of(Get.context).unfocus();
                   c.funcShowPassword();
                 },
                 icon: Icon(

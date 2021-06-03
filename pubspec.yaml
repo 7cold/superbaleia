@@ -16,6 +16,7 @@ dependencies:
   http: ^0.13.0
   get_storage: ^2.0.2
   cached_network_image: ^3.0.0
+  flutter_money_formatter: ^0.8.3
 
 dev_dependencies:
   flutter_test:
@@ -53,11 +54,11 @@ flutter:
 
       - family: regular
         fonts:
-          - asset: assets/fonts/regular.otf
+          - asset: assets/fonts/regular.ttf
 
       - family: semiBold
         fonts:
-          - asset: assets/fonts/semiBold.otf
+          - asset: assets/fonts/semiBold.ttf
 
       - family: thin
         fonts:
