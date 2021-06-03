@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:superbaleia/widgets/texts.dart';
 
 import 'colors.dart';
 import 'fonts.dart';
@@ -40,12 +41,12 @@ class BaleiaButtons {
         height: h,
         width: w,
         child: CupertinoButton(
-          color: Color(corGrey).withAlpha(50),
+          color: CupertinoColors.quaternarySystemFill,
           borderRadius: BorderRadius.circular(5),
           padding: EdgeInsets.all(0),
           child: Text(
             label,
-            style: TextStyle(fontFamily: fontUltraLight, color: Colors.black),
+            style: TextStyle(fontFamily: fontMedium, color: Colors.black),
           ),
           onPressed: func,
         ),
@@ -55,30 +56,31 @@ class BaleiaButtons {
     String label,
     Function func,
   ) =>
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: CupertinoButton(
-          borderRadius: BorderRadius.circular(5),
-          padding: EdgeInsets.all(0),
+      TextButton(
+        onPressed: func,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             label,
-            style: TextStyle(fontFamily: fontBold, color: Color(corPri)),
+            style: textHeavy(
+              14,
+              corPri,
+            ),
           ),
-          onPressed: func,
         ),
       );
 
-  static Widget iconButton() => Container(
+  static Widget iconButtonCart() => Container(
         height: 35,
         width: 35,
         decoration: BoxDecoration(
-            color: Color(corGreen), borderRadius: BorderRadius.circular(8)),
+            color: Color(corGreen), borderRadius: BorderRadius.circular(10)),
         child: IconButton(
           padding: EdgeInsets.all(0),
           onPressed: () {},
           icon: Icon(
-            Icons.shopping_cart_outlined,
-            size: 15,
+            Icons.add_shopping_cart_rounded,
+            size: 18,
             color: Colors.white,
           ),
         ),

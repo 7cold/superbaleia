@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:superbaleia/controller/controller.dart';
 
-String url = 'https://superbaleia.000webhostapp.com/api.php';
-String urlClientes = 'https://superbaleia.000webhostapp.com/api_clientes.php';
+String url = 'http://superbaleia.ueuo.com/api.php';
+String urlClientes = 'http://superbaleia.ueuo.com/api_clientes.php';
 
 final Controller c = Get.put(Controller());
 
@@ -62,16 +62,8 @@ carregarDicas() async {
   c.dicas.value = res;
 }
 
-// Future<String> cadastroCliente() async {
-//   final response = await http.post(url, body: {
-//     'action': 'ADD_PRODLIST',
-//     'lista_userId': '1',
-//     'lista_prodId': productData.prodId.toString(),
-//   });
-
-//   if (200 == response.statusCode) {
-//     return response.body;
-//   } else {
-//     return "erro";
-//   }
-// }
+Future carregarProdutos(String catId) async {
+  var response = await http.post(Uri.parse(urlClientes),
+      body: {'action': 'carregarProdutos', 'cat_id': catId});
+  return response;
+}

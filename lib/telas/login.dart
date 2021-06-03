@@ -10,9 +10,9 @@ import 'package:superbaleia/widgets/texts.dart';
 
 TextEditingController email = TextEditingController();
 TextEditingController senha = TextEditingController();
-final Controller c = Get.put(Controller());
 
 class LoginUi extends StatelessWidget {
+  final Controller c = Get.put(Controller());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,19 +28,13 @@ class LoginUi extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/images/logo2.png'),
-                                    fit: BoxFit.contain),
-                              ),
-                            ),
-                          ],
+                        margin: EdgeInsets.only(top: 40),
+                        height: 100,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/logo.png'),
+                              fit: BoxFit.contain),
                         ),
                       ),
                       Container(
@@ -58,8 +52,8 @@ class LoginUi extends StatelessWidget {
                             ),
                             Text(
                               "Entre para continuar",
-                              style: textHeavy(
-                                12,
+                              style: textRegular(
+                                16,
                                 corGrey,
                               ),
                             ),
@@ -70,23 +64,15 @@ class LoginUi extends StatelessWidget {
                         child: Column(
                           children: [
                             BaleiaForms.textFormField("Email", email),
+                            SizedBox(height: 15),
                             BaleiaForms.textFormFieldPass("Senha", senha),
                             Padding(
-                              padding: EdgeInsets.only(right: 15),
+                              padding: EdgeInsets.only(right: 10, top: 10),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  TextButton(
-                                    //TODO Funão para recuperação de senha
-                                    onPressed: () {},
-                                    child: Text(
-                                      "Esqueci minha senha",
-                                      style: textHeavy(
-                                        12,
-                                        corPri,
-                                      ),
-                                    ),
-                                  ),
+                                  BaleiaButtons.buttonText(
+                                      "Esqueci minha senha", () {})
                                 ],
                               ),
                             ),
@@ -108,6 +94,8 @@ class LoginUi extends StatelessWidget {
                                             "Usuário ou senhas incorretos! 😕",
                                         backgroundColor: Color(corRed));
                                   } else if (result == "ok") {
+                                    email.clear();
+                                    senha.clear();
                                     return Get.rawSnackbar(
                                       snackPosition: SnackPosition.BOTTOM,
                                       backgroundColor: Color(corGreen),
@@ -123,7 +111,7 @@ class LoginUi extends StatelessWidget {
                       Text(
                         "Ou",
                         style: textHeavy(
-                          12,
+                          14,
                           corGrey,
                         ),
                       ),
@@ -132,22 +120,12 @@ class LoginUi extends StatelessWidget {
                         children: [
                           Text(
                             "Ainda não tem uma conta?",
-                            style: textHeavy(
-                              12,
+                            style: textRegular(
+                              14,
                               corGrey,
                             ),
                           ),
-                          TextButton(
-                            //TODO Chamar tela de Cadastro
-                            onPressed: () {},
-                            child: Text(
-                              "Cadastre-se",
-                              style: textHeavy(
-                                12,
-                                corPri,
-                              ),
-                            ),
-                          ),
+                          BaleiaButtons.buttonText("Cadastre-se", () {})
                         ],
                       ),
                     ],
