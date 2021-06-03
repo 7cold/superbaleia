@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/controller/controller_prod.dart';
 import 'package:superbaleia/data/categorias_data.dart';
@@ -21,27 +22,27 @@ class ProdutosUi extends StatelessWidget {
       () => Scaffold(
         appBar: BaleiaExtras.appBar(categoriasData.catNome),
         backgroundColor: Color(corBack),
-        body: Center(
-          child: c.carregando.value == true
-              ? BaleiaExtras.widgetLoading
-              : cP.produtos.length < 1
-                  ? BaleiaExtras.nenhumProd()
-                  : GridView.count(
-                      padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                      crossAxisCount: Get.width < 330
-                          ? 1
-                          : Get.width > 485
-                              ? 3
-                              : 2,
-                      childAspectRatio: Get.width < 330 ? 1.2 : 0.8,
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 20,
-                      children: cP.produtos.map((element) {
-                        ProdutoData produtoData = ProdutoData.fromJson(element);
-                        return BaleiaCards.cardProd(produtoData);
-                      }).toList(),
+        body: c.carregando.value == true
+            ? Center(child: BaleiaExtras.widgetLoading)
+            : cP.produtos.length < 1
+                ? Center(child: BaleiaExtras.nenhumProd())
+                : SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: ResponsiveGridRow(
+                        children: cP.produtos.map((element) {
+                          ProdutoData produtoData =
+                              ProdutoData.fromJson(element);
+                          return ResponsiveGridCol(
+                              sm: 4,
+                              md: 3,
+                              xs: 6,
+                              child: BaleiaCards.cardProd(produtoData));
+                        }).toList(),
+                      ),
                     ),
-        ),
+                  ),
       ),
     );
   }

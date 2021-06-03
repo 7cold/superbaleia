@@ -63,7 +63,7 @@ class BaleiaButtons {
           child: Text(
             label,
             style: textHeavy(
-              12,
+              14,
               corPri,
             ),
           ),

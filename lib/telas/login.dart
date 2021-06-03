@@ -27,19 +27,13 @@ class LoginUi extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/images/logo2.png'),
-                                    fit: BoxFit.contain),
-                              ),
-                            ),
-                          ],
+                        margin: EdgeInsets.only(top: 40),
+                        height: 100,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/logo.png'),
+                              fit: BoxFit.contain),
                         ),
                       ),
                       Container(
@@ -58,7 +52,7 @@ class LoginUi extends StatelessWidget {
                             Text(
                               "Entre para continuar",
                               style: textRegular(
-                                12,
+                                16,
                                 corGrey,
                               ),
                             ),
@@ -116,7 +110,7 @@ class LoginUi extends StatelessWidget {
                       Text(
                         "Ou",
                         style: textHeavy(
-                          12,
+                          14,
                           corGrey,
                         ),
                       ),
@@ -126,7 +120,7 @@ class LoginUi extends StatelessWidget {
                           Text(
                             "Ainda não tem uma conta?",
                             style: textRegular(
-                              12,
+                              14,
                               corGrey,
                             ),
                           ),

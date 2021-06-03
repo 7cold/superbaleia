@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:superbaleia/controller/controller.dart';
 
-String url = 'https://superbaleia.000webhostapp.com/api.php';
-String urlClientes = 'https://superbaleia.000webhostapp.com/api_clientes.php';
+String url = 'http://superbaleia.ueuo.com/api.php';
+String urlClientes = 'http://superbaleia.ueuo.com/api_clientes.php';
 
 final Controller c = Get.put(Controller());
 

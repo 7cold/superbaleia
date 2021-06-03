@@ -142,7 +142,7 @@ class HomeUi extends StatelessWidget {
                                   banner['banner_img']))
                               .toList()),
                       Padding(
-                        padding: EdgeInsets.only(left: 20, top: 35, right: 20),
+                        padding: EdgeInsets.only(left: 20, top: 35, right: 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -171,7 +171,7 @@ class HomeUi extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 20, top: 0, right: 20),
+                        padding: EdgeInsets.only(left: 20, top: 0, right: 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -187,6 +187,7 @@ class HomeUi extends StatelessWidget {
                         ),
                       ),
                       SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         child: Padding(
                           padding: EdgeInsets.only(

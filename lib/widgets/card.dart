@@ -103,7 +103,7 @@ class BaleiaCards {
                       child: Padding(
                         padding: EdgeInsets.all(8),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -116,11 +116,11 @@ class BaleiaCards {
                               children: [
                                 Text(
                                   dicasData.dicasTempo + " min",
-                                  style: textMedium(12, corGrey),
+                                  style: textRegular(12, corGrey),
                                 ),
                                 Text(
                                   dicasData.dicasKcal + " kcal",
-                                  style: textMedium(12, corGrey),
+                                  style: textRegular(12, corGrey),
                                 ),
                               ],
                             ),
@@ -208,128 +208,143 @@ class BaleiaCards {
         ),
       );
 
-  static Widget cardProd(ProdutoData prod) => Material(
-        elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          height: 220,
-          width: 150,
-          child: Flex(
-            direction: Axis.vertical,
-            children: [
-              Flexible(
-                flex: 5,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          topRight: Radius.circular(8),
-                        ),
-                        image: DecorationImage(
-                          image: NetworkImage(prod.prodImg),
-                          fit: prod.prodImgFit == "full"
-                              ? BoxFit.cover
-                              : BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 6,
-                      bottom: 6,
-                      child: prod.prodPrecoDesc != null
-                          ? BaleiaExtras.iconDesconto()
-                          : BaleiaExtras.iconFreteGratis(),
-                    ),
-                  ],
-                ),
-              ),
-              Flexible(
-                flex: 4,
-                child: Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(8),
-                      bottomRight: Radius.circular(8),
-                    ),
-                  ),
+  static Widget cardProd(ProdutoData prod) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 8),
+        child: Material(
+          elevation: 5,
+          shadowColor: Colors.white.withOpacity(0.5),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            height: 240,
+            width: 150,
+            child: Flex(
+              direction: Axis.vertical,
+              children: [
+                Flexible(
+                  flex: 5,
                   child: Stack(
                     children: [
-                      Positioned(
-                        top: 10,
-                        left: 10,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              prod.prodTitulo,
-                              style: textSemiBold(15, corBackDark),
-                            ),
-                            Text(
-                              prod.prodUnd == "kg"
-                                  ? "Preço por Kg"
-                                  : "Preço Unitário",
-                              style: textRegular(14, corGrey),
-                            ),
-                          ],
+                      Container(
+                        margin: prod.prodImgFit == "full"
+                            ? EdgeInsets.all(0)
+                            : EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(prod.prodImg),
+                            fit: prod.prodImgFit == "full"
+                                ? BoxFit.cover
+                                : BoxFit.contain,
+                          ),
                         ),
                       ),
                       Positioned(
-                        bottom: 15,
-                        left: 10,
+                        right: 6,
+                        bottom: 6,
                         child: prod.prodPrecoDesc != null
-                            ? Row(
-                                children: [
-                                  Text(
-                                    FlutterMoneyFormatter(
-                                      amount: double.parse(prod.prodPrecoDesc),
-                                      settings: MoneyFormatterSettings(
-                                          symbol: "R\$", decimalSeparator: ","),
-                                    ).output.symbolOnLeft,
-                                    style: textSemiBold(16, corOrange),
+                            ? BaleiaExtras.iconDesconto()
+                            : BaleiaExtras.iconFreteGratis(),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 4,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    )),
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: Get.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  prod.prodTitulo,
+                                  style: textSemiBold(15, corBackDark),
+                                ),
+                                Text(
+                                  prod.prodUnd == "kg"
+                                      ? "Preço por Kg"
+                                      : "Preço Unitário",
+                                  style: textRegular(14, corGrey),
+                                ),
+                              ],
+                            ),
+                          ),
+                          prod.prodPrecoDesc != null
+                              ? Positioned(
+                                  bottom: 0,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        FlutterMoneyFormatter(
+                                          amount: double.parse(prod.prodPreco),
+                                          settings: MoneyFormatterSettings(
+                                              symbol: "R\$",
+                                              decimalSeparator: ","),
+                                        ).output.symbolOnLeft,
+                                        style: TextStyle(
+                                            fontFamily: fontRegular,
+                                            fontSize: 11,
+                                            color: CupertinoColors.inactiveGray,
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        FlutterMoneyFormatter(
+                                          amount:
+                                              double.parse(prod.prodPrecoDesc),
+                                          settings: MoneyFormatterSettings(
+                                              symbol: "R\$",
+                                              decimalSeparator: ","),
+                                        ).output.symbolOnLeft,
+                                        style: textSemiBold(15, corOrange),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
+                                )
+                              : Positioned(
+                                  bottom: 5,
+                                  left: 0,
+                                  child: Text(
                                     FlutterMoneyFormatter(
                                       amount: double.parse(prod.prodPreco),
                                       settings: MoneyFormatterSettings(
                                           symbol: "R\$", decimalSeparator: ","),
                                     ).output.symbolOnLeft,
-                                    style: TextStyle(
-                                        fontFamily: fontRegular,
-                                        fontSize: 13,
-                                        color: CupertinoColors.inactiveGray,
-                                        decoration: TextDecoration.lineThrough),
+                                    style: textSemiBold(16, corGreen),
                                   ),
-                                ],
-                              )
-                            : Text(
-                                FlutterMoneyFormatter(
-                                  amount: double.parse(prod.prodPreco),
-                                  settings: MoneyFormatterSettings(
-                                      symbol: "R\$", decimalSeparator: ","),
-                                ).output.symbolOnLeft,
-                                style: textSemiBold(16, corGreen),
-                              ),
+                                ),
+                          Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: BaleiaButtons.iconButtonCart())
+                        ],
                       ),
-                      Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: BaleiaButtons.iconButtonCart(),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ],
+                )
+              ],
+            ),
           ),
         ),
       );
