@@ -14,13 +14,13 @@ class Cadastro extends StatefulWidget {
 
 class _CadastroState extends State<Cadastro> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  //final GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
 
   final ClienteData clienteData = ClienteData();
 
   var _cidades = ['Ouro Fino', 'Jacutinga', 'Borda da Mata'];
   var cidadeSelecionada = 'Ouro Fino';
 
+  // ignore: unused_element
   _erroSenha() {
     return showDialog(
       context: context,
@@ -54,6 +54,7 @@ class _CadastroState extends State<Cadastro> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(corBack),
       body: SafeArea(
@@ -208,15 +209,15 @@ class _CadastroState extends State<Cadastro> {
                         TextInputType.emailAddress,
                         true,
                       ),
-                      BaleiaForms.textFormFieldCad(
-                        "Confirmar senha",
-                        clienteData,
-                        (confirmaSenha) =>
-                            clienteData.clienteConfirmaSenha = confirmaSenha,
-                        valConfirmSenha,
-                        TextInputType.emailAddress,
-                        true,
-                      ),
+                      // BaleiaForms.textFormFieldCad(
+                      //   "Confirmar senha",
+                      //   clienteData,
+                      //   (confirmaSenha) =>
+                      //       clienteData.clienteConfirmaSenha = confirmaSenha,
+                      //   valConfirmSenha,
+                      //   TextInputType.emailAddress,
+                      //   true,
+                      // ),
                     ],
                   ),
                 ),
@@ -226,25 +227,25 @@ class _CadastroState extends State<Cadastro> {
                   Get.width,
                   43,
                   () async {
-                    if (formKey.currentState.validate()) {
-                      formKey.currentState.save();
-                      if (clienteData.clienteSenha.toString() ==
-                          clienteData.clienteConfirmaSenha) {
-                        //TODO função enviar cadastro para o banco
-                        print(clienteData.clienteCidade);
-                        print(clienteData.clienteNome);
-                        print(clienteData.clienteEnd);
-                        print(clienteData.clienteEndNum);
-                        print(clienteData.clienteObs);
-                        print(clienteData.clienteCel);
-                        print(clienteData.clienteEmail);
-                        print(clienteData.clienteSenha);
-                      } else {
-                        _erroSenha();
-                      }
-                    } else {
-                      print('erro');
-                    }
+                    // if (formKey.currentState.validate()) {
+                    //   formKey.currentState.save();
+                    //   if (clienteData.clienteSenha.toString() ==
+                    //       clienteData.clienteConfirmaSenha) {
+                    //     //função enviar cadastro para o banco
+                    //     print(clienteData.clienteCidade);
+                    //     print(clienteData.clienteNome);
+                    //     print(clienteData.clienteEnd);
+                    //     print(clienteData.clienteEndNum);
+                    //     print(clienteData.clienteObs);
+                    //     print(clienteData.clienteCel);
+                    //     print(clienteData.clienteEmail);
+                    //     print(clienteData.clienteSenha);
+                    //   } else {
+                    //     _erroSenha();
+                    //   }
+                    // } else {
+                    //   print('erro');
+                    // }
                   },
                 ),
                 SizedBox(height: 50),

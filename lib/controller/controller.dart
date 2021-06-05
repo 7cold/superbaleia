@@ -12,6 +12,7 @@ class Controller extends GetxController {
     await carregarBanners();
     await carregarClienteId();
     await carregarClienteAtual(clienteId.value);
+    if (clienteId.value != "") await carregarCarrinho(clienteId.value);
     super.onInit();
   }
 
@@ -41,6 +42,7 @@ class Controller extends GetxController {
   logoutCliente() {
     getStorage.value.remove('cliente_id');
     dadosCliente.value = {};
+    cart.carrinho.clear();
     Get.offAll(() => LoginUi());
   }
 }

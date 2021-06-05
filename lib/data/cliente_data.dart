@@ -8,7 +8,6 @@ class ClienteData {
   String clienteEndNum;
   String clienteObs;
   String clienteCidade;
-  String clienteConfirmaSenha;
 
   ClienteData({
     this.clienteId,
@@ -20,14 +19,12 @@ class ClienteData {
     this.clienteEndNum,
     this.clienteObs,
     this.clienteCidade,
-    this.clienteConfirmaSenha,
   });
 
   ClienteData.fromJson(Map<dynamic, dynamic> json) {
     clienteId = json['cliente_id'];
     clienteEmail = json['cliente_email'];
     clienteSenha = json['cliente_senha'];
-    clienteConfirmaSenha = json['cliente_confirmaSenha'];
     clienteNome = json['cliente_nome'];
     clienteCel = json['cliente_cel'];
     clienteEnd = json['cliente_end'];
@@ -41,7 +38,6 @@ class ClienteData {
     data['cliente_id'] = this.clienteId;
     data['cliente_email'] = this.clienteEmail;
     data['cliente_senha'] = this.clienteSenha;
-    data['cliente_ clienteConfirmaSenha'] = this.clienteConfirmaSenha;
     data['cliente_nome'] = this.clienteNome;
     data['cliente_cel'] = this.clienteCel;
     data['cliente_end'] = this.clienteEnd;

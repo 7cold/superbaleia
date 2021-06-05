@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
+import 'package:superbaleia/controller/controller_carrinho.dart';
 import 'package:superbaleia/data/categorias_data.dart';
 import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/dicas_data.dart';
+import 'package:superbaleia/telas/carrinho.dart';
 import 'package:superbaleia/telas/dados_cliente.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/card.dart';
@@ -14,10 +16,10 @@ import 'package:superbaleia/widgets/forms.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
 class HomeUi extends StatelessWidget {
-  final Controller c = Get.put(Controller());
-
   @override
   Widget build(BuildContext context) {
+    final Controller c = Get.put(Controller());
+
     return Obx(() {
       ClienteData cliente = ClienteData.fromJson(c.dadosCliente);
       return Scaffold(
@@ -45,7 +47,9 @@ class HomeUi extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 10),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => CarrinhoUi());
+                      },
                       icon: Icon(
                         Icons.shopping_cart_outlined,
                         color: Color(corPri),

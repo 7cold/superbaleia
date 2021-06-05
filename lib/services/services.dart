@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:superbaleia/controller/controller.dart';
+import 'package:superbaleia/controller/controller_carrinho.dart';
+import 'package:superbaleia/data/carrinho_data.dart';
 
 String url = 'http://superbaleia.ueuo.com/api.php';
 String urlClientes = 'http://superbaleia.ueuo.com/api_clientes.php';
 
 final Controller c = Get.put(Controller());
+final ControllerCarrinho cart = Get.put(ControllerCarrinho());
 
 Future<String> login(String email, String senha) async {
   c.carregando.value = true;
@@ -66,4 +69,78 @@ Future carregarProdutos(String catId) async {
   var response = await http.post(Uri.parse(urlClientes),
       body: {'action': 'carregarProdutos', 'cat_id': catId});
   return response;
+}
+
+carregarCarrinho(String clienteId) async {
+  cart.carrinho.clear();
+
+  var response = await http.post(Uri.parse(urlClientes),
+      body: {'action': 'carregarCarrinho', 'cliente_id': clienteId});
+
+  Iterable res = json.decode(response.body);
+
+  List list = res.map((e) => CarrinhoData.fromJson(e)).toList();
+
+  cart.carrinho.addAll(list);
+}
+
+Future<String> addProdCarrinho(String clienteId, String prodId) async {
+  c.carregando.value = true;
+  var response = await http.post(Uri.parse(urlClientes), body: {
+    'action': 'addProdCarrinho',
+    'cliente_id': clienteId,
+    'prod_id': prodId
+  });
+
+  if (response.body == "ok") {
+    c.carregando.value = false;
+    return "ok";
+  } else {
+    c.carregando.value = false;
+    return "error";
+  }
+}
+
+Future<String> delProdCarrinho(String cartId) async {
+  c.carregando.value = true;
+  var response = await http.post(Uri.parse(urlClientes),
+      body: {'action': 'delProdCarrinho', 'cart_id': cartId});
+
+  if (response.body == "ok") {
+    c.carregando.value = false;
+    return "ok";
+  } else {
+    c.carregando.value = false;
+    return "error";
+  }
+}
+
+Future<String> addQtdCarrinho(String cartId, String cartQtd) async {
+  c.carregando.value = true;
+  var response = await http.post(Uri.parse(urlClientes), body: {
+    'action': 'addQtdCarrinho',
+    'cart_id': cartId,
+    'cart_qtd': cartQtd
+  });
+  c.carregando.value = false;
+  if (response.body == "ok") {
+    return "ok";
+  } else {
+    return "error";
+  }
+}
+
+Future<String> remQtdCarrinho(String cartId, String cartQtd) async {
+  c.carregando.value = true;
+  var response = await http.post(Uri.parse(urlClientes), body: {
+    'action': 'remQtdCarrinho',
+    'cart_id': cartId,
+    'cart_qtd': cartQtd
+  });
+  c.carregando.value = false;
+  if (response.body == "ok") {
+    return "ok";
+  } else {
+    return "error";
+  }
 }

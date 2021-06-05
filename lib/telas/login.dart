@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/services/services.dart';
+import 'package:superbaleia/telas/cadastro.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/forms.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
-TextEditingController email = TextEditingController();
-TextEditingController senha = TextEditingController();
-
 class LoginUi extends StatelessWidget {
-  final Controller c = Get.put(Controller());
+  final TextEditingController email = TextEditingController();
+  final TextEditingController senha = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final Controller c = Get.put(Controller());
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(corBack),
       body: Obx(
         () => c.carregando.value == true
             ? BaleiaExtras.widgetLoading
@@ -94,6 +94,8 @@ class LoginUi extends StatelessWidget {
                                             "Usuário ou senhas incorretos! 😕",
                                         backgroundColor: Color(corRed));
                                   } else if (result == "ok") {
+                                    carregarCarrinho(
+                                        c.dadosCliente['cliente_id']);
                                     email.clear();
                                     senha.clear();
                                     return Get.rawSnackbar(
@@ -125,7 +127,9 @@ class LoginUi extends StatelessWidget {
                               corGrey,
                             ),
                           ),
-                          BaleiaButtons.buttonText("Cadastre-se", () {})
+                          BaleiaButtons.buttonText("Cadastre-se", () {
+                            Get.to(() => Cadastro());
+                          })
                         ],
                       ),
                     ],

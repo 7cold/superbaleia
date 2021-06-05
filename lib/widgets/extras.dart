@@ -1,14 +1,15 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
+import 'package:superbaleia/controller/controller_carrinho.dart';
 import 'package:superbaleia/data/cliente_data.dart';
-
 import 'buttons.dart';
 import 'colors.dart';
 import 'texts.dart';
+
+final ControllerCarrinho cart = Get.find();
 
 class BaleiaExtras {
   static Widget widgetLoading = Center(
@@ -82,9 +83,10 @@ class BaleiaExtras {
                     Icon(
                       icon,
                       size: 20,
+                      color: Colors.grey[700],
                     ),
                     SizedBox(width: 5),
-                    Text(label, style: textRegular(16, corBackDark)),
+                    Text(label, style: textRegular(16, 0XFF6B6B6C)),
                   ],
                 ),
                 Icon(CupertinoIcons.chevron_right,
@@ -101,6 +103,35 @@ class BaleiaExtras {
         toolbarHeight: 80,
         backgroundColor: Colors.white,
         centerTitle: true,
+        title: Text(
+          title.toString(),
+          style: textSemiBold(20, corBackDark),
+        ),
+        iconTheme: IconThemeData(
+          color: Color(corBackDark),
+        ),
+      );
+
+  static Widget appBarCart(String title, String qtd) => AppBar(
+        elevation: 5,
+        shadowColor: Colors.white.withOpacity(0.2),
+        toolbarHeight: 80,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        actions: [
+          Container(
+            margin: EdgeInsets.only(top: 22, bottom: 22, right: 15),
+            padding: EdgeInsets.only(left: 13, right: 13),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color(corPri),
+            ),
+            child: Center(
+                child: cart.carrinho.length == 0
+                    ? BaleiaExtras.widgetLoading
+                    : Text(qtd, style: textSemiBold(16, corBack))),
+          )
+        ],
         title: Text(
           title.toString(),
           style: textSemiBold(20, corBackDark),
