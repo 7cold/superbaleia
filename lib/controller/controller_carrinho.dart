@@ -4,6 +4,7 @@ import 'package:superbaleia/services/services.dart';
 
 class ControllerCarrinho extends GetxController {
   RxList carrinho = [].obs;
+  RxDouble totalCompra = 0.0.obs;
 
   static ControllerCarrinho get to =>
       Get.put(ControllerCarrinho(), permanent: false);

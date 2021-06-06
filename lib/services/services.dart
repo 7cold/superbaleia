@@ -75,6 +75,21 @@ carregarCarrinho(String clienteId) async {
       body: {'action': 'carregarCarrinho', 'cliente_id': clienteId});
   Iterable res = json.decode(response.body);
   List list = res.map((e) => CarrinhoData.fromJson(e)).toList();
+
+  ControllerCarrinho.to.totalCompra.value = 0.0;
+
+  for (CarrinhoData c in list) {
+    if (c.produtoData.prodPreco != null) {
+      if (c.produtoData.prodPrecoDesc != null) {
+        ControllerCarrinho.to.totalCompra.value +=
+            int.parse(c.cartQtd) * double.parse(c.produtoData.prodPrecoDesc);
+      } else {
+        ControllerCarrinho.to.totalCompra.value +=
+            int.parse(c.cartQtd) * double.parse(c.produtoData.prodPreco);
+      }
+    }
+  }
+
   ControllerCarrinho.to.carrinho.addAll(list);
 }
 
