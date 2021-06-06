@@ -18,7 +18,6 @@ import 'buttons.dart';
 import 'colors.dart';
 import 'texts.dart';
 
-final ControllerCarrinho cart = Get.find();
 final Controller c = Get.find();
 
 class BaleiaCards {
@@ -347,12 +346,11 @@ class BaleiaCards {
                             cartData.cartQtd = 1;
                             cartData.cartProdId = prod.prodId;
                             cartData.produtoData = prod;
-                            cart.carrinho.add(cartData);
+                            ControllerCarrinho.to.carrinho.add(cartData);
 
                             addProdCarrinho(c.clienteId.value, prod.prodId)
                                 .then((value) {
                               if (value == "ok") {
-                                carregarCarrinho(c.clienteId.value);
                                 return Get.rawSnackbar(
                                   snackPosition: SnackPosition.BOTTOM,
                                   backgroundColor: Color(corGreen),
@@ -401,6 +399,7 @@ class BaleiaCards {
                       onPressed: () {
                         delProdCarrinho(cart.cartId).then((value) {
                           if (value == "ok") {
+                            ControllerCarrinho.to.carrinho.clear();
                             carregarCarrinho(c.clienteId.value);
                             return Get.back();
                           } else {
@@ -421,7 +420,7 @@ class BaleiaCards {
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
             child: Container(
-              height: 120,
+              height: 100,
               width: Get.width,
               child: Flex(
                 direction: Axis.horizontal,
@@ -554,6 +553,8 @@ class BaleiaCards {
                                           remQtdCarrinho(
                                                   cart.cartId, cart.cartQtd)
                                               .then((value) {
+                                            ControllerCarrinho.to.carrinho
+                                                .clear();
                                             carregarCarrinho(c.clienteId.value);
                                           });
                                         }),
@@ -568,6 +569,7 @@ class BaleiaCards {
                                   BaleiaButtons.iconCartAdd(() {
                                     addQtdCarrinho(cart.cartId, cart.cartQtd)
                                         .then((value) {
+                                      ControllerCarrinho.to.carrinho.clear();
                                       carregarCarrinho(c.clienteId.value);
                                     });
                                   }),

@@ -9,12 +9,13 @@ import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/forms.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
+final TextEditingController email = TextEditingController();
+final TextEditingController senha = TextEditingController();
+
 class LoginUi extends StatelessWidget {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController senha = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final Controller c = Get.put(Controller());
+    final Controller c = Get.find();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -96,8 +97,6 @@ class LoginUi extends StatelessWidget {
                                   } else if (result == "ok") {
                                     carregarCarrinho(
                                         c.dadosCliente['cliente_id']);
-                                    email.clear();
-                                    senha.clear();
                                     return Get.rawSnackbar(
                                       snackPosition: SnackPosition.BOTTOM,
                                       backgroundColor: Color(corGreen),

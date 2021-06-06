@@ -18,7 +18,7 @@ import 'package:superbaleia/widgets/texts.dart';
 class HomeUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Controller c = Get.put(Controller());
+    final Controller c = Get.find();
 
     return Obx(() {
       ClienteData cliente = ClienteData.fromJson(c.dadosCliente);
@@ -44,22 +44,43 @@ class HomeUi extends StatelessWidget {
                 elevation: 0,
                 backgroundColor: Colors.white,
                 actions: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 10),
-                    child: IconButton(
-                      onPressed: () {
-                        Get.to(() => CarrinhoUi());
-                      },
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
-                        color: Color(corPri),
-                        size: 30,
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: IconButton(
+                          onPressed: () {
+                            Get.to(() => CarrinhoUi());
+                          },
+                          icon: Icon(
+                            Icons.shopping_cart_outlined,
+                            color: Color(corPri),
+                            size: 30,
+                          ),
+                        ),
                       ),
-                    ),
+                      // Positioned(
+                      //   right: 7,
+                      //   top: 7,
+                      //   child: Container(
+                      //     padding:
+                      //         EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                      //     decoration: BoxDecoration(
+                      //         color: Color(corGreen).withOpacity(0.8),
+                      //         borderRadius: BorderRadius.circular(5)),
+                      //     child: Text(
+                      //         ControllerCarrinho.to.carrinho.length.toString()),
+                      //   ),
+                      // ),
+                    ],
                   ),
                 ],
               )
-            : null,
+            : AppBar(
+                backgroundColor: Colors.white,
+                toolbarHeight: 1,
+              ),
         drawer: c.dadosCliente['cliente_nome'] != null
             ? BaleiaExtras.drawer(cliente, c, [
                 BaleiaExtras.itemDrawer(
@@ -83,7 +104,7 @@ class HomeUi extends StatelessWidget {
                   DadosClienteUi(),
                 ),
               ])
-            : null,
+            : SizedBox(),
         backgroundColor: Color(corBack),
         body: SafeArea(
           child: c.dadosCliente['cliente_nome'] != null

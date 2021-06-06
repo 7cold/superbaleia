@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:superbaleia/controller/controller_carrinho.dart';
 import 'package:superbaleia/services/services.dart';
 import 'package:superbaleia/telas/home.dart';
 import 'package:superbaleia/telas/login.dart';
 
 class Controller extends GetxController {
+  static Controller get to => Get.put(Controller(), permanent: false);
+
   @override
   onInit() async {
     await carregarCategorias();
@@ -12,7 +15,7 @@ class Controller extends GetxController {
     await carregarBanners();
     await carregarClienteId();
     await carregarClienteAtual(clienteId.value);
-    if (clienteId.value != "") await carregarCarrinho(clienteId.value);
+    // if (clienteId.value != "") await carregarCarrinho(clienteId.value);
     super.onInit();
   }
 
@@ -42,7 +45,7 @@ class Controller extends GetxController {
   logoutCliente() {
     getStorage.value.remove('cliente_id');
     dadosCliente.value = {};
-    cart.carrinho.clear();
-    Get.offAll(() => LoginUi());
+    ControllerCarrinho.to.carrinho.clear();
+    Get.off(() => LoginUi());
   }
 }

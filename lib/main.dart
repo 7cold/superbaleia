@@ -11,10 +11,10 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Controller c = Get.put(Controller());
-
   @override
   Widget build(BuildContext context) {
+    final Controller c = Get.put(Controller());
+
     return GetMaterialApp(
         defaultTransition: Transition.topLevel,
         transitionDuration: Duration(milliseconds: 190),

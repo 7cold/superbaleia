@@ -3,13 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
-import 'package:superbaleia/controller/controller_carrinho.dart';
 import 'package:superbaleia/data/cliente_data.dart';
 import 'buttons.dart';
 import 'colors.dart';
 import 'texts.dart';
-
-final ControllerCarrinho cart = Get.find();
 
 class BaleiaExtras {
   static Widget widgetLoading = Center(
@@ -126,10 +123,7 @@ class BaleiaExtras {
               borderRadius: BorderRadius.circular(10),
               color: Color(corPri),
             ),
-            child: Center(
-                child: cart.carrinho.length == 0
-                    ? BaleiaExtras.widgetLoading
-                    : Text(qtd, style: textSemiBold(16, corBack))),
+            child: Center(child: Text(qtd, style: textSemiBold(16, corBack))),
           )
         ],
         title: Text(

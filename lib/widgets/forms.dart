@@ -4,7 +4,7 @@ import 'package:superbaleia/controller/controller.dart';
 import 'colors.dart';
 import 'texts.dart';
 
-final Controller c = Get.put(Controller());
+final Controller c = Get.find();
 
 class BaleiaForms {
   static textFormField(String hint, TextEditingController controller) =>
@@ -14,7 +14,7 @@ class BaleiaForms {
           height: 40,
           child: TextField(
             controller: controller,
-            autofocus: false,
+            keyboardType: TextInputType.name,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: textRegular(15, corGrey),
@@ -48,7 +48,7 @@ class BaleiaForms {
           height: 40,
           child: TextField(
             controller: controller,
-            autofocus: false,
+            autofocus: true,
             obscureText: c.showPassword.value,
             decoration: InputDecoration(
               suffixIcon: IconButton(

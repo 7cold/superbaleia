@@ -9,13 +9,14 @@ import 'package:superbaleia/widgets/card.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
 
-final Controller c = Get.put(Controller());
+final Controller c = Get.find();
 
 class ProdutosUi extends StatelessWidget {
   final ControllerProd cP = Get.put(ControllerProd());
   final CategoriasData categoriasData;
 
   ProdutosUi({@required this.categoriasData});
+
   @override
   Widget build(BuildContext context) {
     return Obx(

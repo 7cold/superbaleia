@@ -5,11 +5,10 @@ import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/controller/controller_carrinho.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
 
-String url = 'http://superbaleia.ueuo.com/api.php';
-String urlClientes = 'http://superbaleia.ueuo.com/api_clientes.php';
+String url = 'https://superbaleia.000webhostapp.com/api.php';
+String urlClientes = 'https://superbaleia.000webhostapp.com/api_clientes.php';
 
-final Controller c = Get.put(Controller());
-final ControllerCarrinho cart = Get.put(ControllerCarrinho());
+final Controller c = Get.find();
 
 Future<String> login(String email, String senha) async {
   c.carregando.value = true;
@@ -51,18 +50,18 @@ carregarCategorias() async {
   c.categorias.value = res;
 }
 
-carregarBanners() async {
-  var response = await http
-      .post(Uri.parse(urlClientes), body: {'action': 'carregarBanners'});
-  var res = json.decode(response.body);
-  c.banners.value = res;
-}
-
 carregarDicas() async {
   var response = await http
       .post(Uri.parse(urlClientes), body: {'action': 'carregarDicas'});
   var res = json.decode(response.body);
   c.dicas.value = res;
+}
+
+carregarBanners() async {
+  var response = await http
+      .post(Uri.parse(urlClientes), body: {'action': 'carregarBanners'});
+  var res = json.decode(response.body);
+  c.banners.value = res;
 }
 
 Future carregarProdutos(String catId) async {
@@ -72,31 +71,22 @@ Future carregarProdutos(String catId) async {
 }
 
 carregarCarrinho(String clienteId) async {
-  cart.carrinho.clear();
-
   var response = await http.post(Uri.parse(urlClientes),
       body: {'action': 'carregarCarrinho', 'cliente_id': clienteId});
-
   Iterable res = json.decode(response.body);
-
   List list = res.map((e) => CarrinhoData.fromJson(e)).toList();
-
-  cart.carrinho.addAll(list);
+  ControllerCarrinho.to.carrinho.addAll(list);
 }
 
 Future<String> addProdCarrinho(String clienteId, String prodId) async {
-  c.carregando.value = true;
   var response = await http.post(Uri.parse(urlClientes), body: {
     'action': 'addProdCarrinho',
     'cliente_id': clienteId,
     'prod_id': prodId
   });
-
   if (response.body == "ok") {
-    c.carregando.value = false;
     return "ok";
   } else {
-    c.carregando.value = false;
     return "error";
   }
 }
@@ -105,7 +95,6 @@ Future<String> delProdCarrinho(String cartId) async {
   c.carregando.value = true;
   var response = await http.post(Uri.parse(urlClientes),
       body: {'action': 'delProdCarrinho', 'cart_id': cartId});
-
   if (response.body == "ok") {
     c.carregando.value = false;
     return "ok";
