@@ -1,17 +1,16 @@
 PODS:
   - cloud_firestore (2.2.1):
-    - Firebase/CoreOnly (~> 8.0.0)
-    - Firebase/Firestore (~> 8.0.0)
+    - Firebase/Firestore (= 8.0.0)
     - firebase_core
-    - FlutterMacOS
+    - Flutter
   - Firebase/CoreOnly (8.0.0):
     - FirebaseCore (= 8.0.0)
   - Firebase/Firestore (8.0.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.0.0)
   - firebase_core (1.2.1):
-    - Firebase/CoreOnly (~> 8.0.0)
-    - FlutterMacOS
+    - Firebase/CoreOnly (= 8.0.0)
+    - Flutter
   - FirebaseCore (8.0.0):
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
@@ -29,7 +28,9 @@ PODS:
   - FirebaseFirestore/Base (8.0.0)
   - FirebaseFirestore/WithLeveldb (8.0.0):
     - FirebaseFirestore/Base
-  - FlutterMacOS (1.0.0)
+  - Flutter (1.0.0)
+  - flutter_money_formatter (0.0.1):
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -46,20 +47,21 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - path_provider_macos (0.0.1):
-    - FlutterMacOS
+  - path_provider (0.0.1):
+    - Flutter
   - PromisesObjC (1.2.12)
   - sqflite (0.0.2):
-    - FlutterMacOS
+    - Flutter
     - FMDB (>= 2.7.5)
 
 DEPENDENCIES:
-  - cloud_firestore (from `Flutter/ephemeral/.symlinks/plugins/cloud_firestore/macos`)
-  - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
+  - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.0.0`)
-  - FlutterMacOS (from `Flutter/ephemeral`)
-  - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
-  - sqflite (from `Flutter/ephemeral/.symlinks/plugins/sqflite/macos`)
+  - Flutter (from `Flutter`)
+  - flutter_money_formatter (from `.symlinks/plugins/flutter_money_formatter/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
 SPEC REPOS:
   trunk:
@@ -74,18 +76,20 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   cloud_firestore:
-    :path: Flutter/ephemeral/.symlinks/plugins/cloud_firestore/macos
+    :path: ".symlinks/plugins/cloud_firestore/ios"
   firebase_core:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
+    :path: ".symlinks/plugins/firebase_core/ios"
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
     :tag: 8.0.0
-  FlutterMacOS:
-    :path: Flutter/ephemeral
-  path_provider_macos:
-    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
+  Flutter:
+    :path: Flutter
+  flutter_money_formatter:
+    :path: ".symlinks/plugins/flutter_money_formatter/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
   sqflite:
-    :path: Flutter/ephemeral/.symlinks/plugins/sqflite/macos
+    :path: ".symlinks/plugins/sqflite/ios"
 
 CHECKOUT OPTIONS:
   FirebaseFirestore:
@@ -93,21 +97,22 @@ CHECKOUT OPTIONS:
     :tag: 8.0.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: 0ae86018a51bbafa0701423ce6db57d3ffbee47e
+  cloud_firestore: 1452cb00997cbcb2783ee8b4691bea15b43df34e
   Firebase: 73c3e3b216ec1ecbc54d2ffdd4670c65c749edb1
-  firebase_core: 4623e421b8f97b44a02bb0ca8ae1249980149194
+  firebase_core: a9b69f8583dc992f1b15f376b4918537c1804bb4
   FirebaseCore: 3f09591d51292843e2a46f18358d60bf4e996255
   FirebaseCoreDiagnostics: 3e249cee3de5c5f9cfd6cc2a19997231286fec11
   FirebaseFirestore: 0d1548ab6085002d87c173ce3f881129f39b3565
-  FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_money_formatter: d0d18ddc5be333fad8d09964d741b59fa11a91dc
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
   GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  path_provider_macos: a0a3fd666cb7cd0448e936fb4abad4052961002b
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  sqflite: a5789cceda41d54d23f31d6de539d65bb14100ea
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
 
-PODFILE CHECKSUM: f4b78ce15409ea7f0c8722f95a9008a5c09a5d7e
+PODFILE CHECKSUM: 97972b16f1b1dcc48d406b40846c9175134343cb
 
 COCOAPODS: 1.10.1

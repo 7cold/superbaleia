@@ -17,6 +17,10 @@ dependencies:
   get_storage: ^2.0.2
   cached_network_image: ^3.0.0
   flutter_money_formatter: ^0.8.3
+  cloud_firestore: ^2.2.1
+  firebase_core: ^1.2.1
+
+  
 
 dev_dependencies:
   flutter_test:
