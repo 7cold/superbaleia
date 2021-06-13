@@ -1,24 +1,17 @@
-class CategoriasData {
-  dynamic catId;
-  dynamic catNome;
-  dynamic catCor;
-  dynamic catImagem;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  CategoriasData({this.catId, this.catNome, this.catCor, this.catImagem});
+class CategoriaData {
+  String id;
+  String icone;
+  num pos;
+  String titulo;
+  String color;
 
-  CategoriasData.fromJson(Map<dynamic, dynamic> json) {
-    catId = json['cat_id'];
-    catNome = json['cat_nome'];
-    catCor = int.parse(json['cat_cor']);
-    catImagem = json['cat_imagem'];
-  }
-
-  Map<dynamic, dynamic> toJson() {
-    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
-    data['cat_id'] = this.catId;
-    data['cat_nome'] = this.catNome;
-    data['cat_cor'] = this.catCor;
-    data['cat_imagem'] = this.catImagem;
-    return data;
+  CategoriaData.fromDocument(DocumentSnapshot document) {
+    id = document.id;
+    icone = document['icone'];
+    pos = document['pos'];
+    titulo = document['titulo'];
+    color = document['color'];
   }
 }

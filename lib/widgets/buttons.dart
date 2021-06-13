@@ -22,7 +22,7 @@ class BaleiaButtons {
           child: Text(
             label,
             style: TextStyle(
-              fontFamily: fontUltraLight,
+              fontFamily: fontLight,
             ),
           ),
           onPressed: func,
@@ -89,17 +89,18 @@ class BaleiaButtons {
         height: 30,
         width: 30,
         decoration: BoxDecoration(
-          border: Border.all(color: Color(corPri), width: 1.2),
+          border: Border.all(
+              color: Color(func == null ? corGrey : corPri), width: 1.2),
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: IconButton(
           padding: EdgeInsets.all(0),
-          onPressed: func,
+          onPressed: func == null ? null : func,
           icon: Icon(
             Icons.remove,
             size: 18,
-            color: Color(corPri),
+            color: Color(func == null ? corGrey : corPri),
           ),
         ),
       );

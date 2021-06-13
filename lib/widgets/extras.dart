@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/cliente_data.dart';
-import 'buttons.dart';
 import 'colors.dart';
 import 'texts.dart';
 
@@ -13,58 +12,106 @@ class BaleiaExtras {
     child: CupertinoActivityIndicator(),
   );
 
-  static Widget drawer(ClienteData cliente, Controller c, List<Widget> list) =>
-      Drawer(
-        elevation: 0,
-        child: Container(
-          color: Color(corBack),
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 40),
-                  child: Column(
-                    children: [
-                      Text(
-                        cliente.clienteNome,
-                        style: textHeavy(22, corBackDark),
+  static Widget drawer(Controller c, List<Widget> list) {
+    ClienteData cliente = ClienteData.fromJson(c.clienteData);
+    return Drawer(
+      elevation: 0,
+      child: Container(
+        color: Color(corBack),
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(top: 40),
+                child: cliente.nome == null
+                    ? BaleiaExtras.widgetLoading
+                    : Column(
+                        children: [
+                          Text(
+                            cliente.nome,
+                            style: textHeavy(22, corBackDark),
+                          ),
+                          SizedBox(height: 15),
+                          Text(
+                            cliente.celular,
+                            style: textLight(14, corGrey),
+                          ),
+                          Text(
+                            cliente.endereco + " - " + cliente.numero,
+                            style: textLight(14, corGrey),
+                          ),
+                          SizedBox(height: 40),
+                          Column(
+                            children: list,
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 15),
-                      Text(
-                        cliente.clienteCel,
-                        style: textLight(14, corGrey),
-                      ),
-                      Text(
-                        cliente.clienteEnd + " - " + cliente.clienteEndNum,
-                        style: textLight(14, corGrey),
-                      ),
-                      SizedBox(height: 40),
-                      Column(
-                        children: list,
-                      ),
-                    ],
-                  ),
-                ),
               ),
-              Align(
+            ),
+            Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 40),
-                  child: BaleiaButtons.buttonSecondary("Sair", 180, 35, () {
-                    c.logoutCliente();
-                  }),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+                  child: InkWell(
+                    onTap: () {
+                      Get.back();
+                      c.sair();
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Color(corRed),
+                                ),
+                                child: Icon(Icons.logout_rounded,
+                                    size: 18, color: Color(corBack)),
+                              ),
+                              SizedBox(width: 10),
+                              Text("Sair", style: textRegular(16, 0XFF6B6B6C)),
+                            ],
+                          ),
+                          Icon(CupertinoIcons.chevron_right,
+                              size: 18, color: Color(corGrey))
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+
+                // Padding(
+                //   padding: EdgeInsets.only(bottom: 40),
+                //   child: BaleiaButtons.buttonSecondary("Sair", 180, 35, () {
+                //     c.sair();
+                //   }),
+                // ),
                 ),
-              ),
-            ],
-          ),
+          ],
         ),
-      );
+      ),
+    );
+  }
 
   static Widget itemDrawer(IconData icon, String label, Widget page) => Padding(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
         child: InkWell(
-          onTap: () => Get.to(() => page, transition: Transition.rightToLeft),
+          onTap: () {
+            Get.back();
+            Get.to(() => page, transition: Transition.rightToLeft);
+          },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
@@ -77,12 +124,15 @@ class BaleiaExtras {
               children: [
                 Row(
                   children: [
-                    Icon(
-                      icon,
-                      size: 20,
-                      color: Colors.grey[700],
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color(corPri),
+                      ),
+                      child: Icon(icon, size: 18, color: Color(corBack)),
                     ),
-                    SizedBox(width: 5),
+                    SizedBox(width: 10),
                     Text(label, style: textRegular(16, 0XFF6B6B6C)),
                   ],
                 ),

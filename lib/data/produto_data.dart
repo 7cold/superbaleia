@@ -1,65 +1,77 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProdutoData {
-  dynamic prodId;
-  dynamic prodTitulo;
-  dynamic prodDesc;
-  dynamic prodImg;
-  dynamic prodPreco;
-  dynamic prodPrecoDesc;
-  dynamic prodAtivo;
-  dynamic prodCat;
-  dynamic prodPeso;
-  dynamic prodMl;
-  dynamic prodMarca;
-  dynamic prodUnd;
-  dynamic prodImgFit;
+  String id;
+  String titulo;
+  String desc;
+  String img;
+  num preco;
+  num precoDesc;
+  bool ativo;
+  num peso;
+  num ml;
+  String marca;
+  String unidadeMed;
+  String imgFit;
 
   ProdutoData({
-    this.prodId,
-    this.prodTitulo,
-    this.prodDesc,
-    this.prodImg,
-    this.prodPreco,
-    this.prodPrecoDesc,
-    this.prodAtivo,
-    this.prodCat,
-    this.prodPeso,
-    this.prodMl,
-    this.prodMarca,
-    this.prodUnd,
-    this.prodImgFit,
+    this.id,
+    this.titulo,
+    this.desc,
+    this.img,
+    this.preco,
+    this.precoDesc,
+    this.ativo,
+    this.peso,
+    this.ml,
+    this.marca,
+    this.unidadeMed,
+    this.imgFit,
   });
 
   ProdutoData.fromJson(Map<dynamic, dynamic> json) {
-    prodId = json['prod_id'];
-    prodTitulo = json['prod_titulo'];
-    prodDesc = json['prod_desc'];
-    prodImg = json['prod_img'];
-    prodPreco = json['prod_preco'];
-    prodPrecoDesc = json['prod_precoDesc'];
-    prodAtivo = json['prod_ativo'];
-    prodCat = json['prod_cat'];
-    prodPeso = json['prod_peso'];
-    prodMl = json['prod_ml'];
-    prodMarca = json['prod_marca'];
-    prodUnd = json['prod_und'];
-    prodImgFit = json['prod_imgFit'];
+    id = json['prod_id'];
+    titulo = json['titulo'];
+    desc = json['desc'];
+    img = json['img'];
+    preco = json['preco'];
+    precoDesc = json['precoDesc'];
+    ativo = json['ativo'];
+    peso = json['peso'];
+    ml = json['ml'];
+    marca = json['marca'];
+    unidadeMed = json['unidadeMed'];
+    imgFit = json['imgFit'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
-    data['prod_id'] = this.prodId;
-    data['prod_titulo'] = this.prodTitulo;
-    data['prod_desc'] = this.prodDesc;
-    data['prod_img'] = this.prodImg;
-    data['prod_preco'] = this.prodPreco;
-    data['prod_precoDesc'] = this.prodPrecoDesc;
-    data['prod_ativo'] = this.prodAtivo;
-    data['prod_cat'] = this.prodCat;
-    data['prod_peso'] = this.prodPeso;
-    data['prod_ml'] = this.prodMl;
-    data['prod_marca'] = this.prodMarca;
-    data['prod_und'] = this.prodUnd;
-    data['prod_imgFit'] = this.prodImgFit;
-    return data;
+  ProdutoData.fromDocument(DocumentSnapshot document) {
+    id = document.id;
+    titulo = document['titulo'];
+    desc = document['desc'];
+    img = document['img'];
+    preco = document['preco'];
+    precoDesc = document['precoDesc'];
+    ativo = document['ativo'];
+    peso = document['peso'];
+    ml = document['ml'];
+    marca = document['marca'];
+    unidadeMed = document['unidadeMed'];
+    imgFit = document['imgFit'];
+  }
+
+  Map<String, dynamic> toResumeMap() {
+    return {
+      "titulo": titulo,
+      "desc": desc,
+      "img": img,
+      "preco": preco,
+      "precoDesc": precoDesc,
+      "ativo": ativo,
+      "peso": peso,
+      "ml": ml,
+      "marca": marca,
+      "unidMedida": unidadeMed,
+      "imgFit": imgFit
+    };
   }
 }

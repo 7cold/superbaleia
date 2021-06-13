@@ -1,36 +1,19 @@
-class DicasData {
-  dynamic dicasId;
-  dynamic dicasTitulo;
-  dynamic dicasTexto;
-  dynamic dicasImg;
-  dynamic dicasTempo;
-  dynamic dicasKcal;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  DicasData(
-      {this.dicasId,
-      this.dicasTitulo,
-      this.dicasTexto,
-      this.dicasImg,
-      this.dicasTempo,
-      this.dicasKcal});
+class DicaData {
+  String id;
+  String titulo;
+  String texto;
+  String img;
+  num tempo;
+  num kcal;
 
-  DicasData.fromJson(Map<dynamic, dynamic> json) {
-    dicasId = json['dicas_id'];
-    dicasTitulo = json['dicas_titulo'];
-    dicasTexto = json['dicas_texto'];
-    dicasImg = json['dicas_img'];
-    dicasTempo = json['dicas_tempo'];
-    dicasKcal = json['dicas_kcal'];
-  }
-
-  Map<dynamic, dynamic> toJson() {
-    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
-    data['dicas_id'] = this.dicasId;
-    data['dicas_titulo'] = this.dicasTitulo;
-    data['dicas_texto'] = this.dicasTexto;
-    data['dicas_img'] = this.dicasImg;
-    data['dicas_tempo'] = this.dicasTempo;
-    data['dicas_kcal'] = this.dicasKcal;
-    return data;
+  DicaData.fromDocument(DocumentSnapshot document) {
+    id = document.id;
+    titulo = document['titulo'];
+    texto = document['texto'];
+    img = document['img'];
+    tempo = document['tempo'];
+    kcal = document['kcal'];
   }
 }

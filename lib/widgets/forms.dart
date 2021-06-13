@@ -49,12 +49,12 @@ class BaleiaForms {
           child: TextField(
             controller: controller,
             autofocus: true,
-            obscureText: c.showPassword.value,
+            // obscureText: c.showPassword.value,
             decoration: InputDecoration(
               suffixIcon: IconButton(
                 onPressed: () {
                   FocusScope.of(Get.context).unfocus();
-                  c.funcShowPassword();
+                  // c.funcShowPassword();
                 },
                 icon: Icon(
                   c.showPassword.value

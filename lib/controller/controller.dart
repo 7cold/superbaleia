@@ -1,51 +1,198 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:superbaleia/controller/controller_carrinho.dart';
-import 'package:superbaleia/services/services.dart';
-import 'package:superbaleia/telas/home.dart';
+import 'package:superbaleia/data/carrinho_data.dart';
+import 'package:superbaleia/data/categorias_data.dart';
+import 'package:superbaleia/data/dicas_data.dart';
 import 'package:superbaleia/telas/login.dart';
 
 class Controller extends GetxController {
-  static Controller get to => Get.put(Controller(), permanent: false);
-
   @override
-  onInit() async {
-    await carregarCategorias();
-    await carregarDicas();
-    await carregarBanners();
-    await carregarClienteId();
-    await carregarClienteAtual(clienteId.value);
-    // if (clienteId.value != "") await carregarCarrinho(clienteId.value);
+  onInit() {
+    carregarUsuarios();
     super.onInit();
   }
 
-  RxString idCat = "".obs;
-  RxMap dadosCliente = {}.obs;
+  Rx<FirebaseAuth> _auth = FirebaseAuth.instance.obs;
+  Rx<User> firebaseUser = Rxn<User>();
+
   RxList categorias = [].obs;
   RxList banners = [].obs;
   RxList dicas = [].obs;
-  RxString clienteId = "".obs;
+  RxList pratos = [].obs;
+  RxList carrinho = [].obs;
+
+  // RxString idCat = "".obs;
+  RxMap clienteData = {}.obs;
+
   RxBool showPassword = true.obs;
   RxBool carregando = false.obs;
-  final getStorage = GetStorage().obs;
 
-  funcShowPassword() {
-    showPassword.value = !showPassword.value;
+  _carregarCategorias() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .orderBy("pos", descending: false)
+        .get();
+    List list = resFire.docs.map((DocumentSnapshot doc) {
+      CategoriaData cat = CategoriaData.fromDocument(doc);
+      return cat;
+    }).toList();
+    categorias.value = list;
   }
 
-  salvarClienteId(String clienteId) {
-    getStorage.value.write("cliente_id", clienteId);
-    Get.offAll(() => HomeUi());
+  _carregarDicas() async {
+    QuerySnapshot resFire =
+        await FirebaseFirestore.instance.collection('dicas').get();
+    List list = resFire.docs.map((DocumentSnapshot doc) {
+      DicaData dica = DicaData.fromDocument(doc);
+      return dica;
+    }).toList();
+    dicas.value = list;
   }
 
-  carregarClienteId() {
-    clienteId.value = getStorage.value.read('cliente_id') ?? "";
+  _carregarPratos() async {
+    QuerySnapshot resFire =
+        await FirebaseFirestore.instance.collection('pratos').get();
+    List list = resFire.docs.map((DocumentSnapshot doc) {
+      DicaData dica = DicaData.fromDocument(doc);
+      return dica;
+    }).toList();
+    pratos.value = list;
   }
 
-  logoutCliente() {
-    getStorage.value.remove('cliente_id');
-    dadosCliente.value = {};
-    ControllerCarrinho.to.carrinho.clear();
-    Get.off(() => LoginUi());
+  _carregarBanners() async {
+    QuerySnapshot resFire =
+        await FirebaseFirestore.instance.collection('banners').get();
+    List list = resFire.docs.map((DocumentSnapshot doc) {
+      return doc;
+    }).toList();
+    banners.value = list;
+  }
+
+  sair() async {
+    await _auth.value.signOut();
+    clienteData.value = Map();
+    firebaseUser.value = null;
+    Get.offAll(() => LoginUi());
+  }
+
+  void addCartItem(CarrinhoData carrinhoData) {
+    carrinho.add(carrinhoData);
+
+    FirebaseFirestore.instance
+        .collection("clientes")
+        .doc(firebaseUser.value.uid)
+        .collection("carrinho")
+        .add(carrinhoData.toMap())
+        .then((doc) {
+      carrinhoData.id = doc.id;
+    });
+  }
+
+  void removeCartItem(CarrinhoData carrinhoData) {
+    FirebaseFirestore.instance
+        .collection("clientes")
+        .doc(firebaseUser.value.uid)
+        .collection("carrinho")
+        .doc(carrinhoData.id)
+        .delete();
+
+    carrinho.remove(carrinhoData);
+  }
+
+  double getProductsPrice() {
+    double price = 0.0;
+    for (CarrinhoData c in carrinho) {
+      if (c.productData != null) price += c.qtd * c.productData.preco;
+    }
+    return price;
+  }
+
+  void _loadCartItems() async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("clientes")
+        .doc(firebaseUser.value.uid)
+        .collection("carrinho")
+        .get();
+
+    carrinho.value =
+        query.docs.map((doc) => CarrinhoData.fromDocument(doc)).toList();
+  }
+
+  void incProduct(CarrinhoData carrinhoData) {
+    carrinhoData.qtd++;
+    carrinho.refresh();
+    FirebaseFirestore.instance
+        .collection("clientes")
+        .doc(firebaseUser.value.uid)
+        .collection("carrinho")
+        .doc(carrinhoData.id)
+        .update(carrinhoData.toMap());
+  }
+
+  void decProduct(CarrinhoData carrinhoData) {
+    carrinhoData.qtd--;
+    carrinho.refresh();
+    FirebaseFirestore.instance
+        .collection("clientes")
+        .doc(firebaseUser.value.uid)
+        .collection("carrinho")
+        .doc(carrinhoData.id)
+        .update(carrinhoData.toMap());
+  }
+
+  void login({
+    @required String email,
+    @required String pass,
+    @required VoidCallback onSuccess,
+    @required VoidCallback onFail,
+  }) async {
+    carregando.value = true;
+    _auth.value
+        .signInWithEmailAndPassword(email: email, password: pass)
+        .then((result) async {
+      firebaseUser.value = result.user;
+      await carregarUsuarios();
+      onSuccess();
+      carregando.value = false;
+    }).catchError((e) {
+      onFail();
+      carregando.value = false;
+    });
+  }
+
+  RxBool verifLogado() {
+    if (firebaseUser.value == null) {
+      return false.obs;
+    } else {
+      return true.obs;
+    }
+  }
+
+  Future<Null> carregarUsuarios() async {
+    carregando.value = true;
+    if (firebaseUser.value == null)
+      firebaseUser.value = _auth.value.currentUser;
+    carregando.value = false;
+    if (firebaseUser.value != null) {
+      if (clienteData['nome'] == null) {
+        await _loadCartItems();
+        _carregarDicas();
+        _carregarPratos();
+        _carregarBanners();
+        _carregarCategorias();
+
+        print(carrinho);
+
+        DocumentSnapshot docUser = await FirebaseFirestore.instance
+            .collection('clientes')
+            .doc(firebaseUser.value.uid)
+            .get();
+
+        clienteData.value = docUser.data();
+        carregando.value = false;
+      }
+    }
   }
 }
