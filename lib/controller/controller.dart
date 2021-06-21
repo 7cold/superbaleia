@@ -23,11 +23,19 @@ class Controller extends GetxController {
   RxList pratos = [].obs;
   RxList carrinho = [].obs;
 
-  // RxString idCat = "".obs;
+  RxString tipoEntega = "Entregar a qualquer momento".obs;
+  RxInt formaPag = 1.obs;
+  Rx<DateTime> diaEntrega = DateTime.now().obs;
+  Rx<TimeOfDay> horaEntrega = TimeOfDay.now().obs;
+
   RxMap clienteData = {}.obs;
 
   RxBool showPassword = true.obs;
   RxBool carregando = false.obs;
+
+  void changeShowPass() {
+    showPassword.value = !showPassword.value;
+  }
 
   _carregarCategorias() async {
     QuerySnapshot resFire = await FirebaseFirestore.instance
@@ -104,8 +112,20 @@ class Controller extends GetxController {
   double getProductsPrice() {
     double price = 0.0;
     for (CarrinhoData c in carrinho) {
-      if (c.productData != null) price += c.qtd * c.productData.preco;
+      if (c.produtoData != null) price += c.qtd * c.produtoData.preco;
     }
+    return price;
+  }
+
+  double getShipPrice() {
+    double price = 0.0;
+    tipoEntega.value == "Entrega agendada" ? price = 10 : price = 0;
+    return price;
+  }
+
+  double getTotalPrice() {
+    double price = 0.0;
+    price = getProductsPrice() + getShipPrice();
     return price;
   }
 
@@ -140,6 +160,89 @@ class Controller extends GetxController {
         .collection("carrinho")
         .doc(carrinhoData.id)
         .update(carrinhoData.toMap());
+  }
+
+  Future<String> finishOrder() async {
+    if (carrinho.length == 0) return null;
+    carregando.value = true;
+
+    double productsPrice = getProductsPrice();
+    double shipPrice = getShipPrice();
+    double totalPrice = getTotalPrice();
+    String pagamento = "";
+
+    switch (formaPag.value) {
+      case 1:
+        pagamento = "Cartão";
+        break;
+      case 2:
+        pagamento = "Dinheiro";
+        break;
+      case 3:
+        pagamento = "Pix";
+        break;
+      default:
+        pagamento = "Dinheiro";
+    }
+
+    DocumentReference refOrder =
+        await FirebaseFirestore.instance.collection("pedidos").add({
+      "clientId": firebaseUser.value.uid,
+      "data": Timestamp.now(),
+      "formaPag": pagamento,
+      "cliente": {
+        "nome": clienteData['nome'] + " " + clienteData['sobrenome'],
+        "endereco": clienteData['endereco'],
+        "num": clienteData['num'],
+        "bairro": clienteData['bairro'],
+        "cidade": clienteData['cidade'],
+        "cpf": clienteData['cpf'],
+        "celular": clienteData['celular'],
+      },
+      "entrega": {
+        "entregaPreco": shipPrice,
+        "entregaTipo": tipoEntega.value,
+        "entregaData": DateTime(
+            diaEntrega.value.year,
+            diaEntrega.value.month,
+            diaEntrega.value.day,
+            horaEntrega.value.hour,
+            horaEntrega.value.minute),
+      },
+      "produtos": carrinho.map((cartProduct) => cartProduct.toMap()).toList(),
+      "produtosPreco": productsPrice,
+      "totalPedido": totalPrice,
+      "status": 1,
+    });
+
+    await FirebaseFirestore.instance
+        .collection("clientes")
+        .doc(firebaseUser.value.uid)
+        .collection("pedidos")
+        .doc(refOrder.id)
+        .set({
+      "pedidoId": refOrder.id,
+      "data": Timestamp.now(),
+    });
+
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("clientes")
+        .doc(firebaseUser.value.uid)
+        .collection("carrinho")
+        .get();
+
+    for (DocumentSnapshot doc in query.docs) {
+      doc.reference.delete();
+    }
+
+    tipoEntega.value = "Entregar a qualquer momento";
+    formaPag.value = 1;
+
+    carrinho.clear();
+    carregando.value = false;
+    update();
+
+    return refOrder.id;
   }
 
   void login({
@@ -177,7 +280,7 @@ class Controller extends GetxController {
     carregando.value = false;
     if (firebaseUser.value != null) {
       if (clienteData['nome'] == null) {
-        await _loadCartItems();
+        _loadCartItems();
         _carregarDicas();
         _carregarPratos();
         _carregarBanners();

@@ -45,7 +45,10 @@ class BaleiaButtons {
           padding: EdgeInsets.all(0),
           child: Text(
             label,
-            style: TextStyle(fontFamily: fontMedium, color: Colors.black),
+            style: TextStyle(
+              fontFamily: fontLight,
+              color: Colors.black,
+            ),
           ),
           onPressed: func,
         ),
@@ -61,8 +64,8 @@ class BaleiaButtons {
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             label,
-            style: textHeavy(
-              14,
+            style: textSemiBold(
+              16,
               corPri,
             ),
           ),
