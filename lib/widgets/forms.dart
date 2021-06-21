@@ -7,14 +7,15 @@ import 'texts.dart';
 final Controller c = Get.find();
 
 class BaleiaForms {
-  static textFormField(String hint, TextEditingController controller) =>
+  static textFormField(
+          String hint, teclado, TextEditingController controller) =>
       Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: SizedBox(
           height: 40,
           child: TextField(
             controller: controller,
-            keyboardType: TextInputType.name,
+            keyboardType: teclado,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: textRegular(15, corGrey),
@@ -25,7 +26,7 @@ class BaleiaForms {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
-                  color: Colors.grey[200],
+                  color: Colors.grey[300],
                   width: 1.5,
                 ),
               ),
@@ -48,20 +49,25 @@ class BaleiaForms {
           height: 40,
           child: TextField(
             controller: controller,
-            autofocus: true,
-            // obscureText: c.showPassword.value,
+            //autofocus: true,
+            obscureText: c.showPassword.value,
             decoration: InputDecoration(
               suffixIcon: IconButton(
                 onPressed: () {
-                  FocusScope.of(Get.context).unfocus();
-                  // c.funcShowPassword();
+                  if (c.showPassword.value == true) {
+                    c.showPassword.value = false;
+                    // FocusScope.of(Get.context).unfocus();
+                  } else if (c.showPassword.value == false) {
+                    c.showPassword.value = true;
+                    // FocusScope.of(Get.context).unfocus();
+                  }
                 },
                 icon: Icon(
                   c.showPassword.value
                       ? Icons.remove_red_eye_outlined
                       : Icons.visibility_off_outlined,
                   size: 18,
-                  color: Color(corGrey),
+                  color: Colors.grey[400],
                 ),
               ),
               hintText: hint,
@@ -71,7 +77,7 @@ class BaleiaForms {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
-                  color: Colors.grey[200],
+                  color: Colors.grey[300],
                   width: 1.5,
                 ),
               ),
@@ -94,7 +100,7 @@ class BaleiaForms {
           height: 45,
           child: TextField(
             controller: controller,
-            autofocus: false,
+            // autofocus: false,
             obscureText: false,
             decoration: InputDecoration(
               suffixIcon: Container(
@@ -136,7 +142,7 @@ class BaleiaForms {
       );
 
   static textFormFieldCad(
-          String hint, user, campo, valid, teclado, obscureText) =>
+          String hint, campo, valid, teclado, obscureText, cap) =>
       Padding(
         padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
         child: TextFormField(
@@ -166,7 +172,8 @@ class BaleiaForms {
             ),
           ),
           validator: valid,
-          onSaved: campo,
+          controller: campo,
+          textCapitalization: cap,
         ),
       );
 }

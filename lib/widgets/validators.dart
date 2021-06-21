@@ -35,8 +35,18 @@ String valPadrao(comp) {
 String valTelefone(telefone) {
   if (telefone.isEmpty) {
     return 'Campo Obrigatório';
-  } else if (telefone.length != 11) {
+  } else if (telefone.length != 15) {
     return 'Telefone inválido';
+  } else {
+    return null;
+  }
+}
+
+String valCpf(telefone) {
+  if (telefone.isEmpty) {
+    return 'Campo Obrigatório';
+  } else if (telefone.length != 14) {
+    return 'CPF inválido';
   } else {
     return null;
   }

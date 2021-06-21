@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
+import 'package:superbaleia/telas/cadastro.dart';
 import 'package:superbaleia/telas/home.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/colors.dart';
@@ -17,6 +18,7 @@ class LoginUi extends StatelessWidget {
     return Obx(
       () => Scaffold(
         resizeToAvoidBottomInset: false,
+        backgroundColor: Color(corBack),
         body: SafeArea(
           child: Container(
             padding: EdgeInsets.all(10),
@@ -59,7 +61,8 @@ class LoginUi extends StatelessWidget {
                 Container(
                   child: Column(
                     children: [
-                      BaleiaForms.textFormField("Email", email),
+                      BaleiaForms.textFormField(
+                          "Email", TextInputType.emailAddress, email),
                       SizedBox(height: 15),
                       BaleiaForms.textFormFieldPass("Senha", senha),
                       Padding(
@@ -80,7 +83,7 @@ class LoginUi extends StatelessWidget {
                             email: email.text,
                             pass: senha.text,
                             onSuccess: () {
-                              Get.to(() => HomeUi());
+                              Get.offAll(() => HomeUi());
                             },
                             onFail: () {
                               Get.snackbar("Email ou Senha Incorretos 😕",
@@ -112,7 +115,7 @@ class LoginUi extends StatelessWidget {
                       ),
                     ),
                     BaleiaButtons.buttonText("Cadastre-se", () {
-                      // Get.to(() => Cadastro());
+                      Get.to(() => Cadastro());
                     })
                   ],
                 ),

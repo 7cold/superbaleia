@@ -16,18 +16,44 @@ class Controller extends GetxController {
 
   Rx<FirebaseAuth> _auth = FirebaseAuth.instance.obs;
   Rx<User> firebaseUser = Rxn<User>();
-
   RxList categorias = [].obs;
   RxList banners = [].obs;
   RxList dicas = [].obs;
   RxList pratos = [].obs;
   RxList carrinho = [].obs;
-
-  // RxString idCat = "".obs;
   RxMap clienteData = {}.obs;
-
   RxBool showPassword = true.obs;
   RxBool carregando = false.obs;
+
+  cadastrar({
+    Map<String, dynamic> clienteData,
+    String email,
+    String pass,
+    VoidCallback onSuccess,
+    VoidCallback onFail,
+  }) async {
+    carregando.value = true;
+    try {
+      final UserCredential result = await _auth.value
+          .createUserWithEmailAndPassword(
+              email: clienteData['email'], password: pass);
+
+      await FirebaseFirestore.instance
+          .collection('clientes')
+          .doc(result.user.uid)
+          .set(clienteData);
+
+      login(
+        email: clienteData['email'],
+        pass: pass,
+        onSuccess: onSuccess,
+        onFail: onFail,
+      );
+    } catch (e) {
+      print('falha cadastro');
+    }
+    carregando.value = false;
+  }
 
   _carregarCategorias() async {
     QuerySnapshot resFire = await FirebaseFirestore.instance

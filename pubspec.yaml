@@ -17,6 +17,7 @@ dependencies:
   firebase_auth: ^1.4.1
   cloud_firestore: ^2.2.1
   firebase_core: ^1.2.1
+  flutter_masked_text: ^0.8.0
 
 dev_dependencies:
   flutter_test:
