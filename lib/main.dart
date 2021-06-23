@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:superbaleia/adm/home_adm.dart';
 import 'package:superbaleia/telas/splash.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

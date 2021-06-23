@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/categorias_data.dart';
+import 'package:superbaleia/data/cliente_data.dart';
+import 'package:superbaleia/telas/bloqueio.dart';
 import 'package:superbaleia/telas/carrinho.dart';
 import 'package:superbaleia/telas/localizacao.dart';
 import 'package:superbaleia/telas/pedidos.dart';
@@ -18,7 +20,7 @@ class HomeUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Controller c = Get.put(Controller());
-
+    ClienteData cliente = ClienteData.fromJson(c.clienteData);
     return Obx(
       () => Scaffold(
         appBar: AppBar(
@@ -38,31 +40,37 @@ class HomeUi extends StatelessWidget {
               );
             },
           ),
-          elevation: 0,
-          backgroundColor: Colors.white,
+          elevation: 1,
+          backgroundColor: Color(corBack),
+          title: Text('Inicio', style: textSemiBold(20, corBackDark)),
+          centerTitle: true,
           actions: [
             Stack(
               alignment: Alignment.center,
               children: [
-                Container(
-                  height: 42,
-                  width: 42,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(corPri),
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                  child: IconButton(
-                    onPressed: () {
-                      Get.to(() => CarrinhoUi());
-                    },
-                    icon: Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Color(corBack),
-                      size: 20,
-                    ),
-                  ),
-                ),
+                cliente.nome == null
+                    ? Container(
+                        color: Color(corBack),
+                      )
+                    : Container(
+                        height: 42,
+                        width: 42,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(corPri),
+                        ),
+                        margin: EdgeInsets.only(right: 10),
+                        child: IconButton(
+                          onPressed: () {
+                            Get.to(() => CarrinhoUi());
+                          },
+                          icon: Icon(
+                            Icons.shopping_cart_outlined,
+                            color: Color(corBack),
+                            size: 20,
+                          ),
+                        ),
+                      ),
                 Positioned(
                   right: 4,
                   top: 8,
@@ -90,12 +98,14 @@ class HomeUi extends StatelessWidget {
           BaleiaExtras.itemDrawer(
             Icons.person_outline_rounded,
             "Meus Dados",
-            DadosClienteUi(telaAnterior: "drawer"),
+            c.clienteData['nome'] == null
+                ? Bloquieo("Meus Dados")
+                : DadosClienteUi(telaAnterior: "drawer"),
           ),
           BaleiaExtras.itemDrawer(
             Icons.shopping_cart_outlined,
             "Carrinho",
-            CarrinhoUi(),
+            c.clienteData['nome'] == null ? Bloquieo("Carrinho") : CarrinhoUi(),
           ),
           BaleiaExtras.itemDrawer(
             Icons.list_alt_outlined,
@@ -105,7 +115,9 @@ class HomeUi extends StatelessWidget {
           BaleiaExtras.itemDrawer(
             Icons.paste,
             "Meus Pedidos",
-            PedidosUi(),
+            c.clienteData['nome'] == null
+                ? Bloquieo("Meus Pedidos")
+                : PedidosUi(),
           ),
           BaleiaExtras.itemDrawer(
             Icons.map_rounded,
@@ -115,7 +127,7 @@ class HomeUi extends StatelessWidget {
           BaleiaExtras.itemDrawer(
             Icons.help_outline_rounded,
             "Ajuda",
-            DadosClienteUi(telaAnterior: "drawer"),
+            LocalizacaoUi(),
           ),
         ]),
         backgroundColor: Color(corBack),
@@ -126,6 +138,9 @@ class HomeUi extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(

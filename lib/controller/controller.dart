@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
 import 'package:superbaleia/data/categorias_data.dart';
 import 'package:superbaleia/data/dicas_data.dart';
-import 'package:superbaleia/telas/login.dart';
+import 'package:superbaleia/telas/home.dart';
 
 class Controller extends GetxController {
   @override
@@ -55,10 +55,18 @@ class Controller extends GetxController {
         onSuccess: onSuccess,
         onFail: onFail,
       );
+      carregando.value = false;
     } catch (e) {
-      print('falha cadastro');
+      Get.defaultDialog(
+        title: 'Erro ao Cadastrar  😕',
+        titleStyle: TextStyle(color: Colors.blue, fontSize: 21),
+        middleText: 'Por favor verifique as informações e tente novamente. ',
+        middleTextStyle: TextStyle(fontSize: 16),
+        textCancel: "Ok",
+        cancelTextColor: Colors.blue,
+      );
+      carregando.value = false;
     }
-    carregando.value = false;
   }
 
   void changeShowPass() {
@@ -130,7 +138,8 @@ class Controller extends GetxController {
     await _auth.value.signOut();
     clienteData.value = Map();
     firebaseUser.value = null;
-    Get.offAll(() => LoginUi());
+    Get.back();
+    Get.offAll(() => HomeUi());
   }
 
   void addCartItem(CarrinhoData carrinhoData) {
@@ -273,6 +282,10 @@ class Controller extends GetxController {
     return refOrder.id;
   }
 
+  void redefinicaoSenha(String email) {
+    FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
   void login({
     @required String email,
     @required String pass,
@@ -291,6 +304,7 @@ class Controller extends GetxController {
       onFail();
       carregando.value = false;
     });
+    carregando.value = false;
   }
 
   RxBool verifLogado() {
@@ -325,5 +339,13 @@ class Controller extends GetxController {
         carregando.value = false;
       }
     }
+  }
+
+  Future<Null> carregarDados() async {
+    _loadCartItems();
+    _carregarDicas();
+    _carregarPratos();
+    _carregarBanners();
+    _carregarCategorias();
   }
 }

@@ -80,22 +80,19 @@ class BaleiaForms {
         ),
       );
 
-  static textFormFieldPass(
-          String hint, TextEditingController controller, Function func) =>
-      Padding(
+  static textFormFieldPass(String hint, controller, Function func) => Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: SizedBox(
           height: 50,
-          child: TextField(
+          child: TextFormField(
             style: textRegular(18, corBackDark),
             controller: controller,
-            onSubmitted: func,
-            autofocus: true,
+            //onSubmitted: func,
             obscureText: c.showPassword.value,
             decoration: InputDecoration(
               suffixIcon: IconButton(
                 onPressed: () {
-                  // FocusScope.of(Get.context).unfocus();
+                  //FocusScope.of(Get.context).unfocus();
                   c.changeShowPass();
                 },
                 icon: Icon(
@@ -136,7 +133,7 @@ class BaleiaForms {
           height: 45,
           child: TextField(
             controller: controller,
-            // autofocus: false,
+            autofocus: false,
             obscureText: false,
             decoration: InputDecoration(
               suffixIcon: Container(

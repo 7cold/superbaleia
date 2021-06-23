@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
 import 'package:superbaleia/data/categorias_data.dart';
+import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/dicas_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 import 'package:superbaleia/telas/produto_detalhe.dart';
@@ -19,6 +20,7 @@ import 'colors.dart';
 import 'texts.dart';
 
 final Controller c = Get.find();
+ClienteData cliente = ClienteData.fromJson(c.clienteData);
 
 class BaleiaCards {
   static Widget cardSlide(double w, double h, List<Widget> list) => Padding(
@@ -362,23 +364,28 @@ class BaleiaCards {
                           Positioned(
                             bottom: 0,
                             right: 0,
-                            child: BaleiaButtons.iconButtonCart(() async {
-                              CarrinhoData cart = CarrinhoData();
+                            child: cliente.nome == null
+                                ? Container(
+                                    color: Color(corBack),
+                                  )
+                                : BaleiaButtons.iconButtonCart(() async {
+                                    CarrinhoData cart = CarrinhoData();
 
-                              cart.categoria = catId;
-                              cart.data = Timestamp.fromDate(DateTime.now());
-                              cart.produtoData = prod;
-                              cart.produtoId = prod.id;
-                              cart.qtd = 1;
+                                    cart.categoria = catId;
+                                    cart.data =
+                                        Timestamp.fromDate(DateTime.now());
+                                    cart.produtoData = prod;
+                                    cart.produtoId = prod.id;
+                                    cart.qtd = 1;
 
-                              c.addCartItem(cart);
+                                    c.addCartItem(cart);
 
-                              Get.rawSnackbar(
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Color(corGreen),
-                                message: "Add ao carrinho! 😃",
-                              );
-                            }),
+                                    Get.rawSnackbar(
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: Color(corGreen),
+                                      message: "Add ao carrinho! 😃",
+                                    );
+                                  }),
                           )
                         ],
                       ),

@@ -8,6 +8,7 @@ import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/pedido_data.dart';
 import 'package:superbaleia/telas/dados_cliente.dart';
+import 'package:superbaleia/telas/login.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'colors.dart';
 import 'texts.dart';
@@ -29,106 +30,146 @@ class BaleiaExtras {
         elevation: 0,
         child: Container(
           color: Color(corBack),
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 60),
-                  child: cliente.nome == null
-                      ? BaleiaExtras.widgetLoading
-                      : SingleChildScrollView(
-                          physics: BouncingScrollPhysics(),
-                          child: Column(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 70),
+                    child: cliente.nome == null
+                        ? Column(
                             children: [
-                              Text(
-                                cliente.nome,
-                                style: textHeavy(22, corBackDark),
+                              Image.asset(
+                                "assets/images/logo.png",
+                                scale: 1.5,
                               ),
-                              SizedBox(height: 15),
-                              Text(
-                                cliente.endereco + " - " + cliente.numero,
-                                style: textLight(16, corGrey),
-                              ),
-                              Text(
-                                cliente.celular,
-                                style: textLight(16, corGrey),
-                              ),
-                              SizedBox(height: 40),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 40),
-                                child: Divider(thickness: 0.4),
-                              ),
+                              SizedBox(height: 20),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 20, right: 20, top: 30),
-                                child: Material(
-                                  shadowColor: CupertinoColors.tertiaryLabel
-                                      .withAlpha(40),
-                                  borderRadius: BorderRadius.circular(10),
-                                  elevation: 5,
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                    ),
-                                    child: Column(
-                                      children: list,
-                                    ),
-                                  ),
+                                  left: 20,
                                 ),
-                              ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Por favor, entre ou cadastre-se:",
+                                      style: textRegular(
+                                        14,
+                                        corBackDark,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        'aqui',
+                                        style: textSemiBold(
+                                          14,
+                                          corPri,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Get.to(() => LoginUi());
+                                      },
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
+                          )
+                        : SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            child: Column(
+                              children: [
+                                Text(
+                                  cliente.nome,
+                                  style: textHeavy(22, corBackDark),
+                                ),
+                                SizedBox(height: 15),
+                                Text(
+                                  cliente.endereco + " - " + cliente.numero,
+                                  style: textLight(16, corGrey),
+                                ),
+                                Text(
+                                  cliente.email,
+                                  style: textLight(16, corGrey),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                  ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 40),
-                  child: InkWell(
-                    onTap: () {
-                      Get.back();
-                      c.sair();
-                    },
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                  child: Material(
+                    shadowColor: CupertinoColors.tertiaryLabel.withAlpha(40),
+                    borderRadius: BorderRadius.circular(10),
+                    elevation: 5,
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Color(corRed),
-                                ),
-                                child: Icon(Icons.logout_rounded,
-                                    size: 18, color: Color(corBack)),
-                              ),
-                              SizedBox(width: 10),
-                              Text("Sair", style: textRegular(16, 0XFF6B6B6C)),
-                            ],
-                          ),
-                          Icon(CupertinoIcons.chevron_right,
-                              size: 18, color: Color(corGrey))
-                        ],
+                      child: Column(
+                        children: list,
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+                cliente.nome == null
+                    ? Container(
+                        color: Color(corBack),
+                      )
+                    : Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 40),
+                          child: InkWell(
+                            onTap: () {
+                              Get.back();
+                              c.sair();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 14),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Color(corRed),
+                                        ),
+                                        child: Icon(Icons.logout_rounded,
+                                            size: 18, color: Color(corBack)),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text("Sair",
+                                          style: textRegular(16, 0XFF6B6B6C)),
+                                    ],
+                                  ),
+                                  Icon(CupertinoIcons.chevron_right,
+                                      size: 18, color: Color(corGrey))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+              ],
+            ),
           ),
         ),
       ),
@@ -1109,14 +1150,14 @@ class BaleiaExtras {
                       flex: 2,
                       child: Container(
                         width: Get.width,
-                        child: Text("Rua", style: textSemiBold(18, corGrey)),
+                        child: Text("Rua:", style: textSemiBold(16, corGrey)),
                       )),
                   Flexible(
                       flex: 6,
                       child: Container(
                         width: Get.width,
                         child:
-                            Text(endereco, style: textRegular(18, corBackDark)),
+                            Text(endereco, style: textRegular(16, corBackDark)),
                       )),
                 ],
               ),
@@ -1125,17 +1166,17 @@ class BaleiaExtras {
                 direction: Axis.horizontal,
                 children: [
                   Flexible(
-                      flex: 2,
+                      flex: 3,
                       child: Container(
                         width: Get.width,
                         child:
-                            Text("Telefone", style: textSemiBold(18, corGrey)),
+                            Text("Telefone:", style: textSemiBold(16, corGrey)),
                       )),
                   Flexible(
                       flex: 6,
                       child: Container(
                         width: Get.width,
-                        child: Text(tel, style: textRegular(18, corBackDark)),
+                        child: Text(tel, style: textRegular(16, corBackDark)),
                       )),
                 ],
               ),

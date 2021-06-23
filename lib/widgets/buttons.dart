@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/widgets/texts.dart';
 import 'colors.dart';
 import 'fonts.dart';
+
+Controller c = Get.put(Controller());
 
 class BaleiaButtons {
   static Widget buttonPrimary(

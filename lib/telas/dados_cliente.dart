@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/form_meus_dados.dart';
 
 class DadosClienteUi extends StatelessWidget {
   final String telaAnterior;
-
   const DadosClienteUi({@required this.telaAnterior});
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,7 @@ class DadosClienteUi extends StatelessWidget {
       () => Scaffold(
         appBar: BaleiaExtras.appBar(
             telaAnterior == "drawer" ? "Meus Dados" : "Endereço"),
+        backgroundColor: Color(corBack),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Padding(

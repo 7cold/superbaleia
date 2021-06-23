@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
+import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
@@ -17,6 +18,7 @@ class ProdutoDetalheUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ClienteData cliente = ClienteData.fromJson(c.clienteData);
     return Scaffold(
       backgroundColor: Color(corBack),
       appBar: BaleiaExtras.appBar(prod.titulo),
@@ -25,56 +27,62 @@ class ProdutoDetalheUi extends StatelessWidget {
         child: Container(
           height: 90,
           margin: EdgeInsets.only(bottom: 15),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: CupertinoButton(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                color: Color(corGreen),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RichText(
-                      text: TextSpan(
+          child: cliente.nome == null
+              ? Container(
+                  color: Color(corBack),
+                )
+              : Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  child: CupertinoButton(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      color: Color(corGreen),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextSpan(
-                              text: "R\$ ", style: textRegular(12, corBack)),
-                          TextSpan(
-                            text: formatter.format(prod.preco).toString(),
-                            style: textHeavy(20, corBack),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: "R\$ ",
+                                    style: textRegular(12, corBack)),
+                                TextSpan(
+                                  text: formatter.format(prod.preco).toString(),
+                                  style: textHeavy(20, corBack),
+                                ),
+                              ],
+                            ),
                           ),
+                          Row(
+                            children: [
+                              Text("Add ao Carrinho",
+                                  style: textRegular(20, corBack)),
+                              Icon(
+                                Icons.arrow_forward_rounded,
+                                color: Color(corBack),
+                              )
+                            ],
+                          )
                         ],
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Text("Add ao Carrinho",
-                            style: textRegular(20, corBack)),
-                        Icon(
-                          Icons.arrow_forward_rounded,
-                          color: Color(corBack),
-                        )
-                      ],
-                    )
-                  ],
+                      onPressed: () {
+                        CarrinhoData cart = CarrinhoData();
+
+                        cart.categoria = catId;
+                        cart.data = Timestamp.fromDate(DateTime.now());
+                        cart.produtoData = prod;
+                        cart.produtoId = prod.id;
+                        cart.qtd = 1;
+
+                        c.addCartItem(cart);
+
+                        Get.rawSnackbar(
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Color(corGreen),
+                          message: "Add ao carrinho! 😃",
+                        );
+                      }),
                 ),
-                onPressed: () {
-                  CarrinhoData cart = CarrinhoData();
-
-                  cart.categoria = catId;
-                  cart.data = Timestamp.fromDate(DateTime.now());
-                  cart.produtoData = prod;
-                  cart.produtoId = prod.id;
-                  cart.qtd = 1;
-
-                  c.addCartItem(cart);
-
-                  Get.rawSnackbar(
-                    snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: Color(corGreen),
-                    message: "Add ao carrinho! 😃",
-                  );
-                }),
-          ),
         ),
       ),
       body: SingleChildScrollView(

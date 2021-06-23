@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:superbaleia/telas/index.dart';
+import 'package:get/get.dart';
+import 'package:superbaleia/controller/controller.dart';
+import 'package:superbaleia/telas/home.dart';
 import 'package:superbaleia/widgets/colors.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -8,15 +10,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final Controller c = Get.put(Controller());
   @override
   void initState() {
+    c.carregarDados();
     super.initState();
-
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => Root(),
+            builder: (context) => HomeUi(),
           ));
     });
   }

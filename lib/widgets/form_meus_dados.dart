@@ -84,7 +84,7 @@ class BaleiaMeusDados {
                     flex: 4,
                     child: Container(
                       width: Get.width,
-                      child: Text("Nome", style: textSemiBold(18, corGrey)),
+                      child: Text("Nome", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
@@ -180,7 +180,7 @@ class BaleiaMeusDados {
                     child: Container(
                       width: Get.width,
                       child:
-                          Text("Sobrenome", style: textSemiBold(18, corGrey)),
+                          Text("Sobrenome", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
@@ -217,7 +217,7 @@ class BaleiaMeusDados {
                   flex: 4,
                   child: Container(
                     width: Get.width,
-                    child: Text("CPF", style: textSemiBold(18, corGrey)),
+                    child: Text("CPF", style: textSemiBold(16, corGrey)),
                   )),
               Flexible(
                   flex: 6,
@@ -254,7 +254,7 @@ class BaleiaMeusDados {
                   flex: 4,
                   child: Container(
                     width: Get.width,
-                    child: Text("E-mail", style: textSemiBold(18, corGrey)),
+                    child: Text("Email", style: textSemiBold(16, corGrey)),
                   )),
               Flexible(
                   flex: 6,
@@ -349,7 +349,7 @@ class BaleiaMeusDados {
                     flex: 4,
                     child: Container(
                       width: Get.width,
-                      child: Text("Celular", style: textSemiBold(18, corGrey)),
+                      child: Text("Celular", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
@@ -443,7 +443,7 @@ class BaleiaMeusDados {
                     flex: 4,
                     child: Container(
                       width: Get.width,
-                      child: Text("Endereço", style: textSemiBold(18, corGrey)),
+                      child: Text("Endereço", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
@@ -536,7 +536,7 @@ class BaleiaMeusDados {
                     flex: 4,
                     child: Container(
                       width: Get.width,
-                      child: Text("Numero", style: textSemiBold(18, corGrey)),
+                      child: Text("Numero", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
@@ -629,7 +629,7 @@ class BaleiaMeusDados {
                     flex: 4,
                     child: Container(
                       width: Get.width,
-                      child: Text("Bairro", style: textSemiBold(18, corGrey)),
+                      child: Text("Bairro", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
