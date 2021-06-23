@@ -10,11 +10,11 @@ import 'package:superbaleia/widgets/forms.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
 class LoginUi extends StatelessWidget {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController senha = TextEditingController();
   final Controller c = Get.put(Controller());
   @override
   Widget build(BuildContext context) {
+    TextEditingController email = TextEditingController();
+    TextEditingController senha = TextEditingController();
     return Obx(
       () => Scaffold(
         resizeToAvoidBottomInset: false,
@@ -27,8 +27,7 @@ class LoginUi extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.only(top: 40),
-                  height: 100,
-                  width: 200,
+                  height: 130,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('assets/images/logo.png'),
@@ -61,10 +60,24 @@ class LoginUi extends StatelessWidget {
                 Container(
                   child: Column(
                     children: [
-                      BaleiaForms.textFormField(
-                          "Email", TextInputType.emailAddress, email),
+                      BaleiaForms.textFormField("Email", email, []),
                       SizedBox(height: 15),
-                      BaleiaForms.textFormFieldPass("Senha", senha),
+                      BaleiaForms.textFormFieldPass("Senha", senha, (_) {
+                        c.login(
+                            email: email.text,
+                            pass: senha.text,
+                            onSuccess: () {
+                              Get.off(() => HomeUi());
+                            },
+                            onFail: () {
+                              Get.snackbar("Email ou Senha Incorretos 😕",
+                                  "Verifique seus dados e tente novamente!",
+                                  backgroundColor: CupertinoColors.systemRed,
+                                  borderRadius: 10,
+                                  margin: EdgeInsets.all(20),
+                                  colorText: Colors.white);
+                            });
+                      }),
                       Padding(
                         padding: EdgeInsets.only(right: 10, top: 10),
                         child: Row(
@@ -78,12 +91,12 @@ class LoginUi extends StatelessWidget {
                       SizedBox(
                         height: 15,
                       ),
-                      BaleiaButtons.buttonPrimary("Entrar", Get.width, 35, () {
+                      BaleiaButtons.buttonPrimary("Entrar", Get.width, 45, () {
                         c.login(
                             email: email.text,
                             pass: senha.text,
                             onSuccess: () {
-                              Get.offAll(() => HomeUi());
+                              Get.off(() => HomeUi());
                             },
                             onFail: () {
                               Get.snackbar("Email ou Senha Incorretos 😕",
@@ -100,7 +113,7 @@ class LoginUi extends StatelessWidget {
                 Text(
                   "ou",
                   style: textHeavy(
-                    14,
+                    16,
                     corGrey,
                   ),
                 ),
@@ -110,7 +123,7 @@ class LoginUi extends StatelessWidget {
                     Text(
                       "Ainda não tem uma conta?",
                       style: textRegular(
-                        14,
+                        16,
                         corGrey,
                       ),
                     ),

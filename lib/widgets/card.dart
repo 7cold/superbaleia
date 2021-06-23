@@ -10,6 +10,7 @@ import 'package:superbaleia/data/carrinho_data.dart';
 import 'package:superbaleia/data/categorias_data.dart';
 import 'package:superbaleia/data/dicas_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
+import 'package:superbaleia/telas/produto_detalhe.dart';
 import 'package:superbaleia/telas/produtos.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/fonts.dart';
@@ -221,162 +222,171 @@ class BaleiaCards {
         shadowColor: Colors.white.withOpacity(0.5),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        child: Container(
-          height: 240,
-          width: 150,
-          child: Flex(
-            direction: Axis.vertical,
-            children: [
-              Flexible(
-                flex: 5,
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: prod.img == "full"
-                          ? EdgeInsets.all(0)
-                          : EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          topRight: Radius.circular(8),
-                        ),
-                        image: DecorationImage(
-                          image: NetworkImage(prod.img),
-                          fit: prod.imgFit == "full"
-                              ? BoxFit.cover
-                              : BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 6,
-                      bottom: 6,
-                      child: prod.precoDesc != prod.preco
-                          ? BaleiaExtras.iconDesconto()
-                          : BaleiaExtras.iconFreteGratis(),
-                    ),
-                  ],
-                ),
-              ),
-              Flexible(
-                flex: 4,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                  )),
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: Get.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                prod.titulo,
-                                style: textSemiBold(15, corBackDark),
-                              ),
-                              Text(
-                                prod.unidadeMed == "kg"
-                                    ? "Preço por Kg"
-                                    : "Preço Unitário",
-                                style: textRegular(14, corGrey),
-                              ),
-                            ],
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () {
+            Get.to(() => ProdutoDetalheUi(prod: prod, catId: catId));
+          },
+          child: Container(
+            height: 240,
+            width: 150,
+            child: Flex(
+              direction: Axis.vertical,
+              children: [
+                Flexible(
+                  flex: 5,
+                  child: Stack(
+                    children: [
+                      Container(
+                        margin: prod.img == "full"
+                            ? EdgeInsets.all(0)
+                            : EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: NetworkImage(prod.img),
+                            fit: prod.imgFit == "full"
+                                ? BoxFit.cover
+                                : BoxFit.contain,
                           ),
                         ),
-                        prod.precoDesc != prod.preco
-                            ? Positioned(
-                                bottom: 0,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "R\$" +
-                                          formatter
-                                              .format(prod.preco)
-                                              .toString(),
-                                      style: TextStyle(
-                                          fontFamily: fontRegular,
-                                          fontSize: 11,
-                                          color: CupertinoColors.inactiveGray,
-                                          decoration:
-                                              TextDecoration.lineThrough),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text: "R\$ ",
-                                              style:
-                                                  textRegular(10, corOrange)),
-                                          TextSpan(
-                                            text: formatter
-                                                .format(prod.precoDesc)
-                                                .toString(),
-                                            style: textSemiBold(15, corOrange),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                      ),
+                      Positioned(
+                        right: 6,
+                        bottom: 6,
+                        child: prod.precoDesc != prod.preco
+                            ? BaleiaExtras.iconDesconto()
+                            : BaleiaExtras.iconFreteGratis(),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 4,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    )),
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: Get.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  prod.titulo,
+                                  style: textSemiBold(15, corBackDark),
                                 ),
-                              )
-                            : Positioned(
-                                bottom: 5,
-                                left: 0,
-                                child: RichText(
-                                  text: TextSpan(
+                                Text(
+                                  prod.unidadeMed == "por massa"
+                                      ? "Preço por " +
+                                          prod.medida['massaUnidMed']
+                                      : prod.unidadeMed == "por capacidade"
+                                          ? "Preço por " +
+                                              prod.medida['capacUnidMed']
+                                          : "Preço Unitário ",
+                                  style: textRegular(14, corGrey),
+                                ),
+                              ],
+                            ),
+                          ),
+                          prod.precoDesc != prod.preco
+                              ? Positioned(
+                                  bottom: 0,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      TextSpan(
-                                          text: "R\$ ",
-                                          style: textRegular(10, corGreen)),
-                                      TextSpan(
-                                        text: formatter
-                                            .format(prod.precoDesc)
-                                            .toString(),
-                                        style: textSemiBold(16, corGreen),
+                                      Text(
+                                        "R\$" +
+                                            formatter
+                                                .format(prod.preco)
+                                                .toString(),
+                                        style: TextStyle(
+                                            fontFamily: fontRegular,
+                                            fontSize: 11,
+                                            color: CupertinoColors.inactiveGray,
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: "R\$ ",
+                                                style:
+                                                    textRegular(10, corOrange)),
+                                            TextSpan(
+                                              text: formatter
+                                                  .format(prod.precoDesc)
+                                                  .toString(),
+                                              style:
+                                                  textSemiBold(15, corOrange),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
+                                )
+                              : Positioned(
+                                  bottom: 5,
+                                  left: 0,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                            text: "R\$ ",
+                                            style: textRegular(10, corGreen)),
+                                        TextSpan(
+                                          text: formatter
+                                              .format(prod.precoDesc)
+                                              .toString(),
+                                          style: textSemiBold(16, corGreen),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: BaleiaButtons.iconButtonCart(() async {
-                            CarrinhoData cart = CarrinhoData();
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: BaleiaButtons.iconButtonCart(() async {
+                              CarrinhoData cart = CarrinhoData();
 
-                            cart.categoria = catId;
-                            cart.data = Timestamp.fromDate(DateTime.now());
-                            cart.productData = prod;
-                            cart.produtoId = prod.id;
-                            cart.qtd = 1;
+                              cart.categoria = catId;
+                              cart.data = Timestamp.fromDate(DateTime.now());
+                              cart.produtoData = prod;
+                              cart.produtoId = prod.id;
+                              cart.qtd = 1;
 
-                            c.addCartItem(cart);
+                              c.addCartItem(cart);
 
-                            Get.rawSnackbar(
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Color(corGreen),
-                              message: "Add ao carrinho! 😃",
-                            );
-                          }),
-                        )
-                      ],
+                              Get.rawSnackbar(
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Color(corGreen),
+                                message: "Add ao carrinho! 😃",
+                              );
+                            }),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -424,7 +434,7 @@ class BaleiaCards {
             );
           },
           child: Container(
-            height: 100,
+            height: 110,
             width: Get.width,
             child: Flex(
               direction: Axis.horizontal,
@@ -434,15 +444,15 @@ class BaleiaCards {
                   child: Stack(
                     children: [
                       Container(
-                        margin: cart.productData.imgFit == "full"
+                        margin: cart.produtoData.imgFit == "full"
                             ? EdgeInsets.all(14)
                             : EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
                           image: DecorationImage(
-                            image: NetworkImage(cart.productData.img),
-                            fit: cart.productData.imgFit == "full"
+                            image: NetworkImage(cart.produtoData.img),
+                            fit: cart.produtoData.imgFit == "full"
                                 ? BoxFit.cover
                                 : BoxFit.contain,
                           ),
@@ -470,23 +480,30 @@ class BaleiaCards {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  cart.productData.titulo,
-                                  style: textSemiBold(15, corBackDark),
+                                  cart.produtoData.titulo,
+                                  style: textSemiBold(16, corBackDark),
                                 ),
                                 Text(
-                                  cart.productData.marca,
-                                  style: textRegular(13, corBackDark),
+                                  cart.produtoData.marca,
+                                  style: textRegular(16, corBackDark),
                                 ),
                                 Text(
-                                  cart.productData.unidadeMed == "kg"
-                                      ? "Preço por Kg"
-                                      : "Preço Unitário",
-                                  style: textLight(11, corGrey),
+                                  cart.produtoData.unidadeMed == "por massa"
+                                      ? "Preço por " +
+                                          cart.produtoData
+                                              .medida['massaUnidMed']
+                                      : cart.produtoData.unidadeMed ==
+                                              "por capacidade"
+                                          ? "Preço por " +
+                                              cart.produtoData
+                                                  .medida['capacUnidMed']
+                                          : "Preço Unitário ",
+                                  style: textLight(14, corGrey),
                                 ),
                               ],
                             ),
                           ),
-                          cart.productData.precoDesc != cart.productData.preco
+                          cart.produtoData.precoDesc != cart.produtoData.preco
                               ? Positioned(
                                   bottom: 0,
                                   child: Column(
@@ -498,7 +515,7 @@ class BaleiaCards {
                                         "R\$" +
                                             formatter
                                                 .format(
-                                                    cart.productData.precoDesc)
+                                                    cart.produtoData.precoDesc)
                                                 .toString(),
                                         style: TextStyle(
                                             fontFamily: fontRegular,
@@ -520,7 +537,7 @@ class BaleiaCards {
                                             TextSpan(
                                               text: formatter
                                                   .format(
-                                                      cart.productData.preco)
+                                                      cart.produtoData.preco)
                                                   .toString(),
                                               style:
                                                   textSemiBold(16, corOrange),
@@ -541,7 +558,7 @@ class BaleiaCards {
                                             style: textRegular(10, corGreen)),
                                         TextSpan(
                                           text: formatter
-                                              .format(cart.productData.preco)
+                                              .format(cart.produtoData.preco)
                                               .toString(),
                                           style: textSemiBold(16, corGreen),
                                         ),
@@ -571,6 +588,21 @@ class BaleiaCards {
                                 }),
                               ],
                             ),
+                          ),
+                          Positioned(
+                            right: 0,
+                            bottom: 45,
+                            child: cart.produtoData.unidadeMed ==
+                                    "por capacidade"
+                                ? BaleiaExtras.iconCarrinhoMl(
+                                    cart.produtoData.medida['capac'].toString())
+                                : cart.produtoData.unidadeMed == "unitario"
+                                    ? BaleiaExtras.iconCarrinhoMl(cart
+                                        .produtoData.medida['capac']
+                                        .toString())
+                                    : BaleiaExtras.iconCarrinhoKg(cart
+                                        .produtoData.medida['massa']
+                                        .toString()),
                           )
                         ],
                       ),
@@ -600,7 +632,7 @@ class BaleiaCards {
             Get.to(() => ProdutosUi(cat: cat));
           },
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+            padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -630,20 +662,20 @@ class BaleiaCards {
 
   static Widget cardTodasCat(CategoriaData cat) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: Material(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         child: InkWell(
           focusColor: Colors.white,
-          highlightColor: Colors.blue[100].withOpacity(0.1),
+          highlightColor: Colors.blue[50].withOpacity(0.1),
           hoverColor: Colors.blue[200].withOpacity(0.1),
           borderRadius: BorderRadius.circular(10),
           onTap: () {
             Get.to(() => ProdutosUi(cat: cat));
           },
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 14),
             width: Get.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -667,7 +699,7 @@ class BaleiaCards {
                     SizedBox(width: 10),
                     Text(
                       cat.titulo,
-                      style: textLight(15, corBackDark),
+                      style: textRegular(20, corBackDark),
                     )
                   ],
                 ),

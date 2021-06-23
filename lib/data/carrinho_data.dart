@@ -8,7 +8,7 @@ class CarrinhoData {
   int qtd;
   Timestamp data;
 
-  ProdutoData productData;
+  ProdutoData produtoData;
 
   CarrinhoData();
 
@@ -16,7 +16,7 @@ class CarrinhoData {
     id = document.id;
     categoria = document['categoria'];
     produtoId = document['produtoId'];
-    productData = ProdutoData.fromJson(document['produto']);
+    produtoData = ProdutoData.fromJson(document['produto']);
     qtd = document['qtd'];
     data = document['data'];
   }
@@ -27,7 +27,7 @@ class CarrinhoData {
       "produtoId": produtoId,
       "qtd": qtd,
       "data": data,
-      "produto": productData.toResumeMap(),
+      "produto": produtoData.toResumeMap(),
     };
   }
 }

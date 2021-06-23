@@ -12,6 +12,9 @@ PODS:
   - Firebase/Firestore (8.0.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.0.0)
+  - Firebase/Storage (8.0.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 8.0.0)
   - firebase_auth (1.4.1):
     - Firebase/Auth (~> 8.0.0)
     - Firebase/CoreOnly (~> 8.0.0)
@@ -19,6 +22,11 @@ PODS:
     - FlutterMacOS
   - firebase_core (1.3.0):
     - Firebase/CoreOnly (~> 8.0.0)
+    - FlutterMacOS
+  - firebase_storage (8.1.3):
+    - Firebase/CoreOnly (~> 8.0.0)
+    - Firebase/Storage (~> 8.0.0)
+    - firebase_core
     - FlutterMacOS
   - FirebaseAuth (8.0.0):
     - FirebaseCore (~> 8.0)
@@ -42,6 +50,9 @@ PODS:
   - FirebaseFirestore/Base (8.0.0)
   - FirebaseFirestore/WithLeveldb (8.0.0):
     - FirebaseFirestore/Base
+  - FirebaseStorage (8.0.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - FlutterMacOS (1.0.0)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
@@ -82,6 +93,7 @@ DEPENDENCIES:
   - cloud_firestore (from `Flutter/ephemeral/.symlinks/plugins/cloud_firestore/macos`)
   - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
+  - firebase_storage (from `Flutter/ephemeral/.symlinks/plugins/firebase_storage/macos`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.0.0`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
@@ -93,6 +105,7 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseStorage
     - FMDB
     - GoogleDataTransport
     - GoogleUtilities
@@ -107,6 +120,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos
   firebase_core:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
+  firebase_storage:
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_storage/macos
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
     :tag: 8.0.0
@@ -127,10 +142,12 @@ SPEC CHECKSUMS:
   Firebase: 73c3e3b216ec1ecbc54d2ffdd4670c65c749edb1
   firebase_auth: 97deff570014ad3f88b9835ffc256c9a62f59c22
   firebase_core: 093b16f7f0024146f7486132dee4d8661a3f5e3b
+  firebase_storage: 029b0f2a7498311c45e61a681b1aadccf1ca243d
   FirebaseAuth: b8cd992fca5b53dc6eec09e873a3f375f000c5a1
   FirebaseCore: 3f09591d51292843e2a46f18358d60bf4e996255
   FirebaseCoreDiagnostics: 3e249cee3de5c5f9cfd6cc2a19997231286fec11
   FirebaseFirestore: 0d1548ab6085002d87c173ce3f881129f39b3565
+  FirebaseStorage: 61bcd27880fa17362f68be67d3683d04bfd7b1c7
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d

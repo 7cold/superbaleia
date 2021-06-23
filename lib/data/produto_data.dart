@@ -8,11 +8,11 @@ class ProdutoData {
   num preco;
   num precoDesc;
   bool ativo;
-  num peso;
-  num ml;
+
   String marca;
   String unidadeMed;
   String imgFit;
+  Map<String, dynamic> medida;
 
   ProdutoData({
     this.id,
@@ -22,11 +22,10 @@ class ProdutoData {
     this.preco,
     this.precoDesc,
     this.ativo,
-    this.peso,
-    this.ml,
     this.marca,
     this.unidadeMed,
     this.imgFit,
+    this.medida,
   });
 
   ProdutoData.fromJson(Map<dynamic, dynamic> json) {
@@ -37,11 +36,10 @@ class ProdutoData {
     preco = json['preco'];
     precoDesc = json['precoDesc'];
     ativo = json['ativo'];
-    peso = json['peso'];
-    ml = json['ml'];
     marca = json['marca'];
     unidadeMed = json['unidadeMed'];
     imgFit = json['imgFit'];
+    medida = json['medida'];
   }
 
   ProdutoData.fromDocument(DocumentSnapshot document) {
@@ -52,11 +50,10 @@ class ProdutoData {
     preco = document['preco'];
     precoDesc = document['precoDesc'];
     ativo = document['ativo'];
-    peso = document['peso'];
-    ml = document['ml'];
     marca = document['marca'];
     unidadeMed = document['unidadeMed'];
     imgFit = document['imgFit'];
+    medida = document['medida'];
   }
 
   Map<String, dynamic> toResumeMap() {
@@ -67,11 +64,10 @@ class ProdutoData {
       "preco": preco,
       "precoDesc": precoDesc,
       "ativo": ativo,
-      "peso": peso,
-      "ml": ml,
       "marca": marca,
       "unidMedida": unidadeMed,
-      "imgFit": imgFit
+      "imgFit": imgFit,
+      "medida": medida
     };
   }
 }

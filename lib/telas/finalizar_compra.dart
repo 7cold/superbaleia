@@ -1,24 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:superbaleia/controller/controller.dart';
-import 'package:superbaleia/data/carrinho_data.dart';
-import 'package:superbaleia/telas/finalizar_compra.dart';
-import 'package:superbaleia/widgets/card.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
-class CarrinhoUi extends StatelessWidget {
+import 'finalizar_compra_final.dart';
+
+class FinalizarCompraUi extends StatelessWidget {
+  final Controller c = Get.find();
+
   @override
   Widget build(BuildContext context) {
-    final formatter = new NumberFormat("#,##0.00", "pt_BR");
-    final Controller c = Get.find();
     return Obx(
       () => Scaffold(
-        appBar:
-            BaleiaExtras.appBarCart("Carrinho", c.carrinho.length.toString()),
         backgroundColor: Color(corBack),
         bottomNavigationBar: Material(
           elevation: 10,
@@ -29,7 +25,7 @@ class CarrinhoUi extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: CupertinoButton(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  color: Color(corPri),
+                  color: Color(corGreen),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -40,7 +36,7 @@ class CarrinhoUi extends StatelessWidget {
                                 text: "R\$ ", style: textRegular(12, corBack)),
                             TextSpan(
                               text: formatter
-                                  .format(c.getProductsPrice())
+                                  .format(c.getTotalPrice())
                                   .toString(),
                               style: textHeavy(20, corBack),
                             ),
@@ -49,7 +45,8 @@ class CarrinhoUi extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text("Continuar", style: textRegular(20, corBack)),
+                          Text("Finalizar Compra",
+                              style: textRegular(20, corBack)),
                           Icon(
                             Icons.arrow_forward_rounded,
                             color: Color(corBack),
@@ -58,24 +55,32 @@ class CarrinhoUi extends StatelessWidget {
                       )
                     ],
                   ),
-                  onPressed: c.carrinho.length == 0
-                      ? null
-                      : () {
-                          Get.to(() => FinalizarCompraUi());
-                        }),
+                  onPressed: () {
+                    c.finishOrder();
+                    Get.off(() => FinalizarCompraUiFinal(
+                          tipoEntrega: c.tipoEntega.value,
+                        ));
+                  }),
             ),
           ),
         ),
+        appBar: BaleiaExtras.appBar("Finalizar Pedido"),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          child: c.carregando.value == true
-              ? BaleiaExtras.widgetLoading
-              : Column(
-                  children: c.carrinho.map((res) {
-                    CarrinhoData cart = res;
-                    return BaleiaCards.cardProdCarrinho(cart);
-                  }).toList(),
-                ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Column(
+              children: [
+                BaleiaExtras.finalizarUiEndereco(),
+                SizedBox(height: 30),
+                BaleiaExtras.finalizarUiEntrega(),
+                SizedBox(height: 30),
+                BaleiaExtras.finalizarUiResumo(),
+                SizedBox(height: 30),
+                BaleiaExtras.finalizarUiPagamento(),
+              ],
+            ),
+          ),
         ),
       ),
     );

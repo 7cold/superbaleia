@@ -13,7 +13,6 @@ class TodasCategoriasUi extends StatelessWidget {
     Controller c = Get.find();
     return Scaffold(
       appBar: BaleiaExtras.appBar("Categorias"),
-      // backgroundColor: CupertinoColors.tertiarySystemBackground,
       backgroundColor: Color(corBack),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),

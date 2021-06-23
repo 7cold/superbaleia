@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/categorias_data.dart';
 import 'package:superbaleia/telas/carrinho.dart';
+import 'package:superbaleia/telas/localizacao.dart';
+import 'package:superbaleia/telas/pedidos.dart';
 import 'package:superbaleia/telas/todas_categorias.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/card.dart';
@@ -20,6 +22,7 @@ class HomeUi extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
+          toolbarHeight: 80,
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
@@ -41,30 +44,41 @@ class HomeUi extends StatelessWidget {
             Stack(
               alignment: Alignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 10),
+                Container(
+                  height: 42,
+                  width: 42,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(corPri),
+                  ),
+                  margin: EdgeInsets.only(right: 10),
                   child: IconButton(
                     onPressed: () {
                       Get.to(() => CarrinhoUi());
                     },
                     icon: Icon(
                       Icons.shopping_cart_outlined,
-                      color: Color(corPri),
-                      size: 30,
+                      color: Color(corBack),
+                      size: 20,
                     ),
                   ),
                 ),
                 Positioned(
-                  right: 7,
-                  top: 7,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                        color: Color(corPri).withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Text(
-                      c.carrinho.length.toString(),
-                      style: textSemiBold(14, corBack),
+                  right: 4,
+                  top: 8,
+                  child: Material(
+                    elevation: 5,
+                    borderRadius: BorderRadius.circular(5),
+                    shadowColor: Colors.blue[900],
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                          color: Colors.blue[900],
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(
+                        c.carrinho.length.toString(),
+                        style: textSemiBold(14, corBack),
+                      ),
                     ),
                   ),
                 ),
@@ -76,7 +90,7 @@ class HomeUi extends StatelessWidget {
           BaleiaExtras.itemDrawer(
             Icons.person_outline_rounded,
             "Meus Dados",
-            DadosClienteUi(),
+            DadosClienteUi(telaAnterior: "drawer"),
           ),
           BaleiaExtras.itemDrawer(
             Icons.shopping_cart_outlined,
@@ -91,12 +105,17 @@ class HomeUi extends StatelessWidget {
           BaleiaExtras.itemDrawer(
             Icons.paste,
             "Meus Pedidos",
-            DadosClienteUi(),
+            PedidosUi(),
+          ),
+          BaleiaExtras.itemDrawer(
+            Icons.map_rounded,
+            "Localização",
+            LocalizacaoUi(),
           ),
           BaleiaExtras.itemDrawer(
             Icons.help_outline_rounded,
             "Ajuda",
-            DadosClienteUi(),
+            DadosClienteUi(telaAnterior: "drawer"),
           ),
         ]),
         backgroundColor: Color(corBack),
@@ -128,6 +147,7 @@ class HomeUi extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -171,6 +191,7 @@ class HomeUi extends StatelessWidget {
                 ),
               ),
               SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Padding(
                   padding:
