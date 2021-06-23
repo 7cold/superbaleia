@@ -76,7 +76,12 @@ class Controller extends GetxController {
   double getProductsPrice() {
     double price = 0.0;
     for (CarrinhoData c in carrinho) {
-      if (c.produtoData != null) price += c.qtd * c.produtoData.preco;
+      if (c.produtoData != null) if (c.produtoData.precoDesc !=
+          c.produtoData.preco) {
+        price += c.qtd * c.produtoData.precoDesc;
+      } else {
+        price += c.qtd * c.produtoData.preco;
+      }
     }
     return price;
   }

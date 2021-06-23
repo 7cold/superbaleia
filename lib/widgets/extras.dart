@@ -556,44 +556,44 @@ class BaleiaExtras {
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
-                                          children: pedido.produtos
-                                              .map((res) => Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            res['qtd']
-                                                                .toString(),
-                                                            style: textSemiBold(
-                                                                16,
-                                                                corBackDark),
-                                                          ),
-                                                          SizedBox(width: 15),
-                                                          Text(
-                                                              res['produto']
-                                                                  ['titulo'],
-                                                              style:
-                                                                  textRegular(
-                                                                      16,
-                                                                      corGrey)),
-                                                        ],
+                                          children: pedido.produtos.map((res) {
+                                            var preco = res['produto']['preco'];
+                                            var precoDesc =
+                                                res['produto']['precoDesc'];
+                                            return Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      res['qtd'].toString(),
+                                                      style: textSemiBold(
+                                                          16, corBackDark),
+                                                    ),
+                                                    SizedBox(width: 15),
+                                                    Text(
+                                                        res['produto']
+                                                            ['titulo'],
+                                                        style: textRegular(
+                                                            16, corGrey)),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  "R\$ " +
+                                                      formatter.format(
+                                                        (precoDesc != preco
+                                                                ? precoDesc
+                                                                : preco) *
+                                                            res['qtd'],
                                                       ),
-                                                      Text(
-                                                          "R\$ " +
-                                                              formatter.format(
-                                                                  res['produto']
-                                                                          [
-                                                                          'preco'] *
-                                                                      res[
-                                                                          'qtd']),
-                                                          style: textSemiBold(
-                                                              16, corBackDark)),
-                                                    ],
-                                                  ))
-                                              .toList(),
+                                                  style: textSemiBold(
+                                                      16, corBackDark),
+                                                ),
+                                              ],
+                                            );
+                                          }).toList(),
                                         ),
                                       )
                                     ],
@@ -697,7 +697,7 @@ class BaleiaExtras {
   static Widget finalizarUiEndereco() {
     return Material(
       elevation: 5,
-      shadowColor: Colors.white.withOpacity(0.5),
+      shadowColor: Colors.white.withAlpha(50),
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -860,7 +860,7 @@ class BaleiaExtras {
 
     return Material(
       elevation: 5,
-      shadowColor: Colors.white.withOpacity(0.5),
+      shadowColor: Colors.white.withAlpha(50),
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -964,7 +964,7 @@ class BaleiaExtras {
   static Widget finalizarUiResumo() {
     return Material(
       elevation: 5,
-      shadowColor: Colors.white.withOpacity(0.5),
+      shadowColor: Colors.white.withAlpha(50),
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -1039,7 +1039,7 @@ class BaleiaExtras {
   static Widget finalizarUiPagamento() {
     return Material(
       elevation: 5,
-      shadowColor: Colors.white.withOpacity(0.5),
+      shadowColor: Colors.white.withAlpha(50),
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -1128,7 +1128,7 @@ class BaleiaExtras {
   static Widget localizacao(String cidade, String endereco, String tel) {
     return Material(
       elevation: 5,
-      shadowColor: Colors.white.withOpacity(0.5),
+      shadowColor: Colors.white.withAlpha(50),
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -1177,6 +1177,48 @@ class BaleiaExtras {
                       child: Container(
                         width: Get.width,
                         child: Text(tel, style: textRegular(16, corBackDark)),
+                      )),
+                ],
+              ),
+            ],
+          )),
+    );
+  }
+
+  static Widget ajudaCard() {
+    return Material(
+      elevation: 5,
+      shadowColor: Colors.white.withAlpha(50),
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+          width: Get.width,
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("WhatsApp", style: textSemiBold(18, corGrey)),
+                ],
+              ),
+              SizedBox(height: 20),
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Flexible(
+                      flex: 2,
+                      child: Container(
+                        width: Get.width,
+                        child:
+                            Text("Telefone", style: textSemiBold(18, corGrey)),
+                      )),
+                  Flexible(
+                      flex: 6,
+                      child: Container(
+                        width: Get.width,
+                        child: Text("35-99999-99999",
+                            style: textRegular(18, corBackDark)),
                       )),
                 ],
               ),

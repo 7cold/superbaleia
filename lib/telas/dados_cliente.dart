@@ -11,9 +11,9 @@ class DadosClienteUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
+        backgroundColor: Color(corBack),
         appBar: BaleiaExtras.appBar(
             telaAnterior == "drawer" ? "Meus Dados" : "Endereço"),
-        backgroundColor: Color(corBack),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Padding(

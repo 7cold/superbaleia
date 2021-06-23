@@ -44,10 +44,15 @@ class ProdutoDetalheUi extends StatelessWidget {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                    text: "R\$ ",
-                                    style: textRegular(12, corBack)),
+                                  text: "R\$ ",
+                                  style: textRegular(12, corBack),
+                                ),
                                 TextSpan(
-                                  text: formatter.format(prod.preco).toString(),
+                                  text: formatter
+                                      .format(prod.preco != prod.precoDesc
+                                          ? prod.precoDesc
+                                          : prod.preco)
+                                      .toString(),
                                   style: textHeavy(20, corBack),
                                 ),
                               ],
@@ -99,14 +104,18 @@ class ProdutoDetalheUi extends StatelessWidget {
               ),
               child: CarouselSlider(
                 items: [
-                  Padding(
-                    padding:
-                        EdgeInsets.all(prod.imgFit == "contain" ? 15.0 : 0),
-                    child: Image.network(prod.img),
-                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(prod.img),
+                        fit: prod.imgFit == "full"
+                            ? BoxFit.cover
+                            : BoxFit.contain,
+                      ),
+                    ),
+                  )
                 ],
                 options: CarouselOptions(
-                  aspectRatio: 16 / 9,
                   viewportFraction: 1,
                   initialPage: 0,
                   reverse: false,
@@ -128,42 +137,61 @@ class ProdutoDetalheUi extends StatelessWidget {
               child: Text(prod.marca, style: textSemiBold(18, corBackDark)),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, top: 10, bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                        color: Color(corPri),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Text(
-                      prod.unidadeMed == "por massa"
-                          ? "Preço por " + prod.medida['massaUnidMed']
-                          : prod.unidadeMed == "por capacidade"
-                              ? "Preço por " + prod.medida['capacUnidMed']
-                              : "Preço Unitário ",
-                      style: textRegular(16, corBack),
-                    ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Material(
+                color: Colors.white,
+                shadowColor: Colors.white.withAlpha(50),
+                elevation: 8,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 15, bottom: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                  color: Color(corPri),
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Text(
+                                prod.unidadeMed == "por massa"
+                                    ? "Preço por " + prod.medida['massaUnidMed']
+                                    : prod.unidadeMed == "por capacidade"
+                                        ? "Preço por " +
+                                            prod.medida['capacUnidMed']
+                                        : "Preço Unitário ",
+                                style: textRegular(16, corBack),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 4),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: prod.medida['capac'] != 0
+                                  ? BaleiaExtras.iconCarrinhoMl(
+                                      prod.medida['capac'].toString())
+                                  : BaleiaExtras.iconCarrinhoKg(
+                                      prod.medida['massa'].toString()),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 10, bottom: 20, right: 20),
+                        child: Text(prod.desc, style: textRegular(16, corGrey)),
+                      ),
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: prod.medida['capac'] != 0
-                        ? BaleiaExtras.iconCarrinhoMl(
-                            prod.medida['capac'].toString())
-                        : BaleiaExtras.iconCarrinhoKg(
-                            prod.medida['massa'].toString()),
-                  ),
-                ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, top: 0, bottom: 20, right: 20),
-              child: Text(prod.desc, style: textRegular(18, corGrey)),
             )
           ],
         ),

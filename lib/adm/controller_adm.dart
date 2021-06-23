@@ -4,17 +4,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:superbaleia/data/pedido_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 
 class ControllerAdm extends GetxController {
   @override
   void onInit() {
-    _carregarCatBebidas();
-    _carregarCatBebidasAlcoolicas();
+    carregarTodos();
+    carregarVendas();
     super.onInit();
   }
 
+  RxBool carregando = false.obs;
   RxList produtos = [].obs;
+  RxList pedidos = [].obs;
   RxString url = "".obs;
   RxDouble urlPorcentagem = 0.0.obs;
   PickedFile image;
@@ -56,9 +59,31 @@ class ControllerAdm extends GetxController {
   }
 
   carregarTodos() async {
+    carregando.value = true;
     produtos.value = [];
     await _carregarCatBebidas();
     await _carregarCatBebidasAlcoolicas();
+    await _carregarCatCarnesePeixaria();
+    await _carregarCatCongelados();
+    await _carregarCatHigiene();
+    await _carregarCatHortifruti();
+    await _carregarCatInfantil();
+    await _carregarCatLaticinios();
+    await _carregarCatLimpeza();
+    await _carregarCatMercearia();
+    await _carregarCatPadaria();
+    await _carregarCatPet();
+    await _carregarCatUtilidades();
+    carregando.value = false;
+  }
+
+  carregarVendas() async {
+    QuerySnapshot resFire =
+        await FirebaseFirestore.instance.collection('pedidos').get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      PedidoData ped = PedidoData.fromDocument(doc);
+      return pedidos.add(ped);
+    }).toList();
   }
 
   _carregarCatBebidas() async {
@@ -77,6 +102,138 @@ class ControllerAdm extends GetxController {
     QuerySnapshot resFire = await FirebaseFirestore.instance
         .collection('produtos')
         .doc('bebidas alcoolicas')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatCarnesePeixaria() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('carnes e peixaria')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatCongelados() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('congelados')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatHigiene() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('higiene')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatHortifruti() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('hortifruti')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatInfantil() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('infantil')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatLaticinios() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('laticinios')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatLimpeza() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('limpeza')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatMercearia() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('mercearia')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatPadaria() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('padaria')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatPet() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('pet')
+        .collection('itens')
+        .get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ProdutoData prod = ProdutoData.fromDocument(doc);
+      return produtos.add(prod);
+    }).toList();
+  }
+
+  _carregarCatUtilidades() async {
+    QuerySnapshot resFire = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('utilidades')
         .collection('itens')
         .get();
     resFire.docs.map((DocumentSnapshot doc) {

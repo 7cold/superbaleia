@@ -30,6 +30,7 @@ class ProdutosAdmAdd extends StatelessWidget {
     Rx<bool> massaBool = false.obs;
     Rx<bool> capacBool = false.obs;
     Rx<bool> imgContain = true.obs;
+    Rx<bool> desconto = true.obs;
     Rx<bool> ativo = true.obs;
 
     limparCampos() {
@@ -186,7 +187,7 @@ class ProdutosAdmAdd extends StatelessWidget {
                               ),
                             )),
                         ResponsiveGridCol(
-                            lg: 6,
+                            lg: 4,
                             child: Padding(
                               padding: EdgeInsets.only(top: 20),
                               child: BaleiaForms.textFormField("Preço", preco, [
@@ -194,16 +195,37 @@ class ProdutosAdmAdd extends StatelessWidget {
                                 RealInputFormatter(centavos: true, moeda: true),
                               ]),
                             )),
+
                         ResponsiveGridCol(
-                            lg: 6,
+                            lg: 3,
                             child: Padding(
                               padding: EdgeInsets.only(top: 20),
-                              child: BaleiaForms.textFormField(
-                                  "Preço Desconto", precodesc, [
-                                FilteringTextInputFormatter.digitsOnly,
-                                RealInputFormatter(centavos: true, moeda: true),
-                              ]),
+                              child: Row(
+                                children: [
+                                  CupertinoSwitch(
+                                      value: desconto.value,
+                                      onChanged: (_) {
+                                        desconto.value = _;
+                                      }),
+                                  Text(
+                                    "Desconto",
+                                    style: textRegular(14, corBackDark),
+                                  )
+                                ],
+                              ),
                             )),
+                        ResponsiveGridCol(
+                            lg: 4,
+                            child: Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: desconto.value == true
+                                    ? BaleiaForms.textFormField(
+                                        "Preço Desconto", precodesc, [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                        RealInputFormatter(
+                                            centavos: true, moeda: true),
+                                      ])
+                                    : SizedBox())),
                         ResponsiveGridCol(
                             lg: 12,
                             child: Padding(
@@ -518,10 +540,13 @@ class ProdutosAdmAdd extends StatelessWidget {
                                           "preco": double.parse(preco.text
                                               .replaceAll("R\$ ", "")
                                               .replaceAll(",", ".")),
-                                          "precoDesc": double.parse(precodesc
-                                              .text
-                                              .replaceAll("R\$ ", "")
-                                              .replaceAll(",", ".")),
+                                          "precoDesc": desconto.value == true
+                                              ? double.parse(precodesc.text
+                                                  .replaceAll("R\$ ", "")
+                                                  .replaceAll(",", "."))
+                                              : double.parse(preco.text
+                                                  .replaceAll("R\$ ", "")
+                                                  .replaceAll(",", ".")),
                                           "ativo": true,
                                           "marca": marca.text,
                                           "unidadeMed": unidadeMed.value,

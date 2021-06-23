@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/adm/controller_adm.dart';
 import 'package:superbaleia/adm/produtos_adm.dart';
+import 'package:superbaleia/adm/vendas_adm.dart';
 import 'package:superbaleia/widgets/extras.dart';
 
 class HomeAdm extends StatelessWidget {
@@ -16,7 +17,7 @@ class HomeAdm extends StatelessWidget {
         BaleiaExtras.itemDrawer(
             Icons.people_outline, "Clientes", ProdutosAdm()),
         BaleiaExtras.itemDrawer(
-            Icons.attach_money_rounded, "Vendas", ProdutosAdm()),
+            Icons.attach_money_rounded, "Vendas", VendasAdm()),
         BaleiaExtras.itemDrawer(
             Icons.engineering_outlined, "Configurações", ProdutosAdm()),
       ]),

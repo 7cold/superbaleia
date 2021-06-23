@@ -70,7 +70,7 @@ class BaleiaCards {
         padding: EdgeInsets.only(left: 10, bottom: 24),
         child: Material(
           elevation: 5,
-          shadowColor: Colors.white.withOpacity(0.5),
+          shadowColor: Colors.white.withAlpha(50),
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
           child: Container(
@@ -144,7 +144,7 @@ class BaleiaCards {
         padding: EdgeInsets.only(left: 10, bottom: 24, right: 10),
         child: Material(
           elevation: 5,
-          shadowColor: Colors.white.withOpacity(0.5),
+          shadowColor: Colors.white.withAlpha(50),
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
           child: Container(
@@ -221,7 +221,7 @@ class BaleiaCards {
       padding: EdgeInsets.symmetric(horizontal: 7, vertical: 8),
       child: Material(
         elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: InkWell(
@@ -406,7 +406,7 @@ class BaleiaCards {
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Material(
         elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         child: InkWell(
@@ -521,8 +521,7 @@ class BaleiaCards {
                                       Text(
                                         "R\$" +
                                             formatter
-                                                .format(
-                                                    cart.produtoData.precoDesc)
+                                                .format(cart.produtoData.preco)
                                                 .toString(),
                                         style: TextStyle(
                                             fontFamily: fontRegular,
@@ -543,8 +542,8 @@ class BaleiaCards {
                                                     textRegular(10, corOrange)),
                                             TextSpan(
                                               text: formatter
-                                                  .format(
-                                                      cart.produtoData.preco)
+                                                  .format(cart
+                                                      .produtoData.precoDesc)
                                                   .toString(),
                                               style:
                                                   textSemiBold(16, corOrange),
@@ -671,6 +670,8 @@ class BaleiaCards {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: Material(
+        elevation: 5,
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         child: InkWell(

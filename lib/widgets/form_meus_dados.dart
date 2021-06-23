@@ -71,7 +71,7 @@ class BaleiaMeusDados {
       },
       child: Material(
         elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -166,7 +166,7 @@ class BaleiaMeusDados {
       },
       child: Material(
         elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -204,7 +204,7 @@ class BaleiaMeusDados {
   static Widget cpf() {
     return Material(
       elevation: 5,
-      shadowColor: Colors.white.withOpacity(0.5),
+      shadowColor: Colors.white.withAlpha(50),
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -241,7 +241,7 @@ class BaleiaMeusDados {
   static Widget email() {
     return Material(
       elevation: 5,
-      shadowColor: Colors.white.withOpacity(0.5),
+      shadowColor: Colors.white.withAlpha(50),
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -336,7 +336,7 @@ class BaleiaMeusDados {
       },
       child: Material(
         elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -430,7 +430,7 @@ class BaleiaMeusDados {
       },
       child: Material(
         elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -523,7 +523,7 @@ class BaleiaMeusDados {
       },
       child: Material(
         elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -616,7 +616,7 @@ class BaleiaMeusDados {
       },
       child: Material(
         elevation: 5,
-        shadowColor: Colors.white.withOpacity(0.5),
+        shadowColor: Colors.white.withAlpha(50),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -655,7 +655,7 @@ class BaleiaMeusDados {
     cidade.text = c.clienteData['cidade'];
     return Material(
       elevation: 5,
-      shadowColor: Colors.white.withOpacity(0.5),
+      shadowColor: Colors.white.withAlpha(50),
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(

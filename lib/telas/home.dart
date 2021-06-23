@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/categorias_data.dart';
 import 'package:superbaleia/data/cliente_data.dart';
-import 'package:superbaleia/telas/bloqueio.dart';
+import 'package:superbaleia/telas/ajuda.dart';
 import 'package:superbaleia/telas/carrinho.dart';
 import 'package:superbaleia/telas/localizacao.dart';
 import 'package:superbaleia/telas/pedidos.dart';
@@ -14,6 +14,7 @@ import 'package:superbaleia/widgets/card.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/texts.dart';
+import 'bloqueio.dart';
 import 'dados_cliente.dart';
 
 class HomeUi extends StatelessWidget {
@@ -127,7 +128,7 @@ class HomeUi extends StatelessWidget {
           BaleiaExtras.itemDrawer(
             Icons.help_outline_rounded,
             "Ajuda",
-            LocalizacaoUi(),
+            AjudaUI(),
           ),
         ]),
         backgroundColor: Color(corBack),
