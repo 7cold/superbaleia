@@ -59,18 +59,9 @@ class BaleiaExtras {
                                         corBackDark,
                                       ),
                                     ),
-                                    TextButton(
-                                      child: Text(
-                                        'aqui',
-                                        style: textSemiBold(
-                                          14,
-                                          corPri,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Get.to(() => LoginUi());
-                                      },
-                                    )
+                                    BaleiaButtons.buttonText("Login", () {
+                                      Get.to(() => LoginUi());
+                                    })
                                   ],
                                 ),
                               )
@@ -118,9 +109,7 @@ class BaleiaExtras {
                   ),
                 ),
                 cliente.nome == null
-                    ? Container(
-                        color: Color(corBack),
-                      )
+                    ? SizedBox()
                     : Align(
                         alignment: Alignment.bottomCenter,
                         child: Padding(
@@ -152,16 +141,24 @@ class BaleiaExtras {
                                               BorderRadius.circular(5),
                                           color: Color(corRed),
                                         ),
-                                        child: Icon(Icons.logout_rounded,
-                                            size: 18, color: Color(corBack)),
+                                        child: Icon(
+                                          Icons.logout_rounded,
+                                          size: 18,
+                                          color: Color(corBack),
+                                        ),
                                       ),
                                       SizedBox(width: 10),
-                                      Text("Sair",
-                                          style: textRegular(16, 0XFF6B6B6C)),
+                                      Text(
+                                        "Sair",
+                                        style: textRegular(16, 0XFF6B6B6C),
+                                      ),
                                     ],
                                   ),
-                                  Icon(CupertinoIcons.chevron_right,
-                                      size: 18, color: Color(corGrey))
+                                  Icon(
+                                    CupertinoIcons.chevron_right,
+                                    size: 18,
+                                    color: Color(corGrey),
+                                  )
                                 ],
                               ),
                             ),

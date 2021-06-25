@@ -1,4 +1,4 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/telas/home.dart';
@@ -13,8 +13,15 @@ class Root extends StatelessWidget {
     return Obx(() => c.carregando.value == true
         ? Scaffold(
             backgroundColor: Color(corBack), body: BaleiaExtras.widgetLoading)
-        : c.verifLogado().value == true
-            ? HomeUi()
-            : LoginUi());
+        : HomeUi());
+
+    // return Obx(() {
+    //   if (c.carregando.value == true)
+    //     return Scaffold(
+    //         backgroundColor: Color(corBack), body: BaleiaExtras.widgetLoading);
+    //   if (c.verifLogado().value == true) {
+    //     return HomeUi();
+    //   }
+    // });
   }
-} */
+}

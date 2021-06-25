@@ -44,8 +44,8 @@ class _MyAppState extends State<MyApp> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            return HomeAdm();
-            // return SplashScreen();
+            // return HomeAdm();
+            return SplashScreen();
           }
           return Scaffold(body: BaleiaExtras.widgetLoading);
         },

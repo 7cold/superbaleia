@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
-import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
@@ -18,22 +17,18 @@ class ProdutoDetalheUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ClienteData cliente = ClienteData.fromJson(c.clienteData);
     return Scaffold(
       backgroundColor: Color(corBack),
       appBar: BaleiaExtras.appBar(prod.titulo),
-      bottomNavigationBar: Material(
-        elevation: 10,
-        child: Container(
-          height: 90,
-          margin: EdgeInsets.only(bottom: 15),
-          child: cliente.nome == null
-              ? Container(
-                  color: Color(corBack),
-                )
-              : Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      bottomNavigationBar: c.verifLogado().value == false
+          ? null
+          : Material(
+              elevation: 10,
+              child: Container(
+                height: 90,
+                margin: EdgeInsets.only(bottom: 15),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: CupertinoButton(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       color: Color(corGreen),
@@ -88,8 +83,8 @@ class ProdutoDetalheUi extends StatelessWidget {
                         );
                       }),
                 ),
-        ),
-      ),
+              ),
+            ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(

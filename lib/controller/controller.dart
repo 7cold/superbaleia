@@ -31,7 +31,7 @@ class Controller extends GetxController {
   RxBool showPassword = true.obs;
   RxBool carregando = false.obs;
 
-  cadastrar({
+  cadastroCliente({
     Map<String, dynamic> clienteData,
     String email,
     String pass,
@@ -49,23 +49,11 @@ class Controller extends GetxController {
           .doc(result.user.uid)
           .set(clienteData);
 
-      login(
-        email: clienteData['email'],
-        pass: pass,
-        onSuccess: onSuccess,
-        onFail: onFail,
-      );
       carregando.value = false;
+      onSuccess();
     } catch (e) {
-      Get.defaultDialog(
-        title: 'Erro ao Cadastrar  😕',
-        titleStyle: TextStyle(color: Colors.blue, fontSize: 21),
-        middleText: 'Por favor verifique as informações e tente novamente. ',
-        middleTextStyle: TextStyle(fontSize: 16),
-        textCancel: "Ok",
-        cancelTextColor: Colors.blue,
-      );
       carregando.value = false;
+      onFail();
     }
   }
 
@@ -140,9 +128,12 @@ class Controller extends GetxController {
   }
 
   sair() async {
+    carregando.value = true;
     await _auth.value.signOut();
     clienteData.value = Map();
     firebaseUser.value = null;
+    carregando.value = false;
+
     Get.back();
     Get.offAll(() => HomeUi());
   }
@@ -303,13 +294,13 @@ class Controller extends GetxController {
         .then((result) async {
       firebaseUser.value = result.user;
       await carregarUsuarios();
+
       onSuccess();
       carregando.value = false;
     }).catchError((e) {
       onFail();
       carregando.value = false;
     });
-    carregando.value = false;
   }
 
   RxBool verifLogado() {
@@ -324,6 +315,7 @@ class Controller extends GetxController {
     carregando.value = true;
     if (firebaseUser.value == null)
       firebaseUser.value = _auth.value.currentUser;
+    carregarDados();
     carregando.value = false;
     if (firebaseUser.value != null) {
       if (clienteData['nome'] == null) {
@@ -332,8 +324,6 @@ class Controller extends GetxController {
         _carregarPratos();
         _carregarBanners();
         _carregarCategorias();
-
-        print(carrinho);
 
         DocumentSnapshot docUser = await FirebaseFirestore.instance
             .collection('clientes')
@@ -347,10 +337,9 @@ class Controller extends GetxController {
   }
 
   Future<Null> carregarDados() async {
-    _loadCartItems();
-    _carregarDicas();
-    _carregarPratos();
-    _carregarBanners();
-    _carregarCategorias();
+    await _carregarDicas();
+    await _carregarPratos();
+    await _carregarBanners();
+    await _carregarCategorias();
   }
 }

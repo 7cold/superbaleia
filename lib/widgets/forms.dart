@@ -174,39 +174,41 @@ class BaleiaForms {
         ),
       );
 
-  static textFormFieldCad(
+  static Widget textFormFieldCad(
           String hint, campo, valid, teclado, obscureText, cap) =>
       Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-        child: TextFormField(
-          keyboardType: teclado,
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            labelText: hint,
-            fillColor: Colors.blue,
-            hintStyle: textRegular(15, corGrey),
-            contentPadding: EdgeInsets.only(
-              left: 15,
-            ),
-            border: OutlineInputBorder(),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                color: Colors.grey[350],
-                width: 2,
+        padding: EdgeInsets.only(left: 20, right: 20, top: 14),
+        child: SizedBox(
+          height: 50,
+          child: TextFormField(
+            keyboardType: teclado,
+            obscureText: obscureText,
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: textRegular(15, corGrey),
+              contentPadding: EdgeInsets.only(
+                left: 15,
+              ),
+              border: OutlineInputBorder(),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: Colors.grey[300],
+                  width: 1.5,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: Colors.grey[300],
+                  width: 1.5,
+                ),
               ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                color: Colors.grey[300],
-                width: 2,
-              ),
-            ),
+            validator: valid,
+            controller: campo,
+            textCapitalization: cap,
           ),
-          validator: valid,
-          controller: campo,
-          textCapitalization: cap,
         ),
       );
 }
