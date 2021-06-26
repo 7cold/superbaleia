@@ -38,7 +38,6 @@ class _CadastroState extends State<Cadastro> {
     return Obx(
       () => Scaffold(
         appBar: BaleiaExtras.appBar("Cadastro"),
-        backgroundColor: Color(corBack),
         body: c.carregando.value == true
             ? BaleiaExtras.widgetLoading
             : SingleChildScrollView(
@@ -219,7 +218,7 @@ class _CadastroState extends State<Cadastro> {
                         ),
                         ResponsiveGridCol(
                           child: Padding(
-                            padding: EdgeInsets.only(top: 30),
+                            padding: EdgeInsets.only(top: 30, bottom: 30),
                             child: BaleiaButtons.buttonPrimary(
                                 c.carregando.value == true
                                     ? BaleiaExtras.widgetLoading
@@ -231,14 +230,16 @@ class _CadastroState extends State<Cadastro> {
                                   c.cadastroCliente(
                                     clienteData: {
                                       "cpf": _cpf.text,
-                                      "nome": _nome.text,
-                                      "sobrenome": _sobrenome.text,
+                                      "nome": _nome.text.capitalize,
+                                      "sobrenome": _sobrenome.text.capitalize,
                                       "celular": _telefone.text,
                                       "email": _email.text,
-                                      "endereco": _endereco.text,
+                                      "endereco": _endereco.text.capitalize,
                                       "num": _numero.text,
+                                      "complemento":
+                                          _complemento.text.capitalize,
                                       "cidade": _cidadeSelecionada,
-                                      "bairro": _bairro.text,
+                                      "bairro": _bairro.text.capitalize,
                                       "data_cadastro": DateTime.now(),
                                     },
                                     email: _email.text,

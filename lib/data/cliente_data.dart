@@ -5,6 +5,7 @@ class ClienteData {
   String bairro;
   String celular;
   String cidade;
+  String complemento;
   String cpf;
   String email;
   String endereco;
@@ -18,6 +19,7 @@ class ClienteData {
     this.bairro,
     this.celular,
     this.cidade,
+    this.complemento,
     this.cpf,
     this.email,
     this.endereco,
@@ -32,6 +34,7 @@ class ClienteData {
     bairro = document['bairro'];
     celular = document['celular'];
     cidade = document['cidade'];
+    complemento = document['complemento'];
     cpf = document['cpf'];
     email = document['email'];
     endereco = document['endereco'];
@@ -46,6 +49,7 @@ class ClienteData {
     bairro = this.bairro;
     celular = this.celular;
     cidade = this.cidade;
+    complemento = this.complemento;
     cpf = this.cpf;
     email = this.email;
     endereco = this.endereco;
@@ -58,6 +62,7 @@ class ClienteData {
     bairro = json['bairro'];
     celular = json['celular'];
     cidade = json['cidade'];
+    complemento = json['complemento'];
     cpf = json['cpf'];
     email = json['email'];
     endereco = json['endereco'];

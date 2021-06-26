@@ -557,6 +557,101 @@ class BaleiaMeusDados {
     );
   }
 
+  static Widget enderecoComplemento() {
+    TextEditingController complemento = TextEditingController();
+    complemento.text = c.clienteData['complemento'];
+    return InkWell(
+      onTap: () {
+        Get.bottomSheet(
+          Container(
+            height: 300,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text("Editar Complemento",
+                      style: textSemiBold(22, corBackDark)),
+                  BaleiaForms.textFormField("Complemento", complemento, []),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CupertinoButton(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                          color: CupertinoColors.systemGreen,
+                          child: Text("Salvar"),
+                          onPressed: () async {
+                            c.clienteData['complemento'] = complemento.text;
+                            await FirebaseFirestore.instance
+                                .collection("clientes")
+                                .doc(c.firebaseUser.value.uid)
+                                .update({
+                              "complemento": complemento.text,
+                            });
+                            Get.back();
+                          }),
+                      CupertinoButton(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          color: Color(corRed),
+                          child: Text("Cancelar"),
+                          onPressed: () {
+                            Get.back();
+                            complemento.text = c.clienteData['complemento'];
+                          }),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+          isDismissible: false,
+          enableDrag: false,
+        );
+      },
+      child: Material(
+        elevation: 5,
+        shadowColor: Colors.white.withAlpha(50),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+            width: Get.context.width,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
+            child: Flex(
+              direction: Axis.horizontal,
+              children: [
+                Flexible(
+                    flex: 4,
+                    child: Container(
+                      width: Get.context.width,
+                      child:
+                          Text("Complemento", style: textSemiBold(16, corGrey)),
+                    )),
+                Flexible(
+                    flex: 6,
+                    child: Container(
+                      width: Get.context.width,
+                      child: Text(c.clienteData['complemento'],
+                          style: textRegular(18, corBackDark)),
+                    )),
+                Flexible(
+                    flex: 1,
+                    child: Container(
+                      width: Get.context.width,
+                      child: Icon(Icons.chevron_right_rounded),
+                    )),
+              ],
+            )),
+      ),
+    );
+  }
+
   static Widget bairro() {
     TextEditingController bairro = TextEditingController();
     bairro.text = c.clienteData['bairro'];

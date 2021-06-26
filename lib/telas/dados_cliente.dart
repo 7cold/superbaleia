@@ -35,6 +35,8 @@ class DadosClienteUi extends StatelessWidget {
                       SizedBox(height: 25),
                       BaleiaMeusDados.enderecoNum(),
                       SizedBox(height: 25),
+                      BaleiaMeusDados.enderecoComplemento(),
+                      SizedBox(height: 25),
                       BaleiaMeusDados.bairro(),
                       SizedBox(height: 25),
                       BaleiaMeusDados.cidade(),
