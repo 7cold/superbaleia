@@ -4,7 +4,6 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:get/get.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:superbaleia/controller/controller.dart';
-import 'package:superbaleia/telas/home.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
@@ -140,10 +139,10 @@ class _CadastroState extends State<Cadastro> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             child: Container(
-                                width: Get.width,
+                                width: Get.context.width,
                                 child: Container(
                                   padding: EdgeInsets.only(right: 10, left: 10),
-                                  width: Get.width,
+                                  width: Get.context.width,
                                   decoration: BoxDecoration(
                                     color: CupertinoColors
                                         .tertiarySystemGroupedBackground,
@@ -225,7 +224,7 @@ class _CadastroState extends State<Cadastro> {
                                 c.carregando.value == true
                                     ? BaleiaExtras.widgetLoading
                                     : "Cadastrar",
-                                Get.width,
+                                Get.context.width,
                                 43, () async {
                               if (formKey.currentState.validate()) {
                                 if (_senha.text == _confirmaSenha.text) {
@@ -248,22 +247,6 @@ class _CadastroState extends State<Cadastro> {
                                       c.login(
                                         email: _email.text,
                                         pass: _senha.text,
-                                        onSuccess: () =>
-                                            Get.offAll(() => HomeUi()),
-                                        onFail: () {
-                                          Get.defaultDialog(
-                                            title: 'Erro ao Cadastrar  😕',
-                                            titleStyle: TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 21),
-                                            middleText:
-                                                'Por favor verifique as informações e tente novamente. ',
-                                            middleTextStyle:
-                                                TextStyle(fontSize: 16),
-                                            textCancel: "Ok",
-                                            cancelTextColor: Colors.blue,
-                                          );
-                                        },
                                       );
                                     },
                                     onFail: () {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/telas/cadastro.dart';
-import 'package:superbaleia/telas/home.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
@@ -77,21 +76,9 @@ class _LoginUiState extends State<LoginUi> {
                               BaleiaForms.textFormFieldPass("Senha", senha,
                                   (_) {
                                 c.login(
-                                    email: email.text,
-                                    pass: senha.text,
-                                    onSuccess: () {
-                                      Get.off(() => HomeUi());
-                                    },
-                                    onFail: () {
-                                      Get.snackbar(
-                                          "Email ou Senha Incorretos 😕",
-                                          "Verifique seus dados e tente novamente!",
-                                          backgroundColor:
-                                              CupertinoColors.systemRed,
-                                          borderRadius: 10,
-                                          margin: EdgeInsets.all(20),
-                                          colorText: Colors.white);
-                                    });
+                                  email: email.text,
+                                  pass: senha.text,
+                                );
                               }),
                               Padding(
                                 padding: EdgeInsets.only(right: 10, top: 10),
@@ -133,24 +120,15 @@ class _LoginUiState extends State<LoginUi> {
                                 height: 15,
                               ),
                               BaleiaButtons.buttonPrimary(
-                                  "Entrar", Get.width, 45, () {
-                                c.login(
-                                    email: email.text,
-                                    pass: senha.text,
-                                    onSuccess: () {
-                                      Get.offAll(() => HomeUi());
-                                    },
-                                    onFail: () {
-                                      Get.snackbar(
-                                          "Email ou Senha Incorretos 😕",
-                                          "Verifique seus dados e tente novamente!",
-                                          backgroundColor:
-                                              CupertinoColors.systemRed,
-                                          borderRadius: 10,
-                                          margin: EdgeInsets.all(20),
-                                          colorText: Colors.white);
-                                    });
-                              })
+                                "Entrar",
+                                Get.context.width,
+                                45,
+                                () => c.login(
+                                    // email: email.text,
+                                    // pass: senha.text,
+                                    email: "leobragac@hotmail.com",
+                                    pass: "123456"),
+                              )
                             ],
                           ),
                         ),

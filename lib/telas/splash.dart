@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
-import 'package:superbaleia/telas/home.dart';
 import 'package:superbaleia/telas/root.dart';
 import 'package:superbaleia/widgets/colors.dart';
 
@@ -15,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(milliseconds: 1400), () {
       Get.off(() => Root());
     });
   }

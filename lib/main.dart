@@ -5,8 +5,6 @@ import 'package:superbaleia/telas/splash.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'adm/home_adm.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();

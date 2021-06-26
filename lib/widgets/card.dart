@@ -98,7 +98,7 @@ class BaleiaCards {
                 Flexible(
                   flex: 4,
                   child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -163,7 +163,7 @@ class BaleiaCards {
                   ),
                 ),
                 Container(
-                  width: Get.width,
+                  width: Get.context.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     gradient: LinearGradient(
@@ -277,7 +277,7 @@ class BaleiaCards {
                       child: Stack(
                         children: [
                           Container(
-                            width: Get.width,
+                            width: Get.context.width,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,14 +287,12 @@ class BaleiaCards {
                                   style: textSemiBold(15, corBackDark),
                                 ),
                                 Text(
-                                  prod.unidadeMed == "por massa"
-                                      ? "Preço por " +
-                                          prod.medida['massaUnidMed']
-                                      : prod.unidadeMed == "por capacidade"
-                                          ? "Preço por " +
-                                              prod.medida['capacUnidMed']
-                                          : "Preço Unitário ",
-                                  style: textRegular(14, corGrey),
+                                  prod.unidadeMed == "unitario"
+                                      ? "Preço Unitário"
+                                      : prod.unidadeMed == "por massa"
+                                          ? "Preço por peso"
+                                          : "Preço por capacidade",
+                                  style: textRegular(15, corGrey),
                                 ),
                               ],
                             ),
@@ -364,7 +362,7 @@ class BaleiaCards {
                           Positioned(
                             bottom: 0,
                             right: 0,
-                            child: cliente.nome == null
+                            child: c.verifLogado().value == false
                                 ? Container(
                                     color: Color(corBack),
                                   )
@@ -442,7 +440,7 @@ class BaleiaCards {
           },
           child: Container(
             height: 110,
-            width: Get.width,
+            width: Get.context.width,
             child: Flex(
               direction: Axis.horizontal,
               children: [
@@ -481,7 +479,7 @@ class BaleiaCards {
                       child: Stack(
                         children: [
                           Container(
-                            width: Get.width,
+                            width: Get.context.width,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -493,19 +491,6 @@ class BaleiaCards {
                                 Text(
                                   cart.produtoData.marca,
                                   style: textRegular(16, corBackDark),
-                                ),
-                                Text(
-                                  cart.produtoData.unidadeMed == "por massa"
-                                      ? "Preço por " +
-                                          cart.produtoData
-                                              .medida['massaUnidMed']
-                                      : cart.produtoData.unidadeMed ==
-                                              "por capacidade"
-                                          ? "Preço por " +
-                                              cart.produtoData
-                                                  .medida['capacUnidMed']
-                                          : "Preço Unitário ",
-                                  style: textLight(14, corGrey),
                                 ),
                               ],
                             ),
@@ -533,43 +518,102 @@ class BaleiaCards {
                                       SizedBox(
                                         width: 5,
                                       ),
-                                      RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                                text: "R\$ ",
-                                                style:
-                                                    textRegular(10, corOrange)),
-                                            TextSpan(
-                                              text: formatter
-                                                  .format(cart
-                                                      .produtoData.precoDesc)
-                                                  .toString(),
-                                              style:
-                                                  textSemiBold(16, corOrange),
+                                      Row(
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                    text: "R\$ ",
+                                                    style: textRegular(
+                                                        10, corOrange)),
+                                                TextSpan(
+                                                  text: formatter
+                                                      .format(cart.produtoData
+                                                          .precoDesc)
+                                                      .toString(),
+                                                  style: textSemiBold(
+                                                      16, corOrange),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          cart.qtd > 1
+                                              ? RichText(
+                                                  text: TextSpan(
+                                                    children: [
+                                                      TextSpan(
+                                                          text: "R\$ ",
+                                                          style: textRegular(
+                                                              8, corGrey)),
+                                                      TextSpan(
+                                                        text: formatter
+                                                            .format(cart
+                                                                    .produtoData
+                                                                    .preco *
+                                                                cart.qtd)
+                                                            .toString(),
+                                                        style: textSemiBold(
+                                                            14, corGrey),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              : SizedBox(),
+                                        ],
                                       ),
                                     ],
                                   ),
                                 )
                               : Positioned(
                                   bottom: 0,
-                                  child: RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                            text: "R\$ ",
-                                            style: textRegular(10, corGreen)),
-                                        TextSpan(
-                                          text: formatter
-                                              .format(cart.produtoData.preco)
-                                              .toString(),
-                                          style: textSemiBold(16, corGreen),
+                                  child: Row(
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: "R\$ ",
+                                                style:
+                                                    textRegular(10, corGreen)),
+                                            TextSpan(
+                                              text: formatter
+                                                  .format(
+                                                      cart.produtoData.preco)
+                                                  .toString(),
+                                              style: textSemiBold(16, corGreen),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      cart.qtd > 1
+                                          ? RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                      text: "R\$ ",
+                                                      style: textRegular(
+                                                          8, corGrey)),
+                                                  TextSpan(
+                                                    text: formatter
+                                                        .format(cart.produtoData
+                                                                .preco *
+                                                            cart.qtd)
+                                                        .toString(),
+                                                    style: textSemiBold(
+                                                        14, corGrey),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          : SizedBox(),
+                                    ],
                                   ),
                                 ),
                           Positioned(
@@ -595,21 +639,6 @@ class BaleiaCards {
                               ],
                             ),
                           ),
-                          Positioned(
-                            right: 0,
-                            bottom: 45,
-                            child: cart.produtoData.unidadeMed ==
-                                    "por capacidade"
-                                ? BaleiaExtras.iconCarrinhoMl(
-                                    cart.produtoData.medida['capac'].toString())
-                                : cart.produtoData.unidadeMed == "unitario"
-                                    ? BaleiaExtras.iconCarrinhoMl(cart
-                                        .produtoData.medida['capac']
-                                        .toString())
-                                    : BaleiaExtras.iconCarrinhoKg(cart
-                                        .produtoData.medida['massa']
-                                        .toString()),
-                          )
                         ],
                       ),
                     ),
@@ -684,7 +713,7 @@ class BaleiaCards {
           },
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 18, horizontal: 14),
-            width: Get.width,
+            width: Get.context.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),

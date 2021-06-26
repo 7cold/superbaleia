@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/categorias_data.dart';
-import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/telas/ajuda.dart';
 import 'package:superbaleia/telas/carrinho.dart';
 import 'package:superbaleia/telas/localizacao.dart';
@@ -21,9 +20,8 @@ class HomeUi extends StatelessWidget {
   Widget build(BuildContext context) {
     Controller c = Get.put(Controller());
 
-    return Obx(() {
-      ClienteData cliente = ClienteData.fromJson(c.clienteData);
-      return c.carregando.value == true
+    return Obx(
+      () => c.carregando.value == true
           ? Scaffold(
               body: BaleiaExtras.widgetLoading,
             )
@@ -51,7 +49,7 @@ class HomeUi extends StatelessWidget {
                 title: Text('Inicio', style: textSemiBold(20, corBackDark)),
                 centerTitle: true,
                 actions: [
-                  cliente.nome == null
+                  c.verifLogado().value == false
                       ? SizedBox()
                       : Stack(
                           alignment: Alignment.center,
@@ -153,143 +151,144 @@ class HomeUi extends StatelessWidget {
                         ]),
               backgroundColor: Color(corBack),
               body: SafeArea(
-                  child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //retirada do espacamento pq tem efeito gradiente no fundo
-                    // SizedBox(height: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.white,
-                            Colors.white,
-                            Colors.white,
-                            Colors.white,
-                            Colors.white,
-                            Colors.white,
-                            Color(corBack),
-                          ],
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 10, bottom: 35, left: 20, right: 20),
-                              child: c.categorias.length == 0
-                                  ? SizedBox(
-                                      width: context.width,
-                                      child: BaleiaExtras.widgetLoading,
-                                    )
-                                  : Row(
-                                      children: c.categorias.map((doc) {
-                                        CategoriaData cat = doc;
-                                        return BaleiaCards.cardCategoria(cat);
-                                      }).toList(),
-                                    ),
-                            ),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //retirada do espacamento pq tem efeito gradiente no fundo
+                      // SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white,
+                              Colors.white,
+                              Colors.white,
+                              Colors.white,
+                              Colors.white,
+                              Colors.white,
+                              Color(corBack),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    BaleiaCards.cardSlide(
-                        Get.context.width,
-                        170,
-                        c.banners.map((doc) {
-                          return BaleiaCards.cardSlideItem(doc['img']);
-                        }).toList()),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, top: 35, right: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Dicas do dia",
-                            style: textHeavy(
-                              22,
-                              corBackDark,
-                            ),
-                          ),
-                          BaleiaButtons.buttonText("Ver Todas", () {})
-                        ],
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 20, right: 20, top: 10, bottom: 15),
-                        child: Row(
-                          children: c.dicas.map((dicaData) {
-                            return BaleiaCards.cardTips(dicaData);
-                          }).toList(),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, top: 0, right: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Lanches rápidos",
-                            style: textHeavy(
-                              22,
-                              corBackDark,
-                            ),
-                          ),
-                          BaleiaButtons.buttonText("Ver Todos", () {})
-                        ],
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 20, right: 20, top: 10, bottom: 15),
-                        child: Row(
-                          children: c.pratos.map((dicaData) {
-                            return BaleiaCards.cardPratos(dicaData);
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 40, top: 20),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                BaleiaButtons.buttonSecondary(
-                                    "Mais informações",
-                                    context.width,
-                                    40,
-                                    () async {}),
-                              ],
+                            SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 10, bottom: 35, left: 20, right: 20),
+                                child: c.categorias.length == 0
+                                    ? SizedBox(
+                                        width: context.width,
+                                        child: BaleiaExtras.widgetLoading,
+                                      )
+                                    : Row(
+                                        children: c.categorias.map((doc) {
+                                          CategoriaData cat = doc;
+                                          return BaleiaCards.cardCategoria(cat);
+                                        }).toList(),
+                                      ),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                      BaleiaCards.cardSlide(
+                          Get.context.width,
+                          170,
+                          c.banners.map((doc) {
+                            return BaleiaCards.cardSlideItem(doc['img']);
+                          }).toList()),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, top: 35, right: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Dicas do dia",
+                              style: textHeavy(
+                                22,
+                                corBackDark,
+                              ),
+                            ),
+                            BaleiaButtons.buttonText("Ver Todas", () {})
+                          ],
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 20, right: 20, top: 10, bottom: 15),
+                          child: Row(
+                            children: c.dicas.map((dicaData) {
+                              return BaleiaCards.cardTips(dicaData);
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, top: 0, right: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Lanches rápidos",
+                              style: textHeavy(
+                                22,
+                                corBackDark,
+                              ),
+                            ),
+                            BaleiaButtons.buttonText("Ver Todos", () {})
+                          ],
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 20, right: 20, top: 10, bottom: 15),
+                          child: Row(
+                            children: c.pratos.map((dicaData) {
+                              return BaleiaCards.cardPratos(dicaData);
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 40, top: 20),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  BaleiaButtons.buttonSecondary(
+                                      "Mais informações",
+                                      context.width,
+                                      40,
+                                      () async {}),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              )),
-            );
-    });
+              ),
+            ),
+    );
   }
 }

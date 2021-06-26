@@ -8,11 +8,10 @@ class ProdutoData {
   num preco;
   num precoDesc;
   bool ativo;
-
   String marca;
   String unidadeMed;
   String imgFit;
-  Map<String, dynamic> medida;
+  List espec;
 
   ProdutoData({
     this.id,
@@ -25,7 +24,7 @@ class ProdutoData {
     this.marca,
     this.unidadeMed,
     this.imgFit,
-    this.medida,
+    this.espec,
   });
 
   ProdutoData.fromJson(Map<dynamic, dynamic> json) {
@@ -39,7 +38,7 @@ class ProdutoData {
     marca = json['marca'];
     unidadeMed = json['unidadeMed'];
     imgFit = json['imgFit'];
-    medida = json['medida'];
+    espec = json['espec'];
   }
 
   ProdutoData.fromDocument(DocumentSnapshot document) {
@@ -53,7 +52,7 @@ class ProdutoData {
     marca = document['marca'];
     unidadeMed = document['unidadeMed'];
     imgFit = document['imgFit'];
-    medida = document['medida'];
+    espec = document['espec'];
   }
 
   Map<String, dynamic> toResumeMap() {
@@ -67,7 +66,17 @@ class ProdutoData {
       "marca": marca,
       "unidMedida": unidadeMed,
       "imgFit": imgFit,
-      "medida": medida
+      "espec": espec
     };
+  }
+}
+
+class ProdEscpec {
+  String espec;
+  dynamic valor;
+
+  ProdEscpec.fromList(Map<String, dynamic> res) {
+    espec = res['espec'];
+    valor = res['valor'];
   }
 }

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
@@ -285,26 +288,29 @@ class Controller extends GetxController {
   void login({
     @required String email,
     @required String pass,
-    @required VoidCallback onSuccess,
-    @required VoidCallback onFail,
   }) async {
     carregando.value = true;
+
     _auth.value
         .signInWithEmailAndPassword(email: email, password: pass)
-        .then((result) async {
+        .then((result) {
       firebaseUser.value = result.user;
-      await carregarUsuarios();
+      carregarUsuarios();
 
-      onSuccess();
-      carregando.value = false;
+      Get.offAll(() => HomeUi());
     }).catchError((e) {
-      onFail();
       carregando.value = false;
+      Get.snackbar("Email ou Senha Incorretos 😕",
+          "Verifique seus dados e tente novamente!",
+          backgroundColor: CupertinoColors.systemRed,
+          borderRadius: 10,
+          margin: EdgeInsets.all(20),
+          colorText: Colors.white);
     });
   }
 
   RxBool verifLogado() {
-    if (firebaseUser.value == null) {
+    if (firebaseUser.value == null || clienteData['nome'] == null) {
       return false.obs;
     } else {
       return true.obs;

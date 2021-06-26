@@ -25,7 +25,7 @@ class BaleiaExtras {
   static Widget drawer(Controller c, List<Widget> list) {
     ClienteData cliente = ClienteData.fromJson(c.clienteData);
     return Container(
-      width: Get.width / 1.2,
+      width: Get.context.width / 1.2,
       child: Drawer(
         elevation: 0,
         child: Container(
@@ -36,8 +36,8 @@ class BaleiaExtras {
                 Align(
                   alignment: Alignment.topCenter,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 70),
-                    child: cliente.nome == null
+                    padding: EdgeInsets.only(top: 70, left: 20, right: 20),
+                    child: c.verifLogado().value == false
                         ? Column(
                             children: [
                               Image.asset(
@@ -52,11 +52,13 @@ class BaleiaExtras {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      "Por favor, entre ou cadastre-se:",
-                                      style: textRegular(
-                                        14,
-                                        corBackDark,
+                                    Expanded(
+                                      child: Text(
+                                        "Por favor, entre ou cadastre-se:",
+                                        style: textRegular(
+                                          14,
+                                          corBackDark,
+                                        ),
                                       ),
                                     ),
                                     BaleiaButtons.buttonText("Login", () {
@@ -108,7 +110,7 @@ class BaleiaExtras {
                     ),
                   ),
                 ),
-                cliente.nome == null
+                c.verifLogado().value == false
                     ? SizedBox()
                     : Align(
                         alignment: Alignment.bottomCenter,
@@ -698,7 +700,7 @@ class BaleiaExtras {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        width: Get.width,
+        width: Get.context.width,
         child: Column(
           children: [
             Padding(
@@ -753,7 +755,7 @@ class BaleiaExtras {
                         child: Column(
                           children: [
                             Container(
-                              width: Get.width,
+                              width: Get.context.width,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -861,7 +863,7 @@ class BaleiaExtras {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        width: Get.width,
+        width: Get.context.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -891,7 +893,7 @@ class BaleiaExtras {
                   EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
               child: Container(
                 padding: EdgeInsets.only(right: 10, left: 10),
-                width: Get.width,
+                width: Get.context.width,
                 decoration: BoxDecoration(
                   color: CupertinoColors.tertiarySystemGroupedBackground,
                   borderRadius: BorderRadius.circular(10),
@@ -925,7 +927,7 @@ class BaleiaExtras {
                         top: 0, left: 20, right: 20, bottom: 20),
                     child: Container(
                         padding: EdgeInsets.only(right: 10, left: 10),
-                        width: Get.width,
+                        width: Get.context.width,
                         decoration: BoxDecoration(
                           color:
                               CupertinoColors.tertiarySystemGroupedBackground,
@@ -965,7 +967,7 @@ class BaleiaExtras {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        width: Get.width,
+        width: Get.context.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1040,7 +1042,7 @@ class BaleiaExtras {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        width: Get.width,
+        width: Get.context.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1129,7 +1131,7 @@ class BaleiaExtras {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-          width: Get.width,
+          width: Get.context.width,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
           child: Column(
             children: [
@@ -1144,15 +1146,15 @@ class BaleiaExtras {
                 direction: Axis.horizontal,
                 children: [
                   Flexible(
-                      flex: 2,
+                      flex: 3,
                       child: Container(
-                        width: Get.width,
+                        width: Get.context.width,
                         child: Text("Rua:", style: textSemiBold(16, corGrey)),
                       )),
                   Flexible(
                       flex: 6,
                       child: Container(
-                        width: Get.width,
+                        width: Get.context.width,
                         child:
                             Text(endereco, style: textRegular(16, corBackDark)),
                       )),
@@ -1165,14 +1167,14 @@ class BaleiaExtras {
                   Flexible(
                       flex: 3,
                       child: Container(
-                        width: Get.width,
+                        width: Get.context.width,
                         child:
                             Text("Telefone:", style: textSemiBold(16, corGrey)),
                       )),
                   Flexible(
                       flex: 6,
                       child: Container(
-                        width: Get.width,
+                        width: Get.context.width,
                         child: Text(tel, style: textRegular(16, corBackDark)),
                       )),
                 ],
@@ -1189,7 +1191,7 @@ class BaleiaExtras {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-          width: Get.width,
+          width: Get.context.width,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
           child: Column(
             children: [
@@ -1204,16 +1206,16 @@ class BaleiaExtras {
                 direction: Axis.horizontal,
                 children: [
                   Flexible(
-                      flex: 2,
+                      flex: 3,
                       child: Container(
-                        width: Get.width,
+                        width: Get.context.width,
                         child:
                             Text("Telefone", style: textSemiBold(18, corGrey)),
                       )),
                   Flexible(
                       flex: 6,
                       child: Container(
-                        width: Get.width,
+                        width: Get.context.width,
                         child: Text("35-99999-99999",
                             style: textRegular(18, corBackDark)),
                       )),

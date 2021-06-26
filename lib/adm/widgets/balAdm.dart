@@ -27,7 +27,7 @@ class BalAdm {
           child: Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             margin: EdgeInsets.all(10),
-            width: Get.width,
+            width: Get.context.width,
             child: ResponsiveGridRow(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -55,19 +55,6 @@ class BalAdm {
                   lg: 3,
                   child: Text(
                     prod.marca,
-                    style: textLight(16, corGrey),
-                  ),
-                ),
-                ResponsiveGridCol(
-                  lg: 1,
-                  child: Text(
-                    prod.medida['massa'] == ""
-                        ? prod.medida['capac'].toString() +
-                            " " +
-                            prod.medida['capacUnidMed']
-                        : prod.medida['massa'].toString() +
-                            " " +
-                            prod.medida['massaUnidMed'],
                     style: textLight(16, corGrey),
                   ),
                 ),
@@ -144,7 +131,7 @@ class BalAdm {
           child: Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             margin: EdgeInsets.all(10),
-            width: Get.width,
+            width: Get.context.width,
             child: ResponsiveGridRow(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

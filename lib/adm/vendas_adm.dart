@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/adm/controller_adm.dart';
-import 'package:superbaleia/adm/produtos_adm_add.dart';
 import 'package:superbaleia/adm/widgets/balAdm.dart';
 import 'package:superbaleia/data/pedido_data.dart';
-import 'package:superbaleia/data/produto_data.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
 

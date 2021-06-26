@@ -164,7 +164,7 @@ class ProdutosAdmAdd extends StatelessWidget {
                               child: Padding(
                                 padding: EdgeInsets.only(top: 20),
                                 child: BaleiaButtons.buttonPrimary(
-                                    "Selecionar", Get.width, 50, () {
+                                    "Selecionar", Get.context.width, 50, () {
                                   c.getImage();
                                 }),
                               )),
@@ -238,12 +238,12 @@ class ProdutosAdmAdd extends StatelessWidget {
                         ResponsiveGridCol(
                           lg: 6,
                           child: Container(
-                            width: Get.width,
+                            width: Get.context.width,
                             child: Container(
                               padding: EdgeInsets.only(right: 20, left: 20),
                               margin:
                                   EdgeInsets.only(right: 20, left: 20, top: 20),
-                              width: Get.width,
+                              width: Get.context.width,
                               decoration: BoxDecoration(
                                 color: CupertinoColors
                                     .tertiarySystemGroupedBackground,
@@ -295,12 +295,12 @@ class ProdutosAdmAdd extends StatelessWidget {
                         ResponsiveGridCol(
                           lg: 6,
                           child: Container(
-                            width: Get.width,
+                            width: Get.context.width,
                             child: Container(
                               padding: EdgeInsets.only(right: 20, left: 20),
                               margin:
                                   EdgeInsets.only(right: 20, left: 20, top: 20),
-                              width: Get.width,
+                              width: Get.context.width,
                               decoration: BoxDecoration(
                                 color: CupertinoColors
                                     .tertiarySystemGroupedBackground,
@@ -398,7 +398,7 @@ class ProdutosAdmAdd extends StatelessWidget {
                                           EdgeInsets.only(right: 20, left: 20),
                                       margin:
                                           EdgeInsets.only(right: 20, left: 20),
-                                      width: Get.width,
+                                      width: Get.context.width,
                                       decoration: BoxDecoration(
                                         color: CupertinoColors
                                             .tertiarySystemGroupedBackground,
@@ -450,7 +450,7 @@ class ProdutosAdmAdd extends StatelessWidget {
                                           EdgeInsets.only(right: 20, left: 20),
                                       margin:
                                           EdgeInsets.only(right: 20, left: 20),
-                                      width: Get.width,
+                                      width: Get.context.width,
                                       decoration: BoxDecoration(
                                         color: CupertinoColors
                                             .tertiarySystemGroupedBackground,

@@ -31,7 +31,7 @@ class Bloquieo extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              BaleiaButtons.buttonPrimary("Entrar", Get.width, 45, () {
+              BaleiaButtons.buttonPrimary("Entrar", Get.context.width, 45, () {
                 Get.off(() => LoginUi());
               }),
               SizedBox(

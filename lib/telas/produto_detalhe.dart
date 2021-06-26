@@ -92,7 +92,7 @@ class ProdutoDetalheUi extends StatelessWidget {
           children: [
             Container(
               height: 200,
-              width: Get.width,
+              width: Get.context.width,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -129,7 +129,7 @@ class ProdutoDetalheUi extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 0, bottom: 10),
-              child: Text(prod.marca, style: textSemiBold(18, corBackDark)),
+              child: Text(prod.marca, style: textSemiBold(18, corGrey)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -139,55 +139,54 @@ class ProdutoDetalheUi extends StatelessWidget {
                 elevation: 8,
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, top: 15, bottom: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 4),
-                              decoration: BoxDecoration(
-                                  color: Color(corPri),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Text(
-                                prod.unidadeMed == "por massa"
-                                    ? "Preço por " + prod.medida['massaUnidMed']
-                                    : prod.unidadeMed == "por capacidade"
-                                        ? "Preço por " +
-                                            prod.medida['capacUnidMed']
-                                        : "Preço Unitário ",
-                                style: textRegular(16, corBack),
+                      Text("Descrição", style: textSemiBold(16, corBackDark)),
+                      SizedBox(height: 10),
+                      Text(prod.desc, style: textRegular(16, corGrey)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Material(
+                color: Colors.white,
+                shadowColor: Colors.white.withAlpha(50),
+                elevation: 8,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Especificações",
+                          style: textSemiBold(16, corBackDark)),
+                      SizedBox(height: 10),
+                      Column(
+                        children: prod.espec.map((e) {
+                          ProdEscpec espec = ProdEscpec.fromList(e);
+                          return Row(
+                            children: [
+                              Text(espec.espec.toString() + ":",
+                                  style: textRegular(16, corBackDark)),
+                              SizedBox(
+                                width: 5,
                               ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 4),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: prod.medida['capac'] != 0
-                                  ? BaleiaExtras.iconCarrinhoMl(
-                                      prod.medida['capac'].toString())
-                                  : BaleiaExtras.iconCarrinhoKg(
-                                      prod.medida['massa'].toString()),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, top: 10, bottom: 20, right: 20),
-                        child: Text(prod.desc, style: textRegular(16, corGrey)),
+                              Text(espec.valor.toString(),
+                                  style: textRegular(16, corGrey)),
+                            ],
+                          );
+                        }).toList(),
                       ),
                     ],
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -75,7 +75,7 @@ class BaleiaMeusDados {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-            width: Get.width,
+            width: Get.context.width,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
             child: Flex(
               direction: Axis.horizontal,
@@ -83,20 +83,20 @@ class BaleiaMeusDados {
                 Flexible(
                     flex: 4,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text("Nome", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text(c.clienteData['nome'],
                           style: textRegular(18, corBackDark)),
                     )),
                 Flexible(
                     flex: 1,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Icon(Icons.chevron_right_rounded),
                     )),
               ],
@@ -170,7 +170,7 @@ class BaleiaMeusDados {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-            width: Get.width,
+            width: Get.context.width,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
             child: Flex(
               direction: Axis.horizontal,
@@ -178,21 +178,21 @@ class BaleiaMeusDados {
                 Flexible(
                     flex: 4,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child:
                           Text("Sobrenome", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text(c.clienteData['sobrenome'],
                           style: textRegular(18, corBackDark)),
                     )),
                 Flexible(
                     flex: 1,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Icon(Icons.chevron_right_rounded),
                     )),
               ],
@@ -208,7 +208,7 @@ class BaleiaMeusDados {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-          width: Get.width,
+          width: Get.context.width,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
           child: Flex(
             direction: Axis.horizontal,
@@ -216,20 +216,20 @@ class BaleiaMeusDados {
               Flexible(
                   flex: 4,
                   child: Container(
-                    width: Get.width,
+                    width: Get.context.width,
                     child: Text("CPF", style: textSemiBold(16, corGrey)),
                   )),
               Flexible(
                   flex: 6,
                   child: Container(
-                    width: Get.width,
+                    width: Get.context.width,
                     child: Text(c.clienteData['cpf'],
                         style: textRegular(18, corBackDark)),
                   )),
               Flexible(
                 flex: 1,
                 child: Container(
-                  width: Get.width,
+                  width: Get.context.width,
                   child: SizedBox(),
                 ),
               ),
@@ -245,7 +245,7 @@ class BaleiaMeusDados {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-          width: Get.width,
+          width: Get.context.width,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
           child: Flex(
             direction: Axis.horizontal,
@@ -253,20 +253,20 @@ class BaleiaMeusDados {
               Flexible(
                   flex: 4,
                   child: Container(
-                    width: Get.width,
+                    width: Get.context.width,
                     child: Text("Email", style: textSemiBold(16, corGrey)),
                   )),
               Flexible(
                   flex: 6,
                   child: Container(
-                    width: Get.width,
+                    width: Get.context.width,
                     child: Text(c.clienteData['email'],
                         style: textRegular(18, corBackDark)),
                   )),
               Flexible(
                   flex: 1,
                   child: Container(
-                    width: Get.width,
+                    width: Get.context.width,
                     child: SizedBox(),
                   )),
             ],
@@ -340,7 +340,7 @@ class BaleiaMeusDados {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-            width: Get.width,
+            width: Get.context.width,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
             child: Flex(
               direction: Axis.horizontal,
@@ -348,20 +348,20 @@ class BaleiaMeusDados {
                 Flexible(
                     flex: 4,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text("Celular", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text(c.clienteData['celular'],
                           style: textRegular(18, corBackDark)),
                     )),
                 Flexible(
                     flex: 1,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Icon(Icons.chevron_right_rounded),
                     )),
               ],
@@ -434,7 +434,7 @@ class BaleiaMeusDados {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-            width: Get.width,
+            width: Get.context.width,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
             child: Flex(
               direction: Axis.horizontal,
@@ -442,20 +442,20 @@ class BaleiaMeusDados {
                 Flexible(
                     flex: 4,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text("Endereço", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text(c.clienteData['endereco'],
                           style: textRegular(18, corBackDark)),
                     )),
                 Flexible(
                     flex: 1,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Icon(Icons.chevron_right_rounded),
                     )),
               ],
@@ -527,7 +527,7 @@ class BaleiaMeusDados {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-            width: Get.width,
+            width: Get.context.width,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
             child: Flex(
               direction: Axis.horizontal,
@@ -535,20 +535,20 @@ class BaleiaMeusDados {
                 Flexible(
                     flex: 4,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text("Numero", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text(c.clienteData['num'],
                           style: textRegular(18, corBackDark)),
                     )),
                 Flexible(
                     flex: 1,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Icon(Icons.chevron_right_rounded),
                     )),
               ],
@@ -620,7 +620,7 @@ class BaleiaMeusDados {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-            width: Get.width,
+            width: Get.context.width,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
             child: Flex(
               direction: Axis.horizontal,
@@ -628,20 +628,20 @@ class BaleiaMeusDados {
                 Flexible(
                     flex: 4,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text("Bairro", style: textSemiBold(16, corGrey)),
                     )),
                 Flexible(
                     flex: 6,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Text(c.clienteData['bairro'],
                           style: textRegular(18, corBackDark)),
                     )),
                 Flexible(
                     flex: 1,
                     child: Container(
-                      width: Get.width,
+                      width: Get.context.width,
                       child: Icon(Icons.chevron_right_rounded),
                     )),
               ],
@@ -659,7 +659,7 @@ class BaleiaMeusDados {
       color: Colors.white,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-          width: Get.width,
+          width: Get.context.width,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
           child: Flex(
             direction: Axis.horizontal,
@@ -667,16 +667,16 @@ class BaleiaMeusDados {
               Flexible(
                   flex: 4,
                   child: Container(
-                    width: Get.width,
+                    width: Get.context.width,
                     child: Text("Cidade", style: textSemiBold(18, corGrey)),
                   )),
               Flexible(
                 flex: 8,
                 child: Container(
-                  width: Get.width,
+                  width: Get.context.width,
                   child: Container(
                     padding: EdgeInsets.only(right: 10, left: 10),
-                    width: Get.width,
+                    width: Get.context.width,
                     decoration: BoxDecoration(
                       color: CupertinoColors.tertiarySystemGroupedBackground,
                       borderRadius: BorderRadius.circular(10),

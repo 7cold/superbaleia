@@ -63,7 +63,8 @@ class FinalizarCompraUiFinal extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                BaleiaButtons.buttonPrimary("Meus Pedidos", Get.width, 45, () {
+                BaleiaButtons.buttonPrimary(
+                    "Meus Pedidos", Get.context.width, 45, () {
                   Get.off(() => HomeUi());
                   Get.to(() => PedidosUi());
                 })
