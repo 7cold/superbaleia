@@ -5,6 +5,8 @@ import 'package:superbaleia/telas/splash.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'adm/home_adm.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
@@ -42,8 +44,8 @@ class _MyAppState extends State<MyApp> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            // return HomeAdm();
-            return SplashScreen();
+            return HomeAdm();
+            // return SplashScreen();
           }
           return Scaffold(body: BaleiaExtras.widgetLoading);
         },

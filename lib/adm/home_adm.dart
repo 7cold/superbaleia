@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:superbaleia/adm/controller_adm.dart';
-import 'package:superbaleia/adm/produtos_adm.dart';
-import 'package:superbaleia/adm/vendas_adm.dart';
+import 'package:superbaleia/adm/controller/controller_adm.dart';
+import 'package:superbaleia/adm/produtos/produtos_adm.dart';
+import 'package:superbaleia/adm/pedidos/pedidos_adm.dart';
 import 'package:superbaleia/widgets/extras.dart';
 
 class HomeAdm extends StatelessWidget {

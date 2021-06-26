@@ -21,6 +21,14 @@ class CarrinhoData {
     data = document['data'];
   }
 
+  CarrinhoData.fromMap(Map<dynamic, dynamic> map) {
+    categoria = map['categoria'];
+    produtoId = map['produtoId'];
+    produtoData = ProdutoData.fromJson(map['produto']);
+    qtd = map['qtd'];
+    data = map['data'];
+  }
+
   Map<String, dynamic> toMap() {
     return {
       "categoria": categoria,

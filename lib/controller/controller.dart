@@ -238,12 +238,16 @@ class Controller extends GetxController {
       "entrega": {
         "entregaPreco": shipPrice,
         "entregaTipo": tipoEntega.value,
-        "entregaData": DateTime(
-            diaEntrega.value.year,
-            diaEntrega.value.month,
-            diaEntrega.value.day,
-            horaEntrega.value.hour,
-            horaEntrega.value.minute),
+        "entregaData": tipoEntega.value == "Entregar a qualquer momento"
+            ? null
+            : tipoEntega.value == "Retirada no mercado"
+                ? null
+                : DateTime(
+                    diaEntrega.value.year,
+                    diaEntrega.value.month,
+                    diaEntrega.value.day,
+                    horaEntrega.value.hour,
+                    horaEntrega.value.minute),
       },
       "produtos": carrinho.map((cartProduct) => cartProduct.toMap()).toList(),
       "produtosPreco": productsPrice,

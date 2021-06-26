@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:superbaleia/adm/controller_adm.dart';
+import 'package:superbaleia/adm/controller/controller_adm.dart';
 import 'package:superbaleia/controller/controller.dart';
 import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/pedido_data.dart';
@@ -505,7 +505,7 @@ class BaleiaExtras {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Pedido ID", style: textSemiBold(18, corGrey)),
-                            Text("#" + pedido.id.substring(0, 5),
+                            Text("#" + pedido.id.substring(0, 6),
                                 style: textSemiBold(18, corPri)),
                           ],
                         ),
@@ -669,6 +669,20 @@ class BaleiaExtras {
         ),
       );
 
+  static Widget statusPreparandoAdm() => Container(
+        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: CupertinoColors.activeBlue,
+        ),
+        child: Center(
+          child: Text(
+            "Preparando",
+            style: textRegular(14, corBack),
+          ),
+        ),
+      );
+
   static Widget statusEnviando() => Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         decoration: BoxDecoration(
@@ -681,6 +695,20 @@ class BaleiaExtras {
         ),
       );
 
+  static Widget statusEnviandoAdm() => Container(
+        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: CupertinoColors.activeOrange,
+        ),
+        child: Center(
+          child: Text(
+            "Enviando",
+            style: textRegular(14, corBack),
+          ),
+        ),
+      );
+
   static Widget statusEntregue() => Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         decoration: BoxDecoration(
@@ -690,6 +718,20 @@ class BaleiaExtras {
         child: Text(
           "Entregue",
           style: textRegular(18, corBack),
+        ),
+      );
+
+  static Widget statusEntregueAdm() => Container(
+        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: CupertinoColors.activeGreen,
+        ),
+        child: Center(
+          child: Text(
+            "Entregue",
+            style: textRegular(14, corBack),
+          ),
         ),
       );
 

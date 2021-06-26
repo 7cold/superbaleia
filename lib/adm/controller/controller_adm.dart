@@ -241,4 +241,13 @@ class ControllerAdm extends GetxController {
       return produtos.add(prod);
     }).toList();
   }
+
+  Future<Null> deleteProduto(ProdutoData prod) async {
+    await FirebaseFirestore.instance
+        .collection("produtos")
+        .doc(prod.categoria)
+        .collection("itens")
+        .doc(prod.id)
+        .delete();
+  }
 }

@@ -5,6 +5,7 @@ class ProdutoData {
   String titulo;
   String desc;
   String img;
+  String categoria;
   num preco;
   num precoDesc;
   bool ativo;
@@ -18,6 +19,7 @@ class ProdutoData {
     this.titulo,
     this.desc,
     this.img,
+    this.categoria,
     this.preco,
     this.precoDesc,
     this.ativo,
@@ -32,6 +34,7 @@ class ProdutoData {
     titulo = json['titulo'];
     desc = json['desc'];
     img = json['img'];
+    categoria = json['categoria'];
     preco = json['preco'];
     precoDesc = json['precoDesc'];
     ativo = json['ativo'];
@@ -46,6 +49,7 @@ class ProdutoData {
     titulo = document['titulo'];
     desc = document['desc'];
     img = document['img'];
+    categoria = document['categoria'];
     preco = document['preco'];
     precoDesc = document['precoDesc'];
     ativo = document['ativo'];
@@ -60,6 +64,7 @@ class ProdutoData {
       "titulo": titulo,
       "desc": desc,
       "img": img,
+      "categoria": categoria,
       "preco": preco,
       "precoDesc": precoDesc,
       "ativo": ativo,
