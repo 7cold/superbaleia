@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/pedido_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 
@@ -12,12 +13,14 @@ class ControllerAdm extends GetxController {
   void onInit() {
     carregarTodos();
     carregarVendas();
+    carregarClientes();
     super.onInit();
   }
 
   RxBool carregando = false.obs;
   RxList produtos = [].obs;
   RxList pedidos = [].obs;
+  RxList clientes = [].obs;
   RxString url = "".obs;
   RxDouble urlPorcentagem = 0.0.obs;
   PickedFile image;
@@ -84,6 +87,18 @@ class ControllerAdm extends GetxController {
       PedidoData ped = PedidoData.fromDocument(doc);
       return pedidos.add(ped);
     }).toList();
+  }
+
+  carregarClientes() async {
+    carregando.value = true;
+    clientes.value = [];
+    QuerySnapshot resFire =
+        await FirebaseFirestore.instance.collection('clientes').get();
+    resFire.docs.map((DocumentSnapshot doc) {
+      ClienteData clienteData = ClienteData.fromDocument(doc);
+      return clientes.add(clienteData);
+    }).toList();
+    carregando.value = false;
   }
 
   _carregarCatBebidas() async {

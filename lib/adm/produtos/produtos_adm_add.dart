@@ -459,7 +459,6 @@ class ProdutosAdmAdd extends StatelessWidget {
                                     desc.text == "" ||
                                     c.url.value == "" ||
                                     preco.text == "" ||
-                                    precodesc.text == "" ||
                                     marca.text == "" ||
                                     unidadeMed.value == "" ||
                                     categoria.value == "") {

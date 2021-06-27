@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:superbaleia/adm/controller/controller_adm.dart';
 import 'package:superbaleia/adm/pedidos/pedidos_detalhes_adm.dart';
+import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/pedido_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 import 'package:superbaleia/widgets/colors.dart';
@@ -374,6 +375,86 @@ class BalAdm {
                         : ped.status == 2
                             ? BaleiaExtras.statusEnviandoAdm()
                             : BaleiaExtras.statusEntregueAdm()),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget clienteItens(ClienteData cliente) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+      child: Material(
+        borderRadius: BorderRadius.circular(10),
+        shadowColor: Colors.white.withAlpha(50),
+        color: Colors.white,
+        elevation: 5,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          hoverColor: Color(corPri).withAlpha(50),
+          highlightColor: Color(corBack).withAlpha(10),
+          splashColor: Colors.transparent,
+          onTap: () {
+            // Get.to(() => PedidosDetalhesAdm(
+            //       ped: ped,
+            //     ));
+          },
+          child: Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+            margin: EdgeInsets.all(10),
+            width: Get.context.width,
+            child: ResponsiveGridRow(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ResponsiveGridCol(
+                  lg: 1,
+                  child: Text(
+                    "#" + cliente.id.substring(0, 6),
+                    style: textRegular(14, corGrey),
+                  ),
+                ),
+                ResponsiveGridCol(
+                  lg: 2,
+                  child: Text(
+                    cliente.nome + " " + cliente.sobrenome,
+                    style: textRegular(14, corBackDark),
+                  ),
+                ),
+                ResponsiveGridCol(
+                  lg: 2,
+                  child: Text(
+                    cliente.cpf,
+                    style: textRegular(14, corBackDark),
+                  ),
+                ),
+                ResponsiveGridCol(
+                  lg: 2,
+                  child: Text(
+                    cliente.celular,
+                    style: textRegular(14, corBackDark),
+                  ),
+                ),
+                ResponsiveGridCol(
+                  lg: 2,
+                  child: Text(
+                    cliente.email,
+                    style: textRegular(14, corBackDark),
+                  ),
+                ),
+                ResponsiveGridCol(
+                  lg: 2,
+                  child: Text(
+                    "Rua: " +
+                        cliente.endereco +
+                        ", " +
+                        cliente.numero.toString() +
+                        " - " +
+                        cliente.bairro,
+                    style: textRegular(14, corBackDark),
+                  ),
+                ),
               ],
             ),
           ),
