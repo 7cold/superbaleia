@@ -145,7 +145,10 @@ class ProdutoDetalheUi extends StatelessWidget {
                     children: [
                       Text("Descrição", style: textSemiBold(16, corBackDark)),
                       SizedBox(height: 10),
-                      Text(prod.desc, style: textRegular(16, corGrey)),
+                      Container(
+                          width: Get.width,
+                          child:
+                              Text(prod.desc, style: textRegular(16, corGrey))),
                     ],
                   ),
                 ),

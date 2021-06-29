@@ -105,7 +105,7 @@ class Controller extends GetxController {
     QuerySnapshot resFire =
         await FirebaseFirestore.instance.collection('dicas').get();
     List list = resFire.docs.map((DocumentSnapshot doc) {
-      DicaData dica = DicaData.fromDocument(doc);
+      DicasData dica = DicasData.fromDocument(doc);
       return dica;
     }).toList();
     dicas.value = list;
@@ -115,7 +115,7 @@ class Controller extends GetxController {
     QuerySnapshot resFire =
         await FirebaseFirestore.instance.collection('pratos').get();
     List list = resFire.docs.map((DocumentSnapshot doc) {
-      DicaData dica = DicaData.fromDocument(doc);
+      DicasData dica = DicasData.fromDocument(doc);
       return dica;
     }).toList();
     pratos.value = list;

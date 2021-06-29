@@ -644,7 +644,9 @@ class BaleiaExtras {
                                 ? statusPreparando()
                                 : pedido.status == 2
                                     ? statusEnviando()
-                                    : statusEntregue()
+                                    : pedido.status == 3
+                                        ? statusEntregue()
+                                        : statusCancelado()
                           ],
                         ),
                       ),
@@ -706,6 +708,30 @@ class BaleiaExtras {
             "Enviando",
             style: textRegular(14, corBack),
           ),
+        ),
+      );
+
+  static Widget statusCancelado() => Container(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: CupertinoColors.destructiveRed,
+        ),
+        child: Text(
+          "Cancelado",
+          style: textRegular(18, corBack),
+        ),
+      );
+
+  static Widget statusCanceladoAdm() => Container(
+        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: CupertinoColors.destructiveRed,
+        ),
+        child: Text(
+          "Cancelado",
+          style: textRegular(14, corBack),
         ),
       );
 
@@ -783,7 +809,7 @@ class BaleiaExtras {
                     ),
                   ),
                   Flexible(
-                    flex: 4,
+                    flex: 6,
                     child: Container(
                       padding: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(

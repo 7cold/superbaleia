@@ -11,6 +11,7 @@ import 'package:superbaleia/data/categorias_data.dart';
 import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/dicas_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
+import 'package:superbaleia/telas/pratos_dicas_detalhes.dart';
 import 'package:superbaleia/telas/produto_detalhe.dart';
 import 'package:superbaleia/telas/produtos.dart';
 import 'package:superbaleia/widgets/extras.dart';
@@ -66,149 +67,162 @@ class BaleiaCards {
         ),
       );
 
-  static Widget cardTips(DicaData dica) => Padding(
+  static Widget cardDicas(DicasData dica) => Padding(
         padding: EdgeInsets.only(left: 10, bottom: 24),
         child: Material(
           elevation: 5,
           shadowColor: Colors.white.withAlpha(50),
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
-          child: Container(
-            height: 170,
-            width: 120,
-            child: Flex(
-              direction: Axis.vertical,
-              children: [
-                Flexible(
-                  flex: 5,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8),
-                      ),
-                      image: DecorationImage(
-                        image: NetworkImage(dica.img),
-                        fit: BoxFit.cover,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: () {
+              Get.to(() => PratosDicasDetalhesUi(dica: dica));
+            },
+            child: Container(
+              height: 170,
+              width: 120,
+              child: Flex(
+                direction: Axis.vertical,
+                children: [
+                  Flexible(
+                    flex: 5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
+                        ),
+                        image: DecorationImage(
+                          image: NetworkImage(dica.img),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Flexible(
-                  flex: 4,
-                  child: Container(
-                      width: Get.context.width,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(8),
-                          bottomRight: Radius.circular(8),
+                  Flexible(
+                    flex: 4,
+                    child: Container(
+                        width: Get.context.width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(8),
+                            bottomRight: Radius.circular(8),
+                          ),
                         ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              dica.titulo,
-                              style: textBold(13, corBackDark),
-                            ),
-                            SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  dica.tempo.toString() + " min",
-                                  style: textRegular(12, corGrey),
-                                ),
-                                Text(
-                                  dica.kcal.toString() + " kcal",
-                                  style: textRegular(12, corGrey),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
-                ),
-              ],
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                dica.titulo,
+                                style: textBold(13, corBackDark),
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    dica.tempo.toString() + " min",
+                                    style: textRegular(12, corGrey),
+                                  ),
+                                  Text(
+                                    dica.kcal.toString() + " kcal",
+                                    style: textRegular(12, corGrey),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       );
 
-  static Widget cardPratos(DicaData dica) => Padding(
+  static Widget cardPratos(DicasData dica) => Padding(
         padding: EdgeInsets.only(left: 10, bottom: 24, right: 10),
         child: Material(
           elevation: 5,
           shadowColor: Colors.white.withAlpha(50),
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
-          child: Container(
-            height: 160,
-            width: Get.context.width / 1.6,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(8),
-                    image: DecorationImage(
-                      image: NetworkImage(dica.img),
-                      fit: BoxFit.cover,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: () {
+              Get.to(() => PratosDicasDetalhesUi(dica: dica));
+            },
+            child: Container(
+              height: 160,
+              width: Get.context.width / 1.6,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                        image: NetworkImage(dica.img),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: Get.context.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.transparent,
-                        Colors.black.withAlpha(55),
-                        Colors.black.withAlpha(200),
-                      ],
+                  Container(
+                    width: Get.context.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.black.withAlpha(55),
+                          Colors.black.withAlpha(200),
+                        ],
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10, bottom: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            dica.titulo,
+                            style: textBold(16, corBack),
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Text(
+                                dica.tempo.toString() + " min",
+                                style: textMedium(14, corGrey),
+                              ),
+                              Text(
+                                "  •  ",
+                                style: textMedium(14, corGrey),
+                              ),
+                              Text(
+                                dica.kcal.toString() + " kcal",
+                                style: textMedium(14, corGrey),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10, bottom: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          dica.titulo,
-                          style: textBold(16, corBack),
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Text(
-                              dica.tempo.toString() + " min",
-                              style: textMedium(14, corGrey),
-                            ),
-                            Text(
-                              "  •  ",
-                              style: textMedium(14, corGrey),
-                            ),
-                            Text(
-                              dica.kcal.toString() + " kcal",
-                              style: textMedium(14, corGrey),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -398,6 +412,88 @@ class BaleiaCards {
     );
   }
 
+  static Widget cardTodasDicas(DicasData dica) {
+    return Padding(
+      padding: EdgeInsets.only(left: 10, bottom: 20, right: 10),
+      child: Material(
+        elevation: 5,
+        shadowColor: Colors.white.withAlpha(50),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () {
+            Get.to(() => PratosDicasDetalhesUi(dica: dica));
+          },
+          child: Container(
+            height: 190,
+            width: Get.context.width,
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: NetworkImage(dica.img),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Container(
+                  width: Get.context.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.transparent,
+                        Colors.black.withAlpha(55),
+                        Colors.black.withAlpha(200),
+                      ],
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          dica.titulo,
+                          style: textBold(20, corBack),
+                        ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Text(
+                              dica.tempo.toString() + " min",
+                              style: textMedium(14, corGrey),
+                            ),
+                            Text(
+                              "  •  ",
+                              style: textMedium(14, corGrey),
+                            ),
+                            Text(
+                              dica.kcal.toString() + " kcal",
+                              style: textMedium(14, corGrey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   static Widget cardProdCarrinho(CarrinhoData cart) {
     final formatter = new NumberFormat("#,##0.00", "pt_BR");
     return Padding(
@@ -549,16 +645,34 @@ class BaleiaCards {
                                                           text: "R\$ ",
                                                           style: textRegular(
                                                               8, corGrey)),
-                                                      TextSpan(
-                                                        text: formatter
-                                                            .format(cart
-                                                                    .produtoData
-                                                                    .preco *
-                                                                cart.qtd)
-                                                            .toString(),
-                                                        style: textSemiBold(
-                                                            14, corGrey),
-                                                      ),
+                                                      cart.produtoData
+                                                                  .precoDesc !=
+                                                              cart.produtoData
+                                                                  .preco
+                                                          ? TextSpan(
+                                                              text: formatter
+                                                                  .format(cart
+                                                                          .produtoData
+                                                                          .precoDesc *
+                                                                      cart.qtd)
+                                                                  .toString(),
+                                                              style:
+                                                                  textSemiBold(
+                                                                      14,
+                                                                      corGrey),
+                                                            )
+                                                          : TextSpan(
+                                                              text: formatter
+                                                                  .format(cart
+                                                                          .produtoData
+                                                                          .preco *
+                                                                      cart.qtd)
+                                                                  .toString(),
+                                                              style:
+                                                                  textSemiBold(
+                                                                      14,
+                                                                      corGrey),
+                                                            ),
                                                     ],
                                                   ),
                                                 )

@@ -7,6 +7,7 @@ import 'package:superbaleia/telas/ajuda.dart';
 import 'package:superbaleia/telas/carrinho.dart';
 import 'package:superbaleia/telas/localizacao.dart';
 import 'package:superbaleia/telas/pedidos.dart';
+import 'package:superbaleia/telas/pratos_dicas.dart';
 import 'package:superbaleia/telas/todas_categorias.dart';
 import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/card.dart';
@@ -219,7 +220,11 @@ class HomeUi extends StatelessWidget {
                                 corBackDark,
                               ),
                             ),
-                            BaleiaButtons.buttonText("Ver Todas", () {})
+                            BaleiaButtons.buttonText(
+                                "Ver Todas",
+                                () => Get.to(() => PratosDicasUi(
+                                      tipo: "dicas",
+                                    )))
                           ],
                         ),
                       ),
@@ -231,7 +236,7 @@ class HomeUi extends StatelessWidget {
                               left: 20, right: 20, top: 10, bottom: 15),
                           child: Row(
                             children: c.dicas.map((dicaData) {
-                              return BaleiaCards.cardTips(dicaData);
+                              return BaleiaCards.cardDicas(dicaData);
                             }).toList(),
                           ),
                         ),
@@ -242,13 +247,17 @@ class HomeUi extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Lanches rápidos",
+                              "Pratos",
                               style: textHeavy(
                                 22,
                                 corBackDark,
                               ),
                             ),
-                            BaleiaButtons.buttonText("Ver Todos", () {})
+                            BaleiaButtons.buttonText(
+                                "Ver Todos",
+                                () => Get.to(() => PratosDicasUi(
+                                      tipo: "pratos",
+                                    )))
                           ],
                         ),
                       ),

@@ -120,15 +120,13 @@ class _LoginUiState extends State<LoginUi> {
                                 height: 15,
                               ),
                               BaleiaButtons.buttonPrimary(
-                                "Entrar",
-                                Get.context.width,
-                                45,
-                                () => c.login(
-                                    // email: email.text,
-                                    // pass: senha.text,
-                                    email: "leobragac@hotmail.com",
-                                    pass: "123456"),
-                              )
+                                  "Entrar",
+                                  Get.context.width,
+                                  45,
+                                  () => c.login(
+                                        email: email.text,
+                                        pass: senha.text,
+                                      ))
                             ],
                           ),
                         ),

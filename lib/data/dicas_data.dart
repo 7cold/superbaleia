@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DicaData {
+class DicasData {
   String id;
   String titulo;
   String texto;
@@ -8,7 +8,7 @@ class DicaData {
   num tempo;
   num kcal;
 
-  DicaData.fromDocument(DocumentSnapshot document) {
+  DicasData.fromDocument(DocumentSnapshot document) {
     id = document.id;
     titulo = document['titulo'];
     texto = document['texto'];
