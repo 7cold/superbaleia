@@ -1,14 +1,14 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 import 'package:superbaleia/adm/controller/controller_adm.dart';
 import 'package:superbaleia/adm/widgets/baleiaAdmWidgets.dart';
 import 'package:superbaleia/data/cliente_data.dart';
-import 'package:superbaleia/data/pedido_data.dart';
-import 'package:superbaleia/widgets/buttons.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
-import 'package:superbaleia/widgets/forms.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
 class ClientesAdm extends StatelessWidget {
@@ -22,7 +22,7 @@ class ClientesAdm extends StatelessWidget {
     return Obx(
       () => Scaffold(
         backgroundColor: Color(corBack),
-        appBar: BalAdm.appBar("Clientes", [
+        appBar: BaleiaAdm.appBar("Clientes", [
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: IconButton(
@@ -44,95 +44,141 @@ class ClientesAdm extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
-                      child: Column(
+                      child: ResponsiveGridRow(
                         children: [
-                          Text("Filtros", style: textSemiBold(18, corBackDark)),
-                          SizedBox(height: 10),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                BaleiaButtons.buttonPrimary(
-                                    "Ouro Fino",
-                                    150,
-                                    30,
-                                    cidade.value == "Ouro Fino"
-                                        ? null
-                                        : () {
-                                            cidade.value = "Ouro Fino";
-                                          }),
-                                BaleiaButtons.buttonPrimary(
-                                    "Jacutinga",
-                                    150,
-                                    30,
-                                    cidade.value == "Jacutinga"
-                                        ? null
-                                        : () {
-                                            cidade.value = "Jacutinga";
-                                          }),
-                                BaleiaButtons.buttonPrimary(
-                                    "Borda da Mata",
-                                    150,
-                                    30,
-                                    cidade.value == "Borda da Mata"
-                                        ? null
-                                        : () {
-                                            cidade.value = "Borda da Mata";
-                                          }),
-                                BaleiaButtons.buttonPrimary(
-                                    "Todos",
-                                    150,
-                                    30,
-                                    cidade.value == ""
-                                        ? null
-                                        : () {
-                                            cidade.value = "";
-                                          })
-                              ]),
-                          SizedBox(height: 10),
-                          CupertinoTextField(
-                            suffix: Row(
-                              children: [
-                                SizedBox(
-                                  height: 30,
-                                  child: CupertinoButton(
-                                      padding: EdgeInsets.all(0),
-                                      color: CupertinoColors.activeGreen,
-                                      child: Text(
-                                        "Nome",
-                                        style: textRegular(14, corBack),
+                          ResponsiveGridCol(
+                              lg: 12,
+                              child: Text("Filtros",
+                                  style: textSemiBold(18, corBackDark))),
+                          ResponsiveGridCol(
+                            lg: 3,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 10, top: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Cidade", style: textLight(16, corGrey)),
+                                  SizedBox(height: 6),
+                                  Container(
+                                    padding:
+                                        EdgeInsets.only(right: 20, left: 20),
+                                    width: Get.context.width,
+                                    decoration: BoxDecoration(
+                                      color: CupertinoColors
+                                          .tertiarySystemGroupedBackground,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: DropdownButton(
+                                      style: textRegular(16, corBackDark),
+                                      underline: SizedBox(),
+                                      isExpanded: true,
+                                      icon: Icon(
+                                        Icons.arrow_drop_down_rounded,
+                                        color: Color(corBackDark),
                                       ),
-                                      onPressed: tipoSearch.value == "nome"
-                                          ? null
-                                          : () {
-                                              tipoSearch.value = "nome";
-                                            }),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                  child: CupertinoButton(
-                                      padding: EdgeInsets.all(0),
-                                      color: CupertinoColors.activeGreen,
-                                      child: Text(
-                                        "CPF",
-                                        style: textRegular(14, corBack),
-                                      ),
-                                      onPressed: tipoSearch.value == "cpf"
-                                          ? null
-                                          : () {
-                                              tipoSearch.value = "cpf";
-                                            }),
-                                ),
-                              ],
+                                      hint: Text(cidade.value),
+                                      items: [
+                                        'Ouro Fino',
+                                        'Jacutinga',
+                                        'Borda da Mata',
+                                        'Todas',
+                                      ].map((String value) {
+                                        return DropdownMenuItem<String>(
+                                            value: value, child: Text(value));
+                                      }).toList(),
+                                      onChanged: (_) {
+                                        cidade.value = _;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            placeholder: "Pesquisar",
-                            onChanged: (_) {
-                              clienteSearch.value = _;
-                            },
                           ),
-                          SizedBox(height: 10),
+                          ResponsiveGridCol(
+                            lg: 9,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 10, top: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Pesquisa",
+                                      style: textLight(16, corGrey)),
+                                  SizedBox(height: 6),
+                                  SizedBox(
+                                    height: 45,
+                                    child: CupertinoTextField(
+                                      inputFormatters: tipoSearch.value == "cpf"
+                                          ? [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              CpfInputFormatter(),
+                                            ]
+                                          : [],
+                                      suffix: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 30,
+                                            child: CupertinoButton(
+                                                padding: EdgeInsets.all(0),
+                                                disabledColor:
+                                                    CupertinoColors.activeGreen,
+                                                color:
+                                                    CupertinoColors.systemGrey2,
+                                                child: Text(
+                                                  "Nome",
+                                                  style:
+                                                      textRegular(12, corBack),
+                                                ),
+                                                onPressed:
+                                                    tipoSearch.value == "nome"
+                                                        ? null
+                                                        : () {
+                                                            tipoSearch.value =
+                                                                "nome";
+                                                          }),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            height: 30,
+                                            child: CupertinoButton(
+                                                padding: EdgeInsets.all(0),
+                                                disabledColor:
+                                                    CupertinoColors.activeGreen,
+                                                color:
+                                                    CupertinoColors.systemGrey2,
+                                                child: Text(
+                                                  "CPF",
+                                                  style:
+                                                      textRegular(12, corBack),
+                                                ),
+                                                onPressed:
+                                                    tipoSearch.value == "cpf"
+                                                        ? null
+                                                        : () {
+                                                            tipoSearch.value =
+                                                                "cpf";
+                                                          }),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      ),
+                                      placeholder: "Pesquisar",
+                                      onChanged: (_) {
+                                        clienteSearch.value = _;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -140,7 +186,7 @@ class ClientesAdm extends StatelessWidget {
                       children: c.clientes.where((i) {
                         ClienteData cli = i;
                         return clienteSearch.value == ""
-                            ? cidade.value == ""
+                            ? cidade.value == "Todas"
                                 ? cli.cidade != ""
                                 : cli.cidade == cidade.value
                             : tipoSearch.value == "nome"
@@ -152,7 +198,7 @@ class ClientesAdm extends StatelessWidget {
                                     : null;
                       }).map((val) {
                         ClienteData clienteData = val;
-                        return BalAdm.clienteItens(clienteData);
+                        return BaleiaAdm.clienteItens(clienteData);
                       }).toList(),
                     ),
                   ],

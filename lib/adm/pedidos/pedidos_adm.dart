@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:superbaleia/adm/controller/controller_adm.dart';
@@ -13,16 +14,40 @@ class VendasAdm extends StatelessWidget {
     return Obx(
       () => Scaffold(
         backgroundColor: Color(corBack),
-        appBar: BalAdm.appBar("Vendas", []),
+        appBar: BaleiaAdm.appBar("Vendas", []),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: c.carregando.value == true
               ? BaleiaExtras.widgetLoading
-              : Column(
-                  children: c.pedidos.map((val) {
-                    PedidoData ped = val;
-                    return BalAdm.vendasItens(ped);
-                  }).toList(),
+              : Container(
+                  height: Get.context.height,
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection("pedidos")
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return BaleiaExtras.widgetLoading;
+                        } else {
+                          return ListView(
+                            physics: BouncingScrollPhysics(),
+                            children: snapshot.data.docs.length == 0
+                                ? [
+                                    SizedBox(height: 100),
+                                    BaleiaExtras.nenhumPedido(),
+                                  ]
+                                : snapshot.data.docs
+                                    .map((doc) {
+                                      PedidoData ped =
+                                          PedidoData.fromDocument(doc);
+                                      return BaleiaAdm.vendasItens(ped);
+                                    })
+                                    .toList()
+                                    .reversed
+                                    .toList(),
+                          );
+                        }
+                      }),
                 ),
         ),
       ),

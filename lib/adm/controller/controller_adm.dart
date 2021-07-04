@@ -12,7 +12,6 @@ class ControllerAdm extends GetxController {
   @override
   void onInit() {
     carregarTodos();
-    carregarVendas();
     carregarClientes();
     super.onInit();
   }
@@ -78,15 +77,6 @@ class ControllerAdm extends GetxController {
     await _carregarCatPet();
     await _carregarCatUtilidades();
     carregando.value = false;
-  }
-
-  carregarVendas() async {
-    QuerySnapshot resFire =
-        await FirebaseFirestore.instance.collection('pedidos').get();
-    resFire.docs.map((DocumentSnapshot doc) {
-      PedidoData ped = PedidoData.fromDocument(doc);
-      return pedidos.add(ped);
-    }).toList();
   }
 
   carregarClientes() async {

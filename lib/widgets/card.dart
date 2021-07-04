@@ -303,7 +303,7 @@ class BaleiaCards {
                                 Text(
                                   prod.unidadeMed == "unitario"
                                       ? "Preço Unitário"
-                                      : prod.unidadeMed == "por massa"
+                                      : prod.unidadeMed == "por peso"
                                           ? "Preço por peso"
                                           : "Preço por capacidade",
                                   style: textRegular(15, corGrey),

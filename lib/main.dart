@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:superbaleia/telas/splash.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'adm/home_adm.dart';
 
 void main() {
@@ -44,8 +42,8 @@ class _MyAppState extends State<MyApp> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            // return HomeAdm();
-            return SplashScreen();
+            return HomeAdm();
+            // return SplashScreen();
           }
           return Scaffold(body: BaleiaExtras.widgetLoading);
         },

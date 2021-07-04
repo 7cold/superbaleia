@@ -7,7 +7,6 @@ import 'package:superbaleia/data/cliente_data.dart';
 import 'package:superbaleia/data/pedido_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 import 'package:intl/intl.dart';
-
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/texts.dart';
@@ -215,11 +214,7 @@ class PedidosDetalhesAdm extends StatelessWidget {
                         ]),
                         Row(children: [
                           Text("Status: ", style: textLight(16, corGrey)),
-                          ped.status == 1
-                              ? BaleiaExtras.statusPreparandoAdm()
-                              : ped.status == 2
-                                  ? BaleiaExtras.statusEnviandoAdm()
-                                  : BaleiaExtras.statusEntregueAdm(),
+                          BaleiaExtras.widgetEntrega(ped.status, 14)
                         ]),
                         Row(children: [
                           Text("Valor dos produtos: ",
@@ -268,7 +263,7 @@ class PedidosDetalhesAdm extends StatelessWidget {
                             CarrinhoData ped = CarrinhoData.fromMap(val);
                             ProdutoData prod = ped.produtoData;
 
-                            return BalAdm.produtosItensDetalhes(prod);
+                            return BaleiaAdm.pedidoProdDetalhes(prod, ped);
                           }).toList(),
                         ),
                       ],

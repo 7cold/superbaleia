@@ -640,13 +640,7 @@ class BaleiaExtras {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Status", style: textSemiBold(18, corGrey)),
-                            pedido.status == 1
-                                ? statusPreparando()
-                                : pedido.status == 2
-                                    ? statusEnviando()
-                                    : pedido.status == 3
-                                        ? statusEntregue()
-                                        : statusCancelado()
+                            BaleiaExtras.widgetEntrega(pedido.status, 18)
                           ],
                         ),
                       ),
@@ -658,108 +652,6 @@ class BaleiaExtras {
       ),
     );
   }
-
-  static Widget statusPreparando() => Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: CupertinoColors.activeBlue,
-        ),
-        child: Text(
-          "Preparando",
-          style: textRegular(18, corBack),
-        ),
-      );
-
-  static Widget statusPreparandoAdm() => Container(
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: CupertinoColors.activeBlue,
-        ),
-        child: Center(
-          child: Text(
-            "Preparando",
-            style: textRegular(14, corBack),
-          ),
-        ),
-      );
-
-  static Widget statusEnviando() => Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: CupertinoColors.activeOrange,
-        ),
-        child: Text(
-          "Enviando",
-          style: textRegular(18, corBack),
-        ),
-      );
-
-  static Widget statusEnviandoAdm() => Container(
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: CupertinoColors.activeOrange,
-        ),
-        child: Center(
-          child: Text(
-            "Enviando",
-            style: textRegular(14, corBack),
-          ),
-        ),
-      );
-
-  static Widget statusCancelado() => Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: CupertinoColors.destructiveRed,
-        ),
-        child: Text(
-          "Cancelado",
-          style: textRegular(18, corBack),
-        ),
-      );
-
-  static Widget statusCanceladoAdm() => Container(
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: CupertinoColors.destructiveRed,
-        ),
-        child: Text(
-          "Cancelado",
-          style: textRegular(14, corBack),
-        ),
-      );
-
-  static Widget statusEntregue() => Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: CupertinoColors.activeGreen,
-        ),
-        child: Text(
-          "Entregue",
-          style: textRegular(18, corBack),
-        ),
-      );
-
-  static Widget statusEntregueAdm() => Container(
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: CupertinoColors.activeGreen,
-        ),
-        child: Center(
-          child: Text(
-            "Entregue",
-            style: textRegular(14, corBack),
-          ),
-        ),
-      );
 
   static Widget finalizarUiEndereco() {
     return Material(
@@ -1292,5 +1184,74 @@ class BaleiaExtras {
             ],
           )),
     );
+  }
+
+  static Widget widgetEntrega(int status, double fsize) {
+    switch (status) {
+      case 1:
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: CupertinoColors.activeBlue,
+          ),
+          child: Center(
+            child: Text(
+              "Preparando",
+              style: textRegular(fsize, corBack),
+            ),
+          ),
+        );
+
+        break;
+      case 2:
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: CupertinoColors.activeOrange,
+          ),
+          child: Center(
+            child: Text(
+              "Enviando",
+              style: textRegular(fsize, corBack),
+            ),
+          ),
+        );
+        break;
+
+      case 3:
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: CupertinoColors.activeGreen,
+          ),
+          child: Center(
+            child: Text(
+              "Entregue",
+              style: textRegular(fsize, corBack),
+            ),
+          ),
+        );
+        break;
+      case 4:
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: CupertinoColors.destructiveRed,
+          ),
+          child: Center(
+            child: Text(
+              "Cancelado",
+              style: textRegular(fsize, corBack),
+            ),
+          ),
+        );
+        break;
+      default:
+        return Container();
+    }
   }
 }

@@ -47,7 +47,7 @@ class ProdutosAdmAdd extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: BalAdm.appBar("Adicionar Novo Produto", null),
+      appBar: BaleiaAdm.appBar("Adicionar Novo Produto", null),
       body: Obx(
         () => SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -326,7 +326,7 @@ class ProdutosAdmAdd extends StatelessWidget {
                                 hint: Text(unidadeMed.value),
                                 items: [
                                   'unitario',
-                                  'por massa',
+                                  'por peso',
                                   'por capacidade',
                                 ].map((String value) {
                                   return DropdownMenuItem<String>(
