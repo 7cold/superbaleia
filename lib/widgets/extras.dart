@@ -222,7 +222,7 @@ class BaleiaExtras {
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 40),
                   child: InkWell(
                     onTap: () {
-                      Get.back();
+                      c.sairAdm();
                     },
                     child: Container(
                       padding:
@@ -1190,7 +1190,7 @@ class BaleiaExtras {
     switch (status) {
       case 1:
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: CupertinoColors.activeBlue,

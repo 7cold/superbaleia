@@ -49,23 +49,8 @@ class BaleiaAdm {
             child: ResponsiveGridRow(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // ResponsiveGridCol(
-                //   lg: 1,
-                //   child: Container(
-                //     height: 30,
-                //     margin: EdgeInsets.only(right: 20, left: 10),
-                //     decoration: BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius: BorderRadius.circular(10),
-                //       image: DecorationImage(
-                //         image: NetworkImage(prod.img),
-                //         fit: BoxFit.contain,
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 ResponsiveGridCol(
-                  lg: 1,
+                  lg: 2,
                   child: Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Text(
@@ -75,17 +60,17 @@ class BaleiaAdm {
                   ),
                 ),
                 ResponsiveGridCol(
-                  lg: 3,
+                  lg: c.getNivelUser() == "func" ? 3 : 2,
                   child: Text(
                     prod.titulo,
                     style: textRegular(16, corBackDark),
                   ),
                 ),
                 ResponsiveGridCol(
-                  lg: 2,
+                  lg: c.getNivelUser() == "func" ? 3 : 2,
                   child: Text(
                     prod.marca,
-                    style: textLight(16, corGrey),
+                    style: textRegular(16, corBackDark),
                   ),
                 ),
                 ResponsiveGridCol(
@@ -93,10 +78,19 @@ class BaleiaAdm {
                 ResponsiveGridCol(
                   lg: 1,
                   child: Center(
-                    child: Text(
-                      prod.ativo == true ? "Ativo" : "Desabilitado",
-                      style: textRegular(
-                          16, prod.ativo == true ? corGreen : corRed),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: prod.ativo == true
+                            ? CupertinoColors.activeGreen
+                            : CupertinoColors.systemRed,
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      child: Text(
+                        prod.ativo == true ? "Ativo" : "Desabilitado",
+                        style: textRegular(14, corBack),
+                      ),
                     ),
                   ),
                 ),
@@ -121,69 +115,73 @@ class BaleiaAdm {
                           style: textRegular(16, corOrange),
                         ),
                 ),
-                ResponsiveGridCol(
-                  lg: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Get.defaultDialog(
-                            title: "Deseja Remover",
-                            middleText: "",
-                            confirm: CupertinoButton(
-                                color: CupertinoColors.systemRed,
-                                child: Text("Sim"),
-                                onPressed: () {
-                                  c.deleteProduto(prod);
-                                  c.produtos.remove(prod);
-                                  Get.back();
-                                }),
-                            cancel: CupertinoButton(
-                              child: Text(
-                                "Não",
-                                style: TextStyle(
-                                    color: CupertinoColors.systemGrey),
-                              ),
-                              onPressed: () => Get.back(),
+                c.getNivelUser() == "func"
+                    ? ResponsiveGridCol(child: SizedBox())
+                    : ResponsiveGridCol(
+                        lg: 2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Get.defaultDialog(
+                                  title: "Deseja Remover",
+                                  middleText: "",
+                                  confirm: CupertinoButton(
+                                      color: CupertinoColors.systemRed,
+                                      child: Text("Sim"),
+                                      onPressed: () {
+                                        c.deleteProduto(prod);
+                                        c.produtos.remove(prod);
+                                        Get.back();
+                                      }),
+                                  cancel: CupertinoButton(
+                                    child: Text(
+                                      "Não",
+                                      style: TextStyle(
+                                          color: CupertinoColors.systemGrey),
+                                    ),
+                                    onPressed: () => Get.back(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.delete_outline_rounded,
+                                  color: Color(corGrey)),
                             ),
-                          );
-                        },
-                        icon: Icon(Icons.delete_outline_rounded,
-                            color: Color(corGrey)),
+                            SizedBox(width: 15),
+                            IconButton(
+                              onPressed: () {
+                                Get.defaultDialog(
+                                  title: "Resumo",
+                                  radius: 8,
+                                  titleStyle: textBold(16, corBackDark),
+                                  content:
+                                      Container(child: prodDetalhesAlert(prod)),
+                                  middleText: "",
+                                );
+                              },
+                              icon: Icon(Icons.remove_red_eye_outlined,
+                                  color: Color(corGrey)),
+                            ),
+                            SizedBox(width: 15),
+                            IconButton(
+                              onPressed: () {
+                                Get.defaultDialog(
+                                  barrierDismissible: false,
+                                  radius: 8,
+                                  title: "Editar",
+                                  titleStyle: textBold(20, corBackDark),
+                                  content: Container(
+                                      width: 400, child: prodEditarAlert(prod)),
+                                  middleText: "",
+                                );
+                              },
+                              icon: Icon(Icons.edit_outlined,
+                                  color: Color(corGrey)),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(width: 15),
-                      IconButton(
-                        onPressed: () {
-                          Get.defaultDialog(
-                            title: "Resumo",
-                            radius: 8,
-                            titleStyle: textBold(16, corBackDark),
-                            content: Container(child: prodDetalhesAlert(prod)),
-                            middleText: "",
-                          );
-                        },
-                        icon: Icon(Icons.remove_red_eye_outlined,
-                            color: Color(corGrey)),
-                      ),
-                      SizedBox(width: 15),
-                      IconButton(
-                        onPressed: () {
-                          Get.defaultDialog(
-                            barrierDismissible: false,
-                            radius: 8,
-                            title: "Editar",
-                            titleStyle: textBold(20, corBackDark),
-                            content: Container(
-                                width: 400, child: prodEditarAlert(prod)),
-                            middleText: "",
-                          );
-                        },
-                        icon: Icon(Icons.edit_outlined, color: Color(corGrey)),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
@@ -534,77 +532,106 @@ class BaleiaAdm {
   }
 
   static Widget pedidoProdDetalhes(ProdutoData prod, CarrinhoData ped) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-      child: Material(
-        borderRadius: BorderRadius.circular(10),
-        shadowColor: Colors.white.withAlpha(50),
-        color: Colors.white,
-        elevation: 5,
-        child: InkWell(
+    return Column(
+      children: [
+        Material(
           borderRadius: BorderRadius.circular(10),
-          hoverColor: Color(corPri).withAlpha(50),
-          highlightColor: Color(corBack).withAlpha(10),
-          splashColor: Colors.transparent,
-          onTap: () {},
-          child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-            margin: EdgeInsets.all(10),
-            width: Get.context.width,
-            child: ResponsiveGridRow(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ResponsiveGridCol(
-                  lg: 1,
-                  child: Container(
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(prod.img),
-                        fit: BoxFit.contain,
+          shadowColor: Colors.white.withAlpha(50),
+          color: Colors.white,
+          elevation: 0,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(10),
+            hoverColor: Color(corPri).withAlpha(20),
+            highlightColor: Color(corBack).withAlpha(10),
+            splashColor: Colors.transparent,
+            onTap: () {},
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
+              width: Get.context.width,
+              child: ResponsiveGridRow(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // ResponsiveGridCol(
+                  //   lg: 1,
+                  //   child: Container(
+                  //     height: 30,
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.white,
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       image: DecorationImage(
+                  //         image: NetworkImage(prod.img),
+                  //         fit: BoxFit.contain,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  ResponsiveGridCol(
+                    lg: 2,
+                    child: Text(
+                      "#" + ped.produtoId.substring(0, 6),
+                      style: textRegular(16, corBackDark),
+                    ),
+                  ),
+                  ResponsiveGridCol(
+                    lg: 1,
+                    child: Text(
+                      ped.qtd.toString() + "x",
+                      style: textRegular(16, corBackDark),
+                    ),
+                  ),
+                  ResponsiveGridCol(
+                    lg: 3,
+                    child: Text(
+                      prod.titulo,
+                      style: textRegular(16, corBackDark),
+                    ),
+                  ),
+                  ResponsiveGridCol(
+                    lg: 2,
+                    child: Text(
+                      prod.marca,
+                      style: textRegular(16, corBackDark),
+                    ),
+                  ),
+                  ResponsiveGridCol(
+                    lg: 2,
+                    child: Text(
+                      ped.categoria.capitalize,
+                      style: textRegular(16, corBackDark),
+                    ),
+                  ),
+                  ResponsiveGridCol(
+                      lg: 1,
+                      child: Center(
+                        child: Text(
+                          "R\$ " +
+                              formatter.format(prod.precoDesc != prod.preco
+                                  ? prod.precoDesc
+                                  : prod.preco),
+                          style: textRegular(16, corBackDark),
+                        ),
+                      )),
+                  ResponsiveGridCol(
+                    lg: 1,
+                    child: Center(
+                      child: Text(
+                        "R\$ " +
+                            formatter.format(prod.precoDesc != prod.preco
+                                ? prod.precoDesc * ped.qtd
+                                : prod.preco * ped.qtd),
+                        style: textRegular(16, corBackDark),
                       ),
                     ),
                   ),
-                ),
-                ResponsiveGridCol(
-                  lg: 1,
-                  child: Center(
-                    child: Text(
-                      ped.qtd.toString(),
-                      style: textRegular(16, corBackDark),
-                    ),
-                  ),
-                ),
-                ResponsiveGridCol(
-                  lg: 4,
-                  child: Text(
-                    prod.titulo,
-                    style: textRegular(16, corBackDark),
-                  ),
-                ),
-                ResponsiveGridCol(
-                  lg: 4,
-                  child: Text(
-                    prod.marca,
-                    style: textLight(16, corGrey),
-                  ),
-                ),
-                ResponsiveGridCol(
-                    lg: 2,
-                    child: Text(
-                      "R\$ " +
-                          formatter.format(prod.precoDesc != prod.preco
-                              ? prod.precoDesc
-                              : prod.preco),
-                      style: textRegular(16, corBackDark),
-                    )),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),
+        Divider()
+      ],
     );
   }
 
@@ -735,7 +762,7 @@ class BaleiaAdm {
                     ped.produtos.length == 1
                         ? ped.produtos.length.toString() + " Item"
                         : ped.produtos.length.toString() + " Itens",
-                    style: textRegular(14, corGrey),
+                    style: textRegular(14, corBackDark),
                   ),
                 ),
                 ResponsiveGridCol(
@@ -744,7 +771,7 @@ class BaleiaAdm {
                     DateFormat('dd/MM/yy - HH:mm - EEE', "pt_BR").format(
                         DateTime.fromMicrosecondsSinceEpoch(
                             ped.data.microsecondsSinceEpoch)),
-                    style: textRegular(14, corGrey),
+                    style: textRegular(14, corBackDark),
                   ),
                 ),
                 ResponsiveGridCol(
@@ -767,7 +794,7 @@ class BaleiaAdm {
                       SizedBox(width: 10),
                       Text(
                         ped.formaPag,
-                        style: textRegular(14, corGrey),
+                        style: textRegular(14, corBackDark),
                       ),
                     ],
                   ),
@@ -777,7 +804,7 @@ class BaleiaAdm {
                   child: Center(
                     child: Text(
                       "R\$ " + formatter.format(ped.totalPedido),
-                      style: textRegular(14, corPri),
+                      style: textRegular(14, corGreen),
                     ),
                   ),
                 ),
@@ -854,6 +881,13 @@ class BaleiaAdm {
                   ),
                 ),
                 ResponsiveGridCol(
+                  lg: 1,
+                  child: Text(
+                    cliente.cidade,
+                    style: textRegular(14, corBackDark),
+                  ),
+                ),
+                ResponsiveGridCol(
                   lg: 2,
                   child: Text(
                     "Rua: " +
@@ -882,7 +916,7 @@ class BaleiaAdm {
             borderRadius: BorderRadius.circular(5), color: Color(color)),
         child: Center(
           child: Text(
-            categoria,
+            categoria.capitalizeFirst,
             style: textRegular(14, corBack),
             textAlign: TextAlign.center,
           ),

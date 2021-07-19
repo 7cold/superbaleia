@@ -5,42 +5,51 @@ import 'package:responsive_grid/responsive_grid.dart';
 import 'package:superbaleia/adm/controller/controller_adm.dart';
 import 'package:superbaleia/adm/produtos/produtos_adm_add.dart';
 import 'package:superbaleia/adm/widgets/baleiaAdmWidgets.dart';
+import 'package:superbaleia/data/admin_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 import 'package:superbaleia/widgets/colors.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
 class ProdutosAdm extends StatelessWidget {
-  final RxString categoria = "".obs;
+  final RxString categoria = "Todas".obs;
   final RxString prodSearch = "".obs;
-  final RxString tipoSearch = "".obs;
+  final RxString tipoSearch = "nome".obs;
+  final TextEditingController prodSearchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final ControllerAdm c = Get.find();
+
     return Obx(
       () => Scaffold(
         backgroundColor: Color(corBack),
-        appBar: BaleiaAdm.appBar("Produtos", [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: IconButton(
-              onPressed: () {
-                Get.to(() => ProdutosAdmAdd());
-              },
-              icon: Icon(Icons.add),
+        appBar: BaleiaAdm.appBar(
+          "Produtos",
+          [
+            c.getNivelUser() == "func"
+                ? SizedBox()
+                : Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.to(() => ProdutosAdmAdd());
+                      },
+                      icon: Icon(Icons.add),
+                    ),
+                  ),
+            Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: IconButton(
+                tooltip: "Atualizar",
+                onPressed: () {
+                  c.carregarTodos();
+                },
+                icon: Icon(Icons.cloud_download_outlined),
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: IconButton(
-              onPressed: () {
-                c.carregarTodos();
-              },
-              icon: Icon(Icons.cloud_download_outlined),
-            ),
-          ),
-        ]),
+          ],
+        ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: c.carregando.value == true
@@ -67,7 +76,8 @@ class ProdutosAdm extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Cidade", style: textLight(16, corGrey)),
+                                  Text("Categoria",
+                                      style: textLight(16, corGrey)),
                                   SizedBox(height: 6),
                                   Container(
                                     padding:
@@ -101,11 +111,14 @@ class ProdutosAdm extends StatelessWidget {
                                         'padaria',
                                         'pet',
                                         'utilidades',
+                                        'Todas',
                                       ].map((String value) {
                                         return DropdownMenuItem<String>(
                                             value: value, child: Text(value));
                                       }).toList(),
                                       onChanged: (_) {
+                                        prodSearchController.clear();
+                                        prodSearch.value = "";
                                         categoria.value = _;
                                       },
                                     ),
@@ -128,6 +141,7 @@ class ProdutosAdm extends StatelessWidget {
                                   SizedBox(
                                     height: 45,
                                     child: CupertinoTextField(
+                                      controller: prodSearchController,
                                       suffix: Row(
                                         children: [
                                           SizedBox(
@@ -205,6 +219,7 @@ class ProdutosAdm extends StatelessWidget {
                                       ),
                                       placeholder: "Pesquisar",
                                       onChanged: (_) {
+                                        categoria.value = "Todas";
                                         prodSearch.value = _;
                                       },
                                     ),

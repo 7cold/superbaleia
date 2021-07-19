@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:superbaleia/adm/root_adm.dart';
 import 'package:superbaleia/widgets/extras.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'adm/home_adm.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
       defaultTransition: Transition.topLevel,
       transitionDuration: Duration(milliseconds: 190),
       debugShowCheckedModeBanner: false,
+      // showSemanticsDebugger: true,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            return HomeAdm();
+            return RootAdm();
             // return SplashScreen();
           }
           return Scaffold(body: BaleiaExtras.widgetLoading);

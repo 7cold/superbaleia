@@ -12,9 +12,10 @@ import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
 class ClientesAdm extends StatelessWidget {
-  final RxString cidade = "Ouro Fino".obs;
+  final RxString cidade = "Todas".obs;
   final RxString clienteSearch = "".obs;
   final RxString tipoSearch = "nome".obs;
+  final TextEditingController clienteSearchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class ClientesAdm extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: IconButton(
+              tooltip: "Atualizar",
               onPressed: () {
                 c.carregarClientes();
               },
@@ -88,6 +90,8 @@ class ClientesAdm extends StatelessWidget {
                                             value: value, child: Text(value));
                                       }).toList(),
                                       onChanged: (_) {
+                                        clienteSearchController.clear();
+                                        clienteSearch.value = "";
                                         cidade.value = _;
                                       },
                                     ),
@@ -110,6 +114,7 @@ class ClientesAdm extends StatelessWidget {
                                   SizedBox(
                                     height: 45,
                                     child: CupertinoTextField(
+                                      controller: clienteSearchController,
                                       inputFormatters: tipoSearch.value == "cpf"
                                           ? [
                                               FilteringTextInputFormatter
@@ -171,6 +176,7 @@ class ClientesAdm extends StatelessWidget {
                                       ),
                                       placeholder: "Pesquisar",
                                       onChanged: (_) {
+                                        cidade.value = "Todas";
                                         clienteSearch.value = _;
                                       },
                                     ),

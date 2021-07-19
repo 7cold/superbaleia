@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:responsive_grid/responsive_grid.dart';
+import 'package:superbaleia/adm/pedidos/pedido_adm_impressao.dart';
 import 'package:superbaleia/adm/widgets/baleiaAdmWidgets.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
 import 'package:superbaleia/data/cliente_data.dart';
@@ -13,7 +15,6 @@ import 'package:superbaleia/widgets/texts.dart';
 
 class PedidosDetalhesAdm extends StatelessWidget {
   final PedidoData ped;
-
   const PedidosDetalhesAdm({@required this.ped});
 
   @override
@@ -23,9 +24,18 @@ class PedidosDetalhesAdm extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color(corBack),
-      appBar: BaleiaExtras.appBar(
-        "#" + ped.id.substring(0, 6),
-      ),
+      appBar: BaleiaAdm.appBar("#" + ped.id.substring(0, 6), [
+        Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: IconButton(
+            tooltip: "Impressão de Pedido",
+            onPressed: () => Get.to(() => PedidoAdmImpressao(
+                  ped: ped,
+                )),
+            icon: Icon(Icons.print_outlined),
+          ),
+        )
+      ]),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: ResponsiveGridRow(
@@ -60,21 +70,25 @@ class PedidosDetalhesAdm extends StatelessWidget {
                           Text(cliente.nome,
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Cliente ID: ", style: textLight(16, corGrey)),
                           Text(ped.clienteId.toString(),
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("CPF: ", style: textLight(16, corGrey)),
                           Text(cliente.cpf,
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Celular: ", style: textLight(16, corGrey)),
                           Text(cliente.celular,
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 25),
                       ],
                     ),
                   ),
@@ -110,16 +124,19 @@ class PedidosDetalhesAdm extends StatelessWidget {
                           Text(cliente.endereco + ", " + cliente.numero,
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Bairro: ", style: textLight(16, corGrey)),
                           Text(cliente.bairro,
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Cidade: ", style: textLight(16, corGrey)),
                           Text(cliente.cidade,
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Tipo de entrega: ",
                               style: textLight(16, corGrey)),
@@ -133,6 +150,7 @@ class PedidosDetalhesAdm extends StatelessWidget {
                                       : "Entrega Agendada",
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Preço da Entrega: ",
                               style: textLight(16, corGrey)),
@@ -179,9 +197,11 @@ class PedidosDetalhesAdm extends StatelessWidget {
                         SizedBox(height: 20),
                         Row(children: [
                           Text("Pedido ID: ", style: textLight(16, corGrey)),
+                          SizedBox(height: 6),
                           Text(ped.id.toString(),
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Data: ", style: textLight(16, corGrey)),
                           Text(
@@ -190,12 +210,13 @@ class PedidosDetalhesAdm extends StatelessWidget {
                                       ped.data.microsecondsSinceEpoch)),
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Forma de Pagamento: ",
                               style: textLight(16, corGrey)),
                           Text(
                             ped.formaPag,
-                            style: textRegular(14, corBackDark),
+                            style: textRegular(16, corBackDark),
                           ),
                           SizedBox(width: 4),
                           Icon(
@@ -212,21 +233,24 @@ class PedidosDetalhesAdm extends StatelessWidget {
                                     : Colors.green[600],
                           ),
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Status: ", style: textLight(16, corGrey)),
                           BaleiaExtras.widgetEntrega(ped.status, 14)
                         ]),
+                        SizedBox(height: 6),
                         Row(children: [
                           Text("Valor dos produtos: ",
                               style: textLight(16, corGrey)),
                           Text("R\$ " + formatter.format(ped.totalProdutos),
                               style: textRegular(16, corBackDark)),
                         ]),
+                        SizedBox(height: 25),
                         Row(children: [
                           Text("Total do Pedido: ",
-                              style: textLight(16, corGrey)),
+                              style: textBold(16, corBackDark)),
                           Text("R\$ " + formatter.format(ped.totalPedido),
-                              style: textRegular(16, corBackDark)),
+                              style: textBold(16, corBackDark)),
                         ]),
                       ],
                     ),
@@ -253,9 +277,26 @@ class PedidosDetalhesAdm extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Produtos",
-                          style: textBold(22, corBackDark),
+                        Row(
+                          children: [
+                            Text(
+                              "Produtos",
+                              style: textBold(22, corBackDark),
+                            ),
+                            SizedBox(width: 10),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: CupertinoColors.activeBlue,
+                              ),
+                              child: Text(
+                                ped.produtos.length.toString(),
+                                style: textBold(14, corBack),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 20),
                         Column(
