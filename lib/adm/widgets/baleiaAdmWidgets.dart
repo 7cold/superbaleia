@@ -574,13 +574,7 @@ class BaleiaAdm {
                       style: textRegular(16, corBackDark),
                     ),
                   ),
-                  ResponsiveGridCol(
-                    lg: 1,
-                    child: Text(
-                      ped.qtd.toString() + "x",
-                      style: textRegular(16, corBackDark),
-                    ),
-                  ),
+
                   ResponsiveGridCol(
                     lg: 3,
                     child: Text(
@@ -613,6 +607,13 @@ class BaleiaAdm {
                           style: textRegular(16, corBackDark),
                         ),
                       )),
+                  ResponsiveGridCol(
+                    lg: 1,
+                    child: Text(
+                      ped.qtd.toString() + "x",
+                      style: textRegular(16, corBackDark),
+                    ),
+                  ),
                   ResponsiveGridCol(
                     lg: 1,
                     child: Center(
@@ -707,7 +708,7 @@ class BaleiaAdm {
 
   static Widget vendasItens(PedidoData ped) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Material(
         borderRadius: BorderRadius.circular(10),
         shadowColor: Colors.white.withAlpha(50),
@@ -715,7 +716,7 @@ class BaleiaAdm {
         elevation: 5,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          hoverColor: Color(corPri).withAlpha(50),
+          hoverColor: Color(corPri).withAlpha(30),
           highlightColor: Color(corBack).withAlpha(10),
           splashColor: Colors.transparent,
           onTap: () {
@@ -809,9 +810,10 @@ class BaleiaAdm {
                   ),
                 ),
                 ResponsiveGridCol(
-                    lg: 1,
-                    child: Center(
-                        child: BaleiaExtras.widgetEntrega(ped.status, 14)))
+                  lg: 1,
+                  child:
+                      Center(child: BaleiaExtras.widgetEntrega(ped.status, 14)),
+                ),
               ],
             ),
           ),
@@ -890,8 +892,7 @@ class BaleiaAdm {
                 ResponsiveGridCol(
                   lg: 2,
                   child: Text(
-                    "Rua: " +
-                        cliente.endereco +
+                    cliente.endereco +
                         ", " +
                         cliente.numero.toString() +
                         " - " +

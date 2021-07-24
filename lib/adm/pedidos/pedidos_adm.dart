@@ -14,7 +14,7 @@ class VendasAdm extends StatelessWidget {
     return Obx(
       () => Scaffold(
         backgroundColor: Color(corBack),
-        appBar: BaleiaAdm.appBar("Vendas", []),
+        appBar: BaleiaAdm.appBar("Pedidos", []),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: c.carregando.value == true

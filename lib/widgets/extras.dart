@@ -1189,16 +1189,37 @@ class BaleiaExtras {
   static Widget widgetEntrega(int status, double fsize) {
     switch (status) {
       case 1:
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: CupertinoColors.activeBlue,
-          ),
-          child: Center(
-            child: Text(
-              "Preparando",
-              style: textRegular(fsize, corBack),
+        return InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () {
+            Get.defaultDialog(
+                radius: 6,
+                title: "Alterar Status",
+                middleText: "",
+                custom: Column(
+                  children: [],
+                ));
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: CupertinoColors.activeBlue,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Preparando",
+                  style: textRegular(fsize, corBack),
+                ),
+                Icon(
+                  Icons.drag_indicator_sharp,
+                  size: 14,
+                  color: Colors.white,
+                ),
+              ],
             ),
           ),
         );

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_grid/responsive_grid.dart';
-import 'package:superbaleia/adm/pedidos/pedido_adm_impressao.dart';
+import 'package:superbaleia/adm/pedidos/pedidos_adm_impressao.dart';
 import 'package:superbaleia/adm/widgets/baleiaAdmWidgets.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
 import 'package:superbaleia/data/cliente_data.dart';
