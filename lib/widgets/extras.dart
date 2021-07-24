@@ -15,6 +15,7 @@ import 'texts.dart';
 import 'package:intl/intl.dart';
 
 final Controller c = Get.find();
+final ControllerAdm cadm = Get.find();
 final formatter = new NumberFormat("#,##0.00", "pt_BR");
 
 class BaleiaExtras {
@@ -640,7 +641,8 @@ class BaleiaExtras {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Status", style: textSemiBold(18, corGrey)),
-                            BaleiaExtras.widgetEntrega(pedido.status, 18)
+                            BaleiaExtras.widgetEntrega(
+                                pedido.status, 18, pedido.id)
                           ],
                         ),
                       ),
@@ -1186,93 +1188,182 @@ class BaleiaExtras {
     );
   }
 
-  static Widget widgetEntrega(int status, double fsize) {
-    switch (status) {
-      case 1:
-        return InkWell(
-          borderRadius: BorderRadius.circular(8),
-          onTap: () {
-            Get.defaultDialog(
-                radius: 6,
-                title: "Alterar Status",
-                middleText: "",
-                custom: Column(
-                  children: [],
-                ));
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: CupertinoColors.activeBlue,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Preparando",
-                  style: textRegular(fsize, corBack),
-                ),
-                Icon(
-                  Icons.drag_indicator_sharp,
-                  size: 14,
-                  color: Colors.white,
-                ),
-              ],
-            ),
-          ),
-        );
+  static Widget widgetEntrega(int status, double fsize, String pedId) {
+    return Container(
+      height: 33,
+      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: status == 1
+            ? CupertinoColors.activeBlue
+            : status == 2
+                ? CupertinoColors.activeOrange
+                : status == 3
+                    ? CupertinoColors.activeGreen
+                    : status == 4
+                        ? CupertinoColors.systemRed
+                        : CupertinoColors.black,
+      ),
+      child: DropdownButton(
+        style: textRegular(18, corBackDark),
+        underline: SizedBox(),
+        isExpanded: true,
+        icon: Icon(
+          Icons.arrow_drop_down_rounded,
+          color: Color(corBack),
+        ),
+        hint: Text(
+          status == 1
+              ? "Preparando"
+              : status == 2
+                  ? "Enviando"
+                  : status == 3
+                      ? "Entregue"
+                      : status == 4
+                          ? "Cancelado"
+                          : "ERROR",
+          style: textRegular(fsize, corBack),
+        ),
+        items: [
+          'Preparando',
+          'Enviando',
+          'Entregue',
+          'Cancelado',
+        ].map((String value) {
+          return DropdownMenuItem<String>(value: value, child: Text(value));
+        }).toList(),
+        onChanged: (_) {
+          var status;
 
-        break;
-      case 2:
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: CupertinoColors.activeOrange,
-          ),
-          child: Center(
-            child: Text(
-              "Enviando",
-              style: textRegular(fsize, corBack),
-            ),
-          ),
-        );
-        break;
+          switch (_) {
+            case "Preparando":
+              status = 1;
+              break;
+            case "Enviando":
+              status = 2;
+              break;
+            case "Entregue":
+              status = 3;
+              break;
+            case "Cancelado":
+              status = 4;
+              break;
+            default:
+          }
 
-      case 3:
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: CupertinoColors.activeGreen,
-          ),
-          child: Center(
-            child: Text(
-              "Entregue",
-              style: textRegular(fsize, corBack),
-            ),
-          ),
-        );
-        break;
-      case 4:
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: CupertinoColors.destructiveRed,
-          ),
-          child: Center(
-            child: Text(
-              "Cancelado",
-              style: textRegular(fsize, corBack),
-            ),
-          ),
-        );
-        break;
-      default:
-        return Container();
-    }
+          cadm.alterarStatusPed(pedId, status);
+        },
+      ),
+
+      // Row(
+      //   crossAxisAlignment: CrossAxisAlignment.center,
+      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //   children: [
+      //     Text(
+      //       "Preparando",
+      //       style: textRegular(fsize, corBack),
+      //     ),
+      //     Icon(
+      //       Icons.drag_indicator_sharp,
+      //       size: 14,
+      //       color: Colors.white,
+      //     ),
+      //   ],
+      // ),
+    );
+
+    // switch (status) {
+    //   case 1:
+    //     return Container(
+    //       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+    //       decoration: BoxDecoration(
+    //         borderRadius: BorderRadius.circular(8),
+    //         color: CupertinoColors.activeBlue,
+    //       ),
+    //       child: DropdownButton(
+    //         style: textRegular(18, corBackDark),
+    //         underline: SizedBox(),
+    //         isExpanded: true,
+    //         icon: Icon(
+    //           Icons.arrow_drop_down_rounded,
+    //           color: Color(corBackDark),
+    //         ),
+    //         hint: Text("categoria.value"),
+    //         items: [
+    //           'bebidas',
+    //           'bebidas alcoolicas',
+    //           'carnes e peixaria',
+    //         ].map((String value) {
+    //           return DropdownMenuItem<String>(value: value, child: Text(value));
+    //         }).toList(),
+    //         onChanged: (_) {},
+    //       ),
+
+    //       // Row(
+    //       //   crossAxisAlignment: CrossAxisAlignment.center,
+    //       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       //   children: [
+    //       //     Text(
+    //       //       "Preparando",
+    //       //       style: textRegular(fsize, corBack),
+    //       //     ),
+    //       //     Icon(
+    //       //       Icons.drag_indicator_sharp,
+    //       //       size: 14,
+    //       //       color: Colors.white,
+    //       //     ),
+    //       //   ],
+    //       // ),
+    //     );
+
+    //     break;
+    //   case 2:
+    //     return Container(
+    //       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+    //       decoration: BoxDecoration(
+    //         borderRadius: BorderRadius.circular(8),
+    //         color: CupertinoColors.activeOrange,
+    //       ),
+    //       child: Center(
+    //         child: Text(
+    //           "Enviando",
+    //           style: textRegular(fsize, corBack),
+    //         ),
+    //       ),
+    //     );
+    //     break;
+
+    //   case 3:
+    //     return Container(
+    //       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+    //       decoration: BoxDecoration(
+    //         borderRadius: BorderRadius.circular(8),
+    //         color: CupertinoColors.activeGreen,
+    //       ),
+    //       child: Center(
+    //         child: Text(
+    //           "Entregue",
+    //           style: textRegular(fsize, corBack),
+    //         ),
+    //       ),
+    //     );
+    //     break;
+    //   case 4:
+    //     return Container(
+    //       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+    //       decoration: BoxDecoration(
+    //         borderRadius: BorderRadius.circular(8),
+    //         color: CupertinoColors.destructiveRed,
+    //       ),
+    //       child: Center(
+    //         child: Text(
+    //           "Cancelado",
+    //           style: textRegular(fsize, corBack),
+    //         ),
+    //       ),
+    //     );
+    //     break;
+    //   default:
+    //     return Container();
   }
 }

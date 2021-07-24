@@ -462,10 +462,21 @@ class ProdutosAdmAdd extends StatelessWidget {
                                     marca.text == "" ||
                                     unidadeMed.value == "" ||
                                     categoria.value == "") {
-                                  Get.snackbar("ERRO",
-                                      "Faltam dados para cadastro do produto!");
+                                  Get.snackbar("Faltam dados 😕",
+                                      "Verifique seus dados e tente novamente!",
+                                      backgroundColor:
+                                          CupertinoColors.systemRed,
+                                      borderRadius: 10,
+                                      margin: EdgeInsets.all(20),
+                                      colorText: Colors.white);
                                 } else {
-                                  Get.snackbar("ok", "ok");
+                                  Get.snackbar("Cadastrado com Sucesso",
+                                      "Limpando campos!",
+                                      backgroundColor:
+                                          CupertinoColors.activeGreen,
+                                      borderRadius: 10,
+                                      margin: EdgeInsets.all(20),
+                                      colorText: Colors.white);
 
                                   c.salvarProduto(categoria.value, {
                                     "titulo": titulo.text.capitalize,
@@ -490,6 +501,7 @@ class ProdutosAdmAdd extends StatelessWidget {
                                         ? "contain"
                                         : "full",
                                   });
+                                  limparCampos();
                                 }
                               },
                             ),

@@ -70,12 +70,7 @@ class LoginAdm extends StatelessWidget {
                               children: [
                                 BaleiaForms.textFormField("Email", email, []),
                                 SizedBox(height: 15),
-                                BaleiaForms.textFormField("Senha", senha, []
-                                    // c.login(
-                                    //   email: email.text,
-                                    //   pass: senha.text,
-                                    // );
-                                    ),
+                                BaleiaForms.textFormField("Senha", senha, []),
                               ],
                             ),
                           ),

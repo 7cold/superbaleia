@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_grid/responsive_grid.dart';
-import 'package:superbaleia/adm/pedidos/pedidos_adm_impressao.dart';
+import 'package:superbaleia/adm/pedidos/pedidos_impressao_adm.dart';
 import 'package:superbaleia/adm/widgets/baleiaAdmWidgets.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
 import 'package:superbaleia/data/cliente_data.dart';
@@ -10,7 +10,6 @@ import 'package:superbaleia/data/pedido_data.dart';
 import 'package:superbaleia/data/produto_data.dart';
 import 'package:intl/intl.dart';
 import 'package:superbaleia/widgets/colors.dart';
-import 'package:superbaleia/widgets/extras.dart';
 import 'package:superbaleia/widgets/texts.dart';
 
 class PedidosDetalhesAdm extends StatelessWidget {
@@ -140,14 +139,19 @@ class PedidosDetalhesAdm extends StatelessWidget {
                         Row(children: [
                           Text("Tipo de entrega: ",
                               style: textLight(16, corGrey)),
+                          Text(ped.entrega['entregaTipo'],
+                              style: textRegular(16, corBackDark)),
                           Text(
-                              ped.entrega['entregaTipo'] ==
-                                      "Entregar a qualquer momento"
-                                  ? "Entregar a qualquer momento"
-                                  : ped.entrega['entregaTipo'] ==
-                                          "Retirada no mercado"
-                                      ? "Retirada no mercado"
-                                      : "Entrega Agendada",
+                              ped.entrega['entregaTipo'] == "Entrega agendada"
+                                  ? " - " +
+                                      DateFormat(
+                                              'dd/MM/yy - HH:mm - EE', "pt_BR")
+                                          .format(DateTime
+                                              .fromMicrosecondsSinceEpoch(ped
+                                                  .entrega['entregaData']
+                                                  .microsecondsSinceEpoch))
+                                          .capitalize
+                                  : "",
                               style: textRegular(16, corBackDark)),
                         ]),
                         SizedBox(height: 6),
@@ -195,6 +199,11 @@ class PedidosDetalhesAdm extends StatelessWidget {
                           style: textBold(22, corBackDark),
                         ),
                         SizedBox(height: 20),
+                        // SizedBox(
+                        //     width: 200,
+                        //     child: BaleiaExtras.widgetEntrega(
+                        //         ped.status, 14, ped.id)),
+                        // SizedBox(height: 20),
                         Row(children: [
                           Text("Pedido ID: ", style: textLight(16, corGrey)),
                           SizedBox(height: 6),
@@ -235,8 +244,19 @@ class PedidosDetalhesAdm extends StatelessWidget {
                         ]),
                         SizedBox(height: 6),
                         Row(children: [
-                          Text("Status: ", style: textLight(16, corGrey)),
-                          BaleiaExtras.widgetEntrega(ped.status, 14)
+                          Text("Status atual: ", style: textLight(16, corGrey)),
+                          Text(
+                            ped.status == 1
+                                ? "Preparando"
+                                : ped.status == 2
+                                    ? "Enviando"
+                                    : ped.status == 3
+                                        ? "Entregue"
+                                        : ped.status == 4
+                                            ? "Cancelado"
+                                            : "ERROR",
+                            style: textRegular(16, corBackDark),
+                          ),
                         ]),
                         SizedBox(height: 6),
                         Row(children: [

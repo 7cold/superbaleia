@@ -58,6 +58,12 @@ class PedidoAdmImpressao extends StatelessWidget {
                 pw.Flexible(
                   flex: 1,
                   child: pw.Container(
+                    padding: pw.EdgeInsets.all(10),
+                    margin: pw.EdgeInsets.only(right: 5),
+                    decoration: pw.BoxDecoration(
+                        border:
+                            pw.Border.all(color: PdfColors.grey, width: 0.5),
+                        borderRadius: pw.BorderRadius.circular(6)),
                     width: Get.context.width,
                     child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -67,40 +73,87 @@ class PedidoAdmImpressao extends StatelessWidget {
                               style:
                                   pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                           pw.Padding(padding: pw.EdgeInsets.only(bottom: 10)),
-                          pw.Text("Nome: " + ped.cliente['nome']),
-                          pw.Text("CPF: " + ped.cliente['cpf']),
-                          pw.Text("Celular: " + ped.cliente['celular']),
-                          pw.Padding(
-                            padding: pw.EdgeInsets.only(right: 20),
-                            child: pw.Divider(color: PdfColors.grey),
+                          pw.Text(
+                            "Nome: " + ped.cliente['nome'],
+                            style: pw.TextStyle(color: PdfColors.grey700),
                           ),
-                          pw.Text("Forma de Pag: " + ped.formaPag),
-                          pw.Text("Valor Produtos: R\$" +
-                              formatter.format(ped.totalProdutos)),
-                          pw.Text("Valor Entrega: R\$" +
-                              formatter.format(ped.entrega['entregaPreco'])),
-                          pw.Text("Valor Total: R\$" +
-                              formatter.format(ped.totalPedido)),
+                          pw.Text(
+                            "CPF: " + ped.cliente['cpf'],
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          pw.Text(
+                            "Celular: " + ped.cliente['celular'],
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          pw.Divider(color: PdfColors.grey),
+                          pw.Text(
+                            "Forma de Pag: " + ped.formaPag,
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          pw.Text(
+                            "Valor Produtos: R\$" +
+                                formatter.format(ped.totalProdutos),
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          pw.Text(
+                            "Valor Entrega: R\$" +
+                                formatter.format(ped.entrega['entregaPreco']),
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          pw.Text(
+                            "Valor Total: R\$" +
+                                formatter.format(ped.totalPedido),
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
                         ]),
                   ),
                 ),
                 pw.Flexible(
                   flex: 1,
                   child: pw.Container(
+                    padding: pw.EdgeInsets.all(10),
+                    margin: pw.EdgeInsets.only(left: 5),
+                    decoration: pw.BoxDecoration(
+                        border:
+                            pw.Border.all(color: PdfColors.grey, width: 0.5),
+                        borderRadius: pw.BorderRadius.circular(6)),
                     width: Get.context.width,
                     child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         mainAxisAlignment: pw.MainAxisAlignment.start,
                         children: [
                           pw.Text("Entrega",
-                              style:
-                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                              )),
                           pw.Padding(padding: pw.EdgeInsets.only(bottom: 10)),
-                          pw.Text(ped.cliente['endereco'] +
-                              ", " +
-                              ped.cliente['num']),
-                          pw.Text(ped.cliente['bairro']),
-                          pw.Text(ped.cliente['cidade']),
+                          pw.Text(
+                            ped.cliente['endereco'] + ", " + ped.cliente['num'],
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          pw.Text(
+                            ped.cliente['bairro'],
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          pw.Text(
+                            ped.cliente['cidade'],
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          pw.Text(
+                            ped.entrega['entregaTipo'],
+                            style: pw.TextStyle(color: PdfColors.grey700),
+                          ),
+                          ped.entrega['entregaTipo'] == "Entrega agendada"
+                              ? pw.Text(
+                                  DateFormat('dd/MM/yy - HH:mm - EE', "pt_BR")
+                                      .format(
+                                          DateTime.fromMicrosecondsSinceEpoch(
+                                              ped.entrega['entregaData']
+                                                  .microsecondsSinceEpoch))
+                                      .capitalize,
+                                  style: pw.TextStyle(color: PdfColors.grey700),
+                                )
+                              : pw.SizedBox(),
                         ]),
                   ),
                 ),

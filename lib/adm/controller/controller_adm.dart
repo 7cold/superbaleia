@@ -34,7 +34,8 @@ class ControllerAdm extends GetxController {
   RxMap clienteDataAdm = {}.obs;
 
   getImage() async {
-    image = await ImagePicker().getImage(source: ImageSource.gallery);
+    image = await ImagePicker()
+        .getImage(source: ImageSource.gallery, imageQuality: 60);
     uploadImage();
   }
 
@@ -54,18 +55,19 @@ class ControllerAdm extends GetxController {
     });
     url.value = await taskSnapshot.ref.getDownloadURL();
     urlPorcentagem.value = 0;
+    image = null;
   }
 
   Future<Null> salvarProduto(
       String categoria, Map<String, dynamic> prod) async {
-    await FirebaseFirestore.instance
+    ProdutoData produtoData = ProdutoData.fromJson(prod);
+    DocumentReference docId = await FirebaseFirestore.instance
         .collection('produtos')
         .doc(categoria)
         .collection('itens')
-        .doc()
-        .set(prod);
+        .add(prod);
 
-    ProdutoData produtoData = ProdutoData.fromJson(prod);
+    produtoData.id = docId.id;
     produtos.add(produtoData);
   }
 
@@ -75,19 +77,28 @@ class ControllerAdm extends GetxController {
   }) async {
     carregando.value = true;
 
-    _auth.value
-        .signInWithEmailAndPassword(email: email, password: pass)
-        .then((result) {
-      firebaseUser.value = result.user;
-      carregarUsuariosAdm();
-
-      Get.snackbar("Login Realizado com Sucesso 😕", "Carregando dados!",
-          backgroundColor: CupertinoColors.activeGreen,
-          borderRadius: 10,
-          margin: EdgeInsets.all(20),
-          colorText: Colors.white);
-      Get.to(() => HomeAdm());
-    }).catchError((e) {
+    if (email.contains("@superbaleia.com.br")) {
+      _auth.value
+          .signInWithEmailAndPassword(email: email, password: pass)
+          .then((result) {
+        firebaseUser.value = result.user;
+        carregarUsuariosAdm();
+        Get.snackbar("Login Realizado com Sucesso 😕", "Carregando dados!",
+            backgroundColor: CupertinoColors.activeGreen,
+            borderRadius: 10,
+            margin: EdgeInsets.all(20),
+            colorText: Colors.white);
+        Get.to(() => HomeAdm());
+      }).catchError((e) {
+        carregando.value = false;
+        Get.snackbar("Email ou Senha Incorretos 😕",
+            "Verifique seus dados e tente novamente!",
+            backgroundColor: CupertinoColors.systemRed,
+            borderRadius: 10,
+            margin: EdgeInsets.all(20),
+            colorText: Colors.white);
+      });
+    } else {
       carregando.value = false;
       Get.snackbar("Email ou Senha Incorretos 😕",
           "Verifique seus dados e tente novamente!",
@@ -95,7 +106,7 @@ class ControllerAdm extends GetxController {
           borderRadius: 10,
           margin: EdgeInsets.all(20),
           colorText: Colors.white);
-    });
+    }
   }
 
   Future<Null> carregarUsuariosAdm() async {
@@ -350,5 +361,11 @@ class ControllerAdm extends GetxController {
         .collection("itens")
         .doc(prod.id)
         .delete();
+  }
+
+  alterarStatusPed(String pedId, int status) async {
+    await FirebaseFirestore.instance.collection("pedidos").doc(pedId).update({
+      "status": status,
+    });
   }
 }

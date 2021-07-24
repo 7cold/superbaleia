@@ -13,6 +13,7 @@ import 'package:superbaleia/widgets/texts.dart';
 
 class ProdutosAdm extends StatelessWidget {
   final RxString categoria = "Todas".obs;
+  final RxString ordenar = "categoria".obs;
   final RxString prodSearch = "".obs;
   final RxString tipoSearch = "nome".obs;
   final TextEditingController prodSearchController = TextEditingController();
@@ -69,7 +70,7 @@ class ProdutosAdm extends StatelessWidget {
                               child: Text("Filtros",
                                   style: textSemiBold(18, corBackDark))),
                           ResponsiveGridCol(
-                            lg: 3,
+                            lg: 2,
                             child: Padding(
                               padding: EdgeInsets.only(right: 10, top: 20),
                               child: Column(
@@ -128,7 +129,55 @@ class ProdutosAdm extends StatelessWidget {
                             ),
                           ),
                           ResponsiveGridCol(
-                            lg: 9,
+                            lg: 2,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 10, top: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Ordenar",
+                                      style: textLight(16, corGrey)),
+                                  SizedBox(height: 6),
+                                  Container(
+                                    padding:
+                                        EdgeInsets.only(right: 20, left: 20),
+                                    width: Get.context.width,
+                                    decoration: BoxDecoration(
+                                      color: CupertinoColors
+                                          .tertiarySystemGroupedBackground,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: DropdownButton(
+                                      style: textRegular(16, corBackDark),
+                                      underline: SizedBox(),
+                                      isExpanded: true,
+                                      icon: Icon(
+                                        Icons.arrow_drop_down_rounded,
+                                        color: Color(corBackDark),
+                                      ),
+                                      hint: Text(ordenar.value),
+                                      items: [
+                                        'categoria',
+                                        'nome',
+                                        'marca',
+                                        'preco',
+                                        'precoDesc',
+                                      ].map((String value) {
+                                        return DropdownMenuItem<String>(
+                                            value: value, child: Text(value));
+                                      }).toList(),
+                                      onChanged: (_) {
+                                        ordenar.value = _;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          ResponsiveGridCol(
+                            lg: 8,
                             child: Padding(
                               padding: EdgeInsets.only(left: 10, top: 20),
                               child: Column(
@@ -227,32 +276,31 @@ class ProdutosAdm extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                     Column(
-                      children: c.produtos.where((i) {
-                        ProdutoData prod = i;
-                        return prodSearch.value == ""
-                            ? categoria.value == "Todas"
-                                ? prod.categoria != ""
-                                : prod.categoria == categoria.value
-                            : tipoSearch.value == "marca"
-                                ? prod.marca.isCaseInsensitiveContainsAny(
-                                    prodSearch.value)
-                                : tipoSearch.value == "nome"
-                                    ? prod.titulo.isCaseInsensitiveContainsAny(
-                                        prodSearch.value)
-                                    : tipoSearch.value == "id"
-                                        ? prod.id.isCaseInsensitiveContainsAny(
-                                            prodSearch.value)
-                                        : null;
-                      }).map((val) {
-                        ProdutoData prod = val;
-                        return BaleiaAdm.produtosItens(prod);
-                      }).toList(),
-                    ),
+                        children: c.produtos.where((i) {
+                      ProdutoData prod = i;
+                      return prodSearch.value == ""
+                          ? categoria.value == "Todas"
+                              ? prod.categoria != ""
+                              : prod.categoria == categoria.value
+                          : tipoSearch.value == "marca"
+                              ? prod.marca.isCaseInsensitiveContainsAny(
+                                  prodSearch.value)
+                              : tipoSearch.value == "nome"
+                                  ? prod.titulo.isCaseInsensitiveContainsAny(
+                                      prodSearch.value)
+                                  : tipoSearch.value == "id"
+                                      ? prod.id.isCaseInsensitiveContainsAny(
+                                          prodSearch.value)
+                                      : null;
+                    }).map((val) {
+                      ProdutoData prod = val;
+                      return BaleiaAdm.produtosItens(prod);
+                    }).toList()),
                   ],
                 ),
         ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:responsive_grid/responsive_grid.dart';
+import 'package:superbaleia/adm/clientes/clientes_adm_detalhes.dart';
 import 'package:superbaleia/adm/controller/controller_adm.dart';
 import 'package:superbaleia/adm/pedidos/pedidos_detalhes_adm.dart';
 import 'package:superbaleia/data/carrinho_data.dart';
@@ -811,8 +812,9 @@ class BaleiaAdm {
                 ),
                 ResponsiveGridCol(
                   lg: 1,
-                  child:
-                      Center(child: BaleiaExtras.widgetEntrega(ped.status, 14)),
+                  child: Center(
+                      child:
+                          BaleiaExtras.widgetEntrega(ped.status, 14, ped.id)),
                 ),
               ],
             ),
@@ -836,13 +838,13 @@ class BaleiaAdm {
           highlightColor: Color(corBack).withAlpha(10),
           splashColor: Colors.transparent,
           onTap: () {
-            // Get.to(() => PedidosDetalhesAdm(
-            //       ped: ped,
-            //     ));
+            Get.to(() => ClientesDetalhesAdm(
+                  cliente: cliente,
+                ));
           },
           child: Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.all(15),
             width: Get.context.width,
             child: ResponsiveGridRow(
               crossAxisAlignment: CrossAxisAlignment.center,
